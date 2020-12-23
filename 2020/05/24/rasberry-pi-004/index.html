@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 vi editor 입력 오류 해결방법 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,vi,vim">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 vi 입력오류 해결방법라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.\n그것을 해결하는 방법을 소개해 드리겠습니다.\n일단 VIM부터 설치부터 하겠습니다만\n일단 VNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.\n그리고 아래의 명령어를 차례대로 입력하시기 바랍니다.\n1234567$ sudo apt-get update 엔터$ sudo apt-get install vim 엔터$ sudo vim ~/.vimrc(vim 설정 파일. 하이라이팅, 인덱스, 공백 칸 수동으로 설정을 할수 있습니다.)\n\n\n\n\n\n아래의 내용을 입력해 주시기 바랍니다.\n123456789101112set number                     # 줄 번호 표시set tabstop=4                  # tab을 4칸으로set ignorecase                 # 검색시 대소문자 구별하지 않음set hlsearch                   # 검색시 하이라이트set fileencodings=utf-8,euc-kr # 파일인코딩 형식set bs=indent,eol,start        # backspace 키 사용set ruler                      # 상태표시줄 커서 위치 표시set title                      # 제목 표시set showmatch                  # 매칭되는 괄호 표시set nowrap                     # 자동 줄바꿈 해제set wmnu                       # tab 자동완성시 가능한 목록 표시syntax on                      # 문법 하이라이트\n\n이걸로 설정이 끝났습니다.\n이젠 vi, vim으로 입력시 짜증나는건 모두 해결이 됩니다.\nvim 공식 사이트 입니다.\nhttps://www.vim.org/","dateCreated":"2020-05-24T03:00:00+09:00","dateModified":"2020-12-23T23:24:50+09:00","datePublished":"2020-05-24T03:00:00+09:00","description":"\n라즈베리파이 vi 입력오류 해결방법라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.","headline":"라즈베리파이에서 vi editor 입력 오류 해결방법","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/24/rasberry-pi-004/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/24/rasberry-pi-004/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, vi, vim","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이 vi 입력오류 해결방법라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 vi editor 입력 오류 해결방법">
+<meta property="og:url" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이 vi 입력오류 해결방법라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/001-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/002-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/003-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/005-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/007-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/009-3.png">
+<meta property="article:published_time" content="2020-05-23T18:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T14:24:50.339Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="vi">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/001-3.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/24/rasberry-pi-004/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 vi editor 입력 오류 해결방법
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-24T03:00:00+09:00">
+	
+		    2020/05/24 03:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이-vi-입력오류-해결방법"><a href="#라즈베리파이-vi-입력오류-해결방법" class="headerlink" title="라즈베리파이 vi 입력오류 해결방법"></a>라즈베리파이 vi 입력오류 해결방법</h2><p>라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.</p>
+<p>그것을 해결하는 방법을 소개해 드리겠습니다.</p>
+<p>일단 VIM부터 설치부터 하겠습니다만</p>
+<p>일단 VNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.</p>
+<p>그리고 아래의 명령어를 차례대로 입력하시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update 엔터</span><br><span class="line"></span><br><span class="line">$ sudo apt-get install vim 엔터</span><br><span class="line"></span><br><span class="line">$ sudo vim ~/.vimrc</span><br><span class="line"></span><br><span class="line">(vim 설정 파일. 하이라이팅, 인덱스, 공백 칸 수동으로 설정을 할수 있습니다.)</span><br></pre></td></tr></table></figure>
+<p><img src="001-3.png"></p>
+<p><img src="002-3.png"></p>
+<p><img src="003-3.png"></p>
+<p><img src="005-3.png"></p>
+<p><img src="007-3.png"></p>
+<p>아래의 내용을 입력해 주시기 바랍니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">number</span>                     # 줄 번호 표시</span><br><span class="line"><span class="keyword">set</span> tabstop=<span class="number">4</span>                  # <span class="keyword">tab</span>을 <span class="number">4</span>칸으로</span><br><span class="line"><span class="keyword">set</span> ignorecase                 # 검색시 대소문자 구별하지 않음</span><br><span class="line"><span class="keyword">set</span> hlsearch                   # 검색시 하이라이트</span><br><span class="line"><span class="keyword">set</span> fileencodings=utf-<span class="number">8</span>,euc-kr # 파일인코딩 형식</span><br><span class="line"><span class="keyword">set</span> bs=<span class="built_in">indent</span>,eol,start        # backspace 키 사용</span><br><span class="line"><span class="keyword">set</span> ruler                      # 상태표시줄 커서 위치 표시</span><br><span class="line"><span class="keyword">set</span> title                      # 제목 표시</span><br><span class="line"><span class="keyword">set</span> showmatch                  # 매칭되는 괄호 표시</span><br><span class="line"><span class="keyword">set</span> nowrap                     # 자동 줄바꿈 해제</span><br><span class="line"><span class="keyword">set</span> wmnu                       # <span class="keyword">tab</span> 자동완성시 가능한 목록 표시</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span>                      # 문법 하이라이트</span><br></pre></td></tr></table></figure>
+<p><img src="009-3.png"></p>
+<p>이걸로 설정이 끝났습니다.</p>
+<p>이젠 vi, vim으로 입력시 짜증나는건 모두 해결이 됩니다.</p>
+<p>vim 공식 사이트 입니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.vim.org/">https://www.vim.org/</a></p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/vi/" rel="tag">vi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/vim/" rel="tag">vim</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/24/rasberry-pi-004/';
+              
+            this.page.identifier = '2020/05/24/rasberry-pi-004/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

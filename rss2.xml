@@ -9,8 +9,80 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Wed, 23 Dec 2020 14:11:07 GMT</pubDate>
+    <pubDate>Wed, 23 Dec 2020 14:33:26 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>라즈베리파이 고정 IP Address 설정</title>
+      <link>https://playneko.github.io/2020/05/24/rasberry-pi-005/</link>
+      <guid>https://playneko.github.io/2020/05/24/rasberry-pi-005/</guid>
+      <pubDate>Sat, 23 May 2020 19:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 유선랜 IP를 고정 IP 할당 설정방법 입니다.&lt;br&gt;라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게 이용하는 방법 입니다…&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-고정-IP-Address-설정"><a href="#라즈베리파이-고정-IP-Address-설정" class="headerlink" title="라즈베리파이 고정 IP Address 설정"></a>라즈베리파이 고정 IP Address 설정</h2><p>라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게</p><p>USB용 이더넷 어뎁터를 구매하신후 이용할실수 있습니다.</p><p>VNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.</p><p><img src="001-4.png"></p><p>공유기의 게이트 정보를 얻기위해서 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ netstat -nr</span><br></pre></td></tr></table></figure><p><img src="003-4.png"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/dhcpcd.conf</span><br></pre></td></tr></table></figure><p>아래와 같이 나오시면</p><p><img src="002-4.png"></p><p><img src="004-3.png"></p><p><img src="005-4.png"></p><p>위의 부분이 나올때까지 커서를 내려주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Example static IP configuration;</span><br><span class="line">#intercafe eth0</span><br><span class="line">#static ip_address=<span class="number">192.168</span>.<span class="number">0.10</span>/<span class="number">24</span></span><br><span class="line">#static ip6_address=fd51:<span class="number">42</span>f8:caae:d92e::ff/<span class="number">64</span></span><br><span class="line">#static routers=<span class="number">192.168</span>.<span class="number">0.1</span></span><br><span class="line">#static domain_name_servers=<span class="number">192.168</span>.<span class="number">0.1</span> <span class="number">8.8</span>.<span class="number">8.8</span> fd51:<span class="number">42</span>f8:caae:d92e::<span class="number">1</span></span><br></pre></td></tr></table></figure><p><img src="006-3.png"></p><p><img src="007-4.png"></p><p>위와같이 4줄에 대해서 #(주석)을 해제하시고</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Example static IP configuration;</span><br><span class="line">intercafe eth0</span><br><span class="line">static ip_address=<span class="number">10.0</span>.<span class="number">1.30</span>/<span class="number">24</span></span><br><span class="line">#static ip6_address=fd51:<span class="number">42</span>f8:caae:d92e::ff/<span class="number">64</span></span><br><span class="line">static routers=<span class="number">10.0</span>.<span class="number">1.1</span></span><br><span class="line">static domain_name_servers=<span class="number">10.0</span>.<span class="number">1.1</span> <span class="number">8.8</span>.<span class="number">8.8</span> fd51:<span class="number">42</span>f8:caae:d92e::<span class="number">1</span></span><br></pre></td></tr></table></figure><p>static ip_address 부분에 고정하실 아이피로 수정해 주시기 바랍니다.</p><p>static routers 부분에는 공유기 게이트 정보를 입력해 주시기 바랍니다.</p><p>static domain_name_servers 부분의 첫번째 아이피도 공유기의 게이트 정보를 입력해 주시기 바랍니다.</p><p>저장후 빠져나옵니다.</p><p><img src="008-3.png"></p><p>설정 정보를 반영하기위해서 재가동이 필요합니다.</p><p>아래의 명령어를 입력해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure><p><img src="009-4.png"></p><p>재기동이 끝난후 새로 바꾼 아이피로 접속을 하시기 바랍니다.</p><p>콘솔창에 아래의 명령어를 입력해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure><p><img src="010-3.png"></p><p>아이피 정보가 고정된 정보로 바뀐것을 확인 하실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/vi/">vi</category>
+      
+      <category domain="https://playneko.github.io/tags/vim/">vim</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/24/rasberry-pi-005/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에서 vi editor 입력 오류 해결방법</title>
+      <link>https://playneko.github.io/2020/05/24/rasberry-pi-004/</link>
+      <guid>https://playneko.github.io/2020/05/24/rasberry-pi-004/</guid>
+      <pubDate>Sat, 23 May 2020 18:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 vi 입력오류 해결방법&lt;br&gt;라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-vi-입력오류-해결방법"><a href="#라즈베리파이-vi-입력오류-해결방법" class="headerlink" title="라즈베리파이 vi 입력오류 해결방법"></a>라즈베리파이 vi 입력오류 해결방법</h2><p>라즈베리파이에서 vi를 사용하다보면 방향키와 입력시 글이 밀린다는지 여러가지 짜증난다는 분들이 많으실 겁니다.</p><p>그것을 해결하는 방법을 소개해 드리겠습니다.</p><p>일단 VIM부터 설치부터 하겠습니다만</p><p>일단 VNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.</p><p>그리고 아래의 명령어를 차례대로 입력하시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update 엔터</span><br><span class="line"></span><br><span class="line">$ sudo apt-get install vim 엔터</span><br><span class="line"></span><br><span class="line">$ sudo vim ~/.vimrc</span><br><span class="line"></span><br><span class="line">(vim 설정 파일. 하이라이팅, 인덱스, 공백 칸 수동으로 설정을 할수 있습니다.)</span><br></pre></td></tr></table></figure><p><img src="001-3.png"></p><p><img src="002-3.png"></p><p><img src="003-3.png"></p><p><img src="005-3.png"></p><p><img src="007-3.png"></p><p>아래의 내용을 입력해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">number</span>                     # 줄 번호 표시</span><br><span class="line"><span class="keyword">set</span> tabstop=<span class="number">4</span>                  # <span class="keyword">tab</span>을 <span class="number">4</span>칸으로</span><br><span class="line"><span class="keyword">set</span> ignorecase                 # 검색시 대소문자 구별하지 않음</span><br><span class="line"><span class="keyword">set</span> hlsearch                   # 검색시 하이라이트</span><br><span class="line"><span class="keyword">set</span> fileencodings=utf-<span class="number">8</span>,euc-kr # 파일인코딩 형식</span><br><span class="line"><span class="keyword">set</span> bs=<span class="built_in">indent</span>,eol,start        # backspace 키 사용</span><br><span class="line"><span class="keyword">set</span> ruler                      # 상태표시줄 커서 위치 표시</span><br><span class="line"><span class="keyword">set</span> title                      # 제목 표시</span><br><span class="line"><span class="keyword">set</span> showmatch                  # 매칭되는 괄호 표시</span><br><span class="line"><span class="keyword">set</span> nowrap                     # 자동 줄바꿈 해제</span><br><span class="line"><span class="keyword">set</span> wmnu                       # <span class="keyword">tab</span> 자동완성시 가능한 목록 표시</span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span>                      # 문법 하이라이트</span><br></pre></td></tr></table></figure><p><img src="009-3.png"></p><p>이걸로 설정이 끝났습니다.</p><p>이젠 vi, vim으로 입력시 짜증나는건 모두 해결이 됩니다.</p><p>vim 공식 사이트 입니다.</p><p><a href="https://www.vim.org/">https://www.vim.org/</a></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/vi/">vi</category>
+      
+      <category domain="https://playneko.github.io/tags/vim/">vim</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/24/rasberry-pi-004/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>라즈베리파이 삼바 연결설정</title>
