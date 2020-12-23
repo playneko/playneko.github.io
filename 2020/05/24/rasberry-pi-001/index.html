@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>모니터없이 라즈베리파이3 B 설치하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/"],"image":"image.png"},"articleBody":"\n모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다.라즈베리파이3 B에 라즈베리파이 OS를 설치하기 위해선\n\n준비물\n라즈베리파이 3B 또는 라즈베리파이 Zero\nSD카드(8기가 이상)\n컴퓨터\n인터넷\n\n\n\n준비물이 준비되어 있으면아래의 링크에서 라즈베리파이 OS를 다운로드 합니다.https://www.raspberrypi.org/downloads/\n\nRaspbian을 클릭하면 다운로드 페이지로 이동하게 됩니다.\n\nRaspbian Stretch with desktop : strach, sonic Pi 등 일부 소프트웨어가 제외된 파일입니다.\npython, VLC media player 등의 소프트웨어는 설치되어 있습니다.\nRaspbian Stretch Lite : Desktop GUI가 없는 파일이기 때문에 text ccommand로만 동작 가능합니다.\nzero 모델처럼 저사양에 프로그램만 기능하게 하는 용도로 주로 사용한다고 합니다.\n원하는 버전을 토렌트 또는 압축파일로 선택해서 다운로드 하실수 있습니다.\n저의 경우 Raspbian Stretch with desktop를 다운로드 합니다.\nSD카드에 OS를 설치하기 위해 balenaEtcher이라는 프로그램을 설치했습니다.\nhttps://www.balena.io/etcher/\n\n\nOS에 맞는걸 다운로드 하시면 되겠습니다.\n\n설치프로그램을 실행후 설치를 진행하시면 됩니다.\n\n설치가 완료되었으면 프로그램을 기동하시고 SD카드를 컴퓨터에 삽입 합니다.\n\n다운로드한 라즈베리파이 OS IMG파일을 선택하시면 번개마크가 활성화가 되며 Flash!버튼을 클릭하시면\n데이터가 SD카드에 넣기 시작합니다.\n\n\n조금 시간이 걸리니 느긋하게 기다리시면 됩니다.\n\n\n설치가 완료 되었습니다.\nSD카드를 추출하고 다시 삽입을 해주시기 바랍니다.\n원격으로 SSH로 라즈베리파이를 접속하기 위해선 2가지 방법이 있습니다.\n\n유선랜으로 접속방법 네트워크의 내부 IP를 미리 파악해 두셔야만 합니다.\n무선랜을 설정후 접속방법\n\n아래의 설정은 무선랜으로 라즈베리파이에 접속법을 설명 합니다.\n\nSSH접속 설정을 위해선 우선 SD카드안에 텍스트 문서를 추가 합니다.\n\n추가된 텍스트 문서를 여시고\n\n12ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdevupdate_config=1 network=&#123; ssid=&quot;wifi ssid&quot;   psk=&quot;wifi password&quot;   key_mgmt=WPA-PSK &#125;\n텍스트 문서 파일의 이름을 wpa_supplicant.conf로 변경합니다.\n\n여기까지가 무선랜을 이용한 설정법 입니다.\n이후의 설정은 유선, 무선 모두 해당하는 내용 입니다.\n이젠 SSH파일이 있어야 유선랜 또는 무선랜에서 wpa_supplicant.conf에 설정한 값대로 SSH 기능을 활성화시킵니다.\n추가로 텍스트 문서를 추가 합니다.\n\n폴더안의 숨겨진 확장자를 전부 보이게 합니다.\n\n\n새로 추가한 SSH파일의 확장자를 삭제 합니다.\n이제 기본준비는 모두 끝났으니 SD카드를 추출하시고\n라즈베리파이에 삽입하시고 전원을 넣어주세요.\n라즈베리파이에 할당된 아이피의 확인은 사용중이신 공유기에서 확인하시면 됩니다.\nSSH접속을 위해 접속프로그램이 필요합니다.\n이미 설치된 프로그램 또는 설치가 필요하신 경우 저는 putty를 이용하고 있습니다.\nhttps://www.chiark.greenend.org.uk/~sgtatham/putty/\n\nDownload it hear.링크를 클릭 합니다.\n\n각 환경에 맞는 프로그램을 다운로드 하시면 됩니다.\n\nPutty를 실행하시면 위와같은 화면이 나오게 되며 아이피를 입력하신후 오픈을 클릭해 주세요.\n\n접속이 되시면 아래의 초기 아이디와 비밀번호를 입력해 주세요.\n\nID : pi\nPW : raspberry\n\n정상적으로 접속이 되셨으면 기본적인 세팅을 통해 항상 SSH또는 VNC를 활성화 시켜줍니다.\nsudo raspi-config를 입력해 주세요.\n\n\n설정화면이 나오면 우선 비밀번호를 재설정 합니다.\n이대로 엔터를 치시기 바랍니다.\n\n다시한번 엔터\n\n새로운 비밀번호와 확인 비밀번호를 입력합니다.\n\n설정이 완료되었다고 나왔으니 엔터\n\nSSH와 VNC설정을 위해서 5번메뉴로 이동하시고 엔터\n\n항상 SSH가 활성화를 위해 SSH항목에서 엔터\n\n에 놓고 엔터를 칩니다.\n\n활성화 설정이 완료 되었습니다.\n\n이번에는 VNC항목에서 엔터\n\n에 놓고 엔터를 칩니다.\n\n활성화 설정이 완료 되었습니다.\n\n최신 업데이트를 위해서 업데이트 항목에서 엔터를 칩니다.\n\n업데이트에 필요한 파일을 다운로드와 설치를 진행하게 됩니다.\n\n이렇게해서 라즈베리파이 OS설치와 기본설정이 완료 되었습니다.","dateCreated":"2020-05-24T00:00:00+09:00","dateModified":"2020-12-23T21:47:46+09:00","datePublished":"2020-05-24T00:00:00+09:00","description":"\n모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다.라즈베리파이3 B에 라즈베리파이 OS를 설치하기 위해선…","headline":"모니터없이 라즈베리파이3 B 설치하기","image":["041.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/24/rasberry-pi-001/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/24/rasberry-pi-001/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이","thumbnailUrl":"041.png"}</script>
+    <meta name="description" content="모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다.라즈베리파이3 B에 라즈베리파이 OS를 설치하기 위해선…">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="모니터없이 라즈베리파이3 B 설치하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다.라즈베리파이3 B에 라즈베리파이 OS를 설치하기 위해선…">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/001.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/002.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/003.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/004.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/005.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/006.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/007.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/008.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/009.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/010.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/011.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/012.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/013.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/014.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/015.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/016.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/019.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/020.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/024.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/025.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/022.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/023.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/026.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/027.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/028.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/029.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/030.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/031.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/032.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/033.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/034.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/035.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/036.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/037.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/038.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/039.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/040.png">
+<meta property="article:published_time" content="2020-05-23T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T12:47:46.508Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/001.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/041.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/24/rasberry-pi-001/041.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            모니터없이 라즈베리파이3 B 설치하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-24T00:00:00+09:00">
+	
+		    2020/05/24 00:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="모니터없이-라즈베리파이3-B-설치하기를-설명하겠습니다"><a href="#모니터없이-라즈베리파이3-B-설치하기를-설명하겠습니다" class="headerlink" title="모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다."></a>모니터없이 라즈베리파이3 B 설치하기를 설명하겠습니다.</h2><p>라즈베리파이3 B에 라즈베리파이 OS를 설치하기 위해선</p>
+<ul>
+<li>준비물<ul>
+<li>라즈베리파이 3B 또는 라즈베리파이 Zero</li>
+<li>SD카드(8기가 이상)</li>
+<li>컴퓨터</li>
+<li>인터넷</li>
+</ul>
+</li>
+</ul>
+<p>준비물이 준비되어 있으면<br>아래의 링크에서 라즈베리파이 OS를 다운로드 합니다.<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.raspberrypi.org/downloads/">https://www.raspberrypi.org/downloads/</a></p>
+<p><img src="001.png"></p>
+<p>Raspbian을 클릭하면 다운로드 페이지로 이동하게 됩니다.</p>
+<p><img src="002.png"></p>
+<p>Raspbian Stretch with desktop : strach, sonic Pi 등 일부 소프트웨어가 제외된 파일입니다.</p>
+<p>python, VLC media player 등의 소프트웨어는 설치되어 있습니다.</p>
+<p>Raspbian Stretch Lite : Desktop GUI가 없는 파일이기 때문에 text ccommand로만 동작 가능합니다.</p>
+<p>zero 모델처럼 저사양에 프로그램만 기능하게 하는 용도로 주로 사용한다고 합니다.</p>
+<p>원하는 버전을 토렌트 또는 압축파일로 선택해서 다운로드 하실수 있습니다.</p>
+<p>저의 경우 Raspbian Stretch with desktop를 다운로드 합니다.</p>
+<p>SD카드에 OS를 설치하기 위해 balenaEtcher이라는 프로그램을 설치했습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.balena.io/etcher/">https://www.balena.io/etcher/</a></p>
+<p><img src="003.png"></p>
+<p><img src="004.png"></p>
+<p>OS에 맞는걸 다운로드 하시면 되겠습니다.</p>
+<p><img src="005.png"></p>
+<p>설치프로그램을 실행후 설치를 진행하시면 됩니다.</p>
+<p><img src="006.png"></p>
+<p>설치가 완료되었으면 프로그램을 기동하시고 SD카드를 컴퓨터에 삽입 합니다.</p>
+<p><img src="007.png"></p>
+<p>다운로드한 라즈베리파이 OS IMG파일을 선택하시면 번개마크가 활성화가 되며 Flash!버튼을 클릭하시면</p>
+<p>데이터가 SD카드에 넣기 시작합니다.</p>
+<p><img src="008.png"></p>
+<p><img src="009.png"></p>
+<p>조금 시간이 걸리니 느긋하게 기다리시면 됩니다.</p>
+<p><img src="010.png"></p>
+<p><img src="011.png"></p>
+<p>설치가 완료 되었습니다.</p>
+<p>SD카드를 추출하고 다시 삽입을 해주시기 바랍니다.</p>
+<p>원격으로 SSH로 라즈베리파이를 접속하기 위해선 2가지 방법이 있습니다.</p>
+<ol>
+<li>유선랜으로 접속방법 네트워크의 내부 IP를 미리 파악해 두셔야만 합니다.</li>
+<li>무선랜을 설정후 접속방법</li>
+</ol>
+<p>아래의 설정은 무선랜으로 라즈베리파이에 접속법을 설명 합니다.</p>
+<p><img src="012.png"></p>
+<p>SSH접속 설정을 위해선 우선 SD카드안에 텍스트 문서를 추가 합니다.</p>
+<p><img src="013.png"></p>
+<p>추가된 텍스트 문서를 여시고</p>
+<p><img src="014.png"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1 network=&#123; ssid=&quot;wifi ssid&quot;   psk=&quot;wifi password&quot;   key_mgmt=WPA-PSK &#125;</span><br></pre></td></tr></table></figure>
+<p>텍스트 문서 파일의 이름을 wpa_supplicant.conf로 변경합니다.</p>
+<p><img src="015.png"></p>
+<p>여기까지가 무선랜을 이용한 설정법 입니다.</p>
+<p>이후의 설정은 유선, 무선 모두 해당하는 내용 입니다.</p>
+<p>이젠 SSH파일이 있어야 유선랜 또는 무선랜에서 wpa_supplicant.conf에 설정한 값대로 SSH 기능을 활성화시킵니다.</p>
+<p>추가로 텍스트 문서를 추가 합니다.</p>
+<p><img src="016.png"></p>
+<p>폴더안의 숨겨진 확장자를 전부 보이게 합니다.</p>
+<p><img src="019.png"></p>
+<p><img src="020.png"></p>
+<p>새로 추가한 SSH파일의 확장자를 삭제 합니다.</p>
+<p>이제 기본준비는 모두 끝났으니 SD카드를 추출하시고</p>
+<p>라즈베리파이에 삽입하시고 전원을 넣어주세요.</p>
+<p>라즈베리파이에 할당된 아이피의 확인은 사용중이신 공유기에서 확인하시면 됩니다.</p>
+<p>SSH접속을 위해 접속프로그램이 필요합니다.</p>
+<p>이미 설치된 프로그램 또는 설치가 필요하신 경우 저는 putty를 이용하고 있습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">https://www.chiark.greenend.org.uk/~sgtatham/putty/</a></p>
+<p><img src="024.png"></p>
+<p>Download it hear.링크를 클릭 합니다.</p>
+<p><img src="025.png"></p>
+<p>각 환경에 맞는 프로그램을 다운로드 하시면 됩니다.</p>
+<p><img src="022.png"></p>
+<p>Putty를 실행하시면 위와같은 화면이 나오게 되며 아이피를 입력하신후 오픈을 클릭해 주세요.</p>
+<p><img src="023.png"></p>
+<p>접속이 되시면 아래의 초기 아이디와 비밀번호를 입력해 주세요.</p>
+<ul>
+<li>ID : pi</li>
+<li>PW : raspberry</li>
+</ul>
+<p>정상적으로 접속이 되셨으면 기본적인 세팅을 통해 항상 SSH또는 VNC를 활성화 시켜줍니다.</p>
+<p>sudo raspi-config를 입력해 주세요.</p>
+<p><img src="026.png"></p>
+<p><img src="027.png"></p>
+<p>설정화면이 나오면 우선 비밀번호를 재설정 합니다.</p>
+<p>이대로 엔터를 치시기 바랍니다.</p>
+<p><img src="028.png"></p>
+<p>다시한번 엔터</p>
+<p><img src="029.png"></p>
+<p>새로운 비밀번호와 확인 비밀번호를 입력합니다.</p>
+<p><img src="030.png"></p>
+<p>설정이 완료되었다고 나왔으니 엔터</p>
+<p><img src="031.png"></p>
+<p>SSH와 VNC설정을 위해서 5번메뉴로 이동하시고 엔터</p>
+<p><img src="032.png"></p>
+<p>항상 SSH가 활성화를 위해 SSH항목에서 엔터</p>
+<p><img src="033.png"></p>
+<p><yes>에 놓고 엔터를 칩니다.</yes></p>
+<p><img src="034.png"></p>
+<p>활성화 설정이 완료 되었습니다.</p>
+<p><img src="035.png"></p>
+<p>이번에는 VNC항목에서 엔터</p>
+<p><img src="036.png"></p>
+<p><yes>에 놓고 엔터를 칩니다.</yes></p>
+<p><img src="037.png"></p>
+<p>활성화 설정이 완료 되었습니다.</p>
+<p><img src="038.png"></p>
+<p>최신 업데이트를 위해서 업데이트 항목에서 엔터를 칩니다.</p>
+<p><img src="039.png"></p>
+<p>업데이트에 필요한 파일을 다운로드와 설치를 진행하게 됩니다.</p>
+<p><img src="040.png"></p>
+<p>이렇게해서 라즈베리파이 OS설치와 기본설정이 완료 되었습니다.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/24/rasberry-pi-001/';
+              
+            this.page.identifier = '2020/05/24/rasberry-pi-001/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
