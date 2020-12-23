@@ -9,8 +9,70 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Wed, 23 Dec 2020 14:33:26 GMT</pubDate>
+    <pubDate>Wed, 23 Dec 2020 23:39:16 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Raspberry Pi 3 Model B+ 설치</title>
+      <link>https://playneko.github.io/2020/05/26/rasberry-pi-007/</link>
+      <guid>https://playneko.github.io/2020/05/26/rasberry-pi-007/</guid>
+      <pubDate>Mon, 25 May 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;Raspberry Pi 3 Model B+ 설치&lt;br&gt;라즈베리파이 3 모델 B+를 설치하는 영상 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="Raspberry-Pi-3-Model-B-설치"><a href="#Raspberry-Pi-3-Model-B-설치" class="headerlink" title="Raspberry Pi 3 Model B+ 설치"></a>Raspberry Pi 3 Model B+ 설치</h2><p>라즈베리파이 3 모델 B+를 설치하는 영상 입니다.</p><p>많은 분들이 영상을 참고하고 라즈베리파이를 좀더 쉽게 사용할수 있도록 하겠습니다.</p><p>많은 시청 바랍니다.</p><p>라즈베리파이 공식 사이트</p><p><a href="https://www.raspberrypi.org/">https://www.raspberrypi.org/</a></p><p><a href="https://youtu.be/rna-nl-Bw8E"><img src="hqdefault.jpg"></a></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/26/rasberry-pi-007/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 ngrok으로 외부에서 로컬서버 접속 환경 구성</title>
+      <link>https://playneko.github.io/2020/05/25/rasberry-pi-006/</link>
+      <guid>https://playneko.github.io/2020/05/25/rasberry-pi-006/</guid>
+      <pubDate>Sun, 24 May 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 ngrok을 이용한 외부에서 로컬서버 접속환경 구성 방법 입니다.&lt;br&gt;공식사이트에서 ngrok은 NAT와 방화벽 뒤에 있는 로컬 서버를 안전한 터널을 통해…&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-ngrok을-이용한-외부에서-로컬서버-접속환경-구성-방법-입니다"><a href="#라즈베리파이에서-ngrok을-이용한-외부에서-로컬서버-접속환경-구성-방법-입니다" class="headerlink" title="라즈베리파이에서 ngrok을 이용한 외부에서 로컬서버 접속환경 구성 방법 입니다."></a>라즈베리파이에서 ngrok을 이용한 외부에서 로컬서버 접속환경 구성 방법 입니다.</h2><p>공식사이트에서 ngrok은 NAT와 방화벽 뒤에 있는 로컬 서버를 안전한 터널을 통해</p><p>공개 인터넷에 노출시켜 주는 도구라고 설명되어 있습니다.</p><p><img src="001-5.png"></p><p>프로그램은 아래의 공식사이트에서 다운로드 하실수 있습니다.</p><p><a href="https://ngrok.com/download">https://ngrok.com/download</a></p><p>다운로드 하신 파일을 라즈베리파이의 임의 폴더에 압축울 푸신고 넣어주시기 바랍니다.</p><p><img src="002-5-1536x503.png"></p><p>다운로드한 ngrok파일을 라즈베리파이의 임의의 장소에 배치를 해두었습니다.</p><p><img src="003-5.png"></p><p>콘솔창을 실행하신후 ngrok이 위치한 경로까지 이동합니다.</p><p>저는 콘솔창이 열리자 마자 ngrok이 나오게 배치를 해두었습니다.</p><p><img src="005-5.png"></p><p>아래의 명령어를 치시면 되겠습니다.</p><p>포트번호는 자신이 원하는 포트번호를 입력해 주시면 되겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./ngrok http 8099(포트번호는 임의로 지정)</span><br></pre></td></tr></table></figure><p>실행이 되시면 아래와 같이 고유 URL주소를 발급받게 됩니다.</p><p>8시간정도마다 랜덤으로 바뀌기때문에 고정주소를 원하시는 분은 유료로 가입하시면 고정으로 유지하실 수 있습니다.</p><p>ngrok을 이용해서 URL을 생성하시면 단점은 랜덤주소이지만 장점은 http, https를 모두 사용하실수 있게 됩니다.</p><p><img src="006-4.png"></p><p><img src="008-4.png"></p><p>발급받은 주소를 이용해서 실제 웹페이지가 표시가 되는지 확인 해보도록 하겠습니다.</p><p>저의 라즈베리파이에는 웹서버가 구축이 되어 있는 상태입니다.</p><p>웹서버 구축에 대해서는 차후에 게시하도록 하겠습니다.</p><p>발급받은 주소로 접속하니 정상적으로 내부의 라즈베리파이의 웹서버로 접속된것을 확인 하실수 있습니다.</p><p><img src="007-5.png"></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/ngrok/">ngrok</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B3%A0%EC%A0%95ip/">고정ip</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A1%9C%EC%BB%AC%EC%84%9C%EB%B2%84/">로컬서버</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/25/rasberry-pi-006/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>라즈베리파이 고정 IP Address 설정</title>
