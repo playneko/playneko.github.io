@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 VNC설정 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nVNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다.그전에 라즈베리파이 OS를 설치하지 않으셨으면 아래의 링크를 클릭하신후 먼저 라즈베리파이 OS부터 설치해 주세요.\nhttps://akibatv.net/archives/373\nVNC Viewer는 아래의 사이트에서 다운로드 받을수 있습니다.\nhttps://www.realvnc.com/en/connect/download/viewer/\n\nVNC Viewer를 설치후 실행을 합니다.\n파일-&gt;New connection을 선택합니다.\n\n라즈베리파이의 아이피주소와 이름을 적고 OK를 눌러주세요.\n다른설정은 건들일 필요는 없습니다.\n\n추가한 서버를 선택하면 아이디와 비밀번호 입력창이 나오게 됩니다.\n아이디와 비밀번호를 입력하신후 OK를 눌러주세요.\n\n접속이 되시면 아래의 화면이 나오게 됩니다.\n아래의 화면까지 나오면 일단 기본적인 VNC설정은 끝나게 됩니다.\n라즈베리파이를 처음 접속하시면 기본 설정을 하라는 메세지가 나오게 되며\n설정을 원하시는 분은 다음버튼 필요 없으신 분은 캔슬을 눌러주세요.\n\n다음 버튼을 누르면 스크린설정이 나오지만 다음 버튼을 눌러서 넘어갑니다.\n\n비밀번호 설정창이 나오면 새비밀번호를 입력하시고 다음버튼을 눌러주세요.\n\n국가와 언어를 설정을 하시고 다음버튼을 눌러주세요.\n저의 경우는 일본어 키보드를 설정하고 있기에 국가와 언어를 일본어로 설정하겠습니다.\n\n와이파이 설정 화면입니다.\n와이파이 설정이 필요하신경우 설정을 해주시고 필요가 없으시면 스킵을 해주세요.\n\n소프트웨어를 최신버전으로 업데이트 하겠냐고 물어봅니다.\n일단 최신상태로 해두는게 좋기에 다음을 눌러주시는걸 추천합니다.\n\n업데이트가 진행되고 있습니다.\n각종 프로그램들을 최신버전으로 업데이트하기에 시간이 좀 많이 걸리겠습니다.\n\n드디어 업데이트가 끝났습니다.\nOK버튼을 눌러주시기 바랍니다.\n\n업데이트가 끝나고 재시동을 할것인지 다음에 할것인지 선택하시면\n라즈베리의 기본 업데이트까지는 완료됩니다.\n","dateCreated":"2020-05-24T01:00:00+09:00","dateModified":"2020-12-23T23:09:58+09:00","datePublished":"2020-05-24T01:00:00+09:00","description":"\nVNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다.그전에 라즈베리파이 OS를 설치하지 않으셨으면 먼저 라즈베리파이 OS부터 설치해 주세요.","headline":"라즈베리파이 VNC설정","image":["004-1.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/24/rasberry-pi-002/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/24/rasberry-pi-002/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이","thumbnailUrl":"004-1.png"}</script>
+    <meta name="description" content="VNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다.그전에 라즈베리파이 OS를 설치하지 않으셨으면 먼저 라즈베리파이 OS부터 설치해 주세요.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 VNC설정">
+<meta property="og:url" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="VNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다.그전에 라즈베리파이 OS를 설치하지 않으셨으면 먼저 라즈베리파이 OS부터 설치해 주세요.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/20200524_172558.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/001-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/002-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/003-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/004-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/009-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/008-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/005-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/010-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/011-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/012-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/013-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/014-1.png">
+<meta property="article:published_time" content="2020-05-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T14:09:58.991Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/20200524_172558.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/004-1.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/24/rasberry-pi-002/004-1.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 VNC설정
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-24T01:00:00+09:00">
+	
+		    2020/05/24 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="VNC-Viewer를-이용해서-라즈베리파이를-접속방법을-소개해-드리겠습니다"><a href="#VNC-Viewer를-이용해서-라즈베리파이를-접속방법을-소개해-드리겠습니다" class="headerlink" title="VNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다."></a>VNC Viewer를 이용해서 라즈베리파이를 접속방법을 소개해 드리겠습니다.</h2><p>그전에 라즈베리파이 OS를 설치하지 않으셨으면 아래의 링크를 클릭하신후 먼저 라즈베리파이 OS부터 설치해 주세요.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://akibatv.net/archives/373">https://akibatv.net/archives/373</a></p>
+<p>VNC Viewer는 아래의 사이트에서 다운로드 받을수 있습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.realvnc.com/en/connect/download/viewer/">https://www.realvnc.com/en/connect/download/viewer/</a></p>
+<p><img src="20200524_172558.png"></p>
+<p>VNC Viewer를 설치후 실행을 합니다.</p>
+<p>파일-&gt;New connection을 선택합니다.</p>
+<p><img src="001-1.png"></p>
+<p>라즈베리파이의 아이피주소와 이름을 적고 OK를 눌러주세요.</p>
+<p>다른설정은 건들일 필요는 없습니다.</p>
+<p><img src="002-1.png"></p>
+<p>추가한 서버를 선택하면 아이디와 비밀번호 입력창이 나오게 됩니다.</p>
+<p>아이디와 비밀번호를 입력하신후 OK를 눌러주세요.</p>
+<p><img src="003-1.png"></p>
+<p>접속이 되시면 아래의 화면이 나오게 됩니다.</p>
+<p>아래의 화면까지 나오면 일단 기본적인 VNC설정은 끝나게 됩니다.</p>
+<p>라즈베리파이를 처음 접속하시면 기본 설정을 하라는 메세지가 나오게 되며</p>
+<p>설정을 원하시는 분은 다음버튼 필요 없으신 분은 캔슬을 눌러주세요.</p>
+<p><img src="004-1.png"></p>
+<p>다음 버튼을 누르면 스크린설정이 나오지만 다음 버튼을 눌러서 넘어갑니다.</p>
+<p><img src="009-1.png"></p>
+<p>비밀번호 설정창이 나오면 새비밀번호를 입력하시고 다음버튼을 눌러주세요.</p>
+<p><img src="008-1.png"></p>
+<p>국가와 언어를 설정을 하시고 다음버튼을 눌러주세요.</p>
+<p>저의 경우는 일본어 키보드를 설정하고 있기에 국가와 언어를 일본어로 설정하겠습니다.</p>
+<p><img src="005-1.png"></p>
+<p>와이파이 설정 화면입니다.</p>
+<p>와이파이 설정이 필요하신경우 설정을 해주시고 필요가 없으시면 스킵을 해주세요.</p>
+<p><img src="010-1.png"></p>
+<p>소프트웨어를 최신버전으로 업데이트 하겠냐고 물어봅니다.</p>
+<p>일단 최신상태로 해두는게 좋기에 다음을 눌러주시는걸 추천합니다.</p>
+<p><img src="011-1.png"></p>
+<p>업데이트가 진행되고 있습니다.</p>
+<p>각종 프로그램들을 최신버전으로 업데이트하기에 시간이 좀 많이 걸리겠습니다.</p>
+<p><img src="012-1.png"></p>
+<p>드디어 업데이트가 끝났습니다.</p>
+<p>OK버튼을 눌러주시기 바랍니다.</p>
+<p><img src="013-1.png"></p>
+<p>업데이트가 끝나고 재시동을 할것인지 다음에 할것인지 선택하시면</p>
+<p>라즈베리의 기본 업데이트까지는 완료됩니다.</p>
+<p><img src="014-1.png"></p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/24/rasberry-pi-002/';
+              
+            this.page.identifier = '2020/05/24/rasberry-pi-002/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
