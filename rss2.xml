@@ -9,24 +9,26 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 24 Dec 2020 03:43:24 GMT</pubDate>
+    <pubDate>Thu, 24 Dec 2020 09:16:29 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
-      <title>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</title>
-      <link>https://playneko.github.io/2020/05/28/rasberry-pi-012/</link>
-      <guid>https://playneko.github.io/2020/05/28/rasberry-pi-012/</guid>
-      <pubDate>Wed, 27 May 2020 17:00:00 GMT</pubDate>
+      <title>라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자</title>
+      <link>https://playneko.github.io/2020/05/30/rasberry-pi-013/</link>
+      <guid>https://playneko.github.io/2020/05/30/rasberry-pi-013/</guid>
+      <pubDate>Fri, 29 May 2020 16:00:00 GMT</pubDate>
       
       <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기&lt;br&gt;이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.&lt;/p&gt;</description>
+&lt;p&gt;라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.&lt;/p&gt;</description>
       
       
       
-      <content:encoded><![CDATA[<!-- excerpt --><h2 id="htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기"><a href="#htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기" class="headerlink" title=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기"></a>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.</p><p>사이트를 운영을 하시다 보면 특정 URL로 접속을 하거나 할경우 다른페이지로 이동을 시키고 싶은경우</p><p>아니면 웹서버를 호스팅서버로 이용을 하고 있어서 Apache 또는 Nginx서버를 직접 수정할수 없는 경우</p><p>그럴경우를 위해서 각 사이트별로 간단하게 리다이렉트 처리를 할수있는 방법을 알려드리도록 하겠습니다.</p><p>.htaccess를 수정해서 URL 리다이렉트 처리를 위해선</p><p>기본적으로 각 웹서버에서 도메인이 연결된 홈디렉토리의 root디렉토리에</p><p>.htaccess파일이 없을경우 추가해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span>또는 test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>|test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>에 www가 없을경우 www를 붙이게끔 하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.test.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 test.<span class="keyword">com</span>/xxx로 확장 변경하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>|www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) /xxx/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>/xxx로 접속한 하위 주소까지 playneko.<span class="keyword">com</span>로 리다이렉트 처리(영구이동)</span><br><span class="line"># test.<span class="keyword">com</span>/xxx/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line">다른방법으로는 아래와 같습니다.</span><br><span class="line"># test.<span class="keyword">com</span>/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule ^xxx/(.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line"># R=<span class="number">301</span>은 해당 도메인으로 영구적으로 리다이렉트를 나타내며</span><br><span class="line"># 이럴경우 도메인이 변경되었을때도 검색봇들이 변경을 인지하고</span><br><span class="line"># 기존 도메인에서 새로운 도메인으로 갱신을 하게 됩니다.</span><br></pre></td></tr></table></figure><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 포함하는 서브도메인을 포함한 URL의 경우 playneko.<span class="keyword">com</span>으로 접속</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; test\.<span class="keyword">com</span></span><br><span class="line">RewriteRule ^(.+) %&#123;HTTP_HOST&#125;$<span class="number">1</span> [C]</span><br><span class="line">RewriteRule ^([^.]+)\.test\.<span class="keyword">com</span>(.*) http://$<span class="number">1</span>.playneko.<span class="keyword">com</span>/$<span class="number">2</span> [L]</span><br><span class="line">RewriteRule ^test\.<span class="keyword">com</span>(.*) http://playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br><span class="line"></span><br><span class="line">#해당 라인에서 끝이란 표현으로 [L]을 추가 합니다.</span><br><span class="line">#그리고 그 이후 나오는 모든 구문은 무시하는 형식 (break;)와 동일합니다.</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에-GPIO와-파이선을-이용해서-LED를-켜보자"><a href="#라즈베리파이에-GPIO와-파이선을-이용해서-LED를-켜보자" class="headerlink" title="라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자"></a>라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.</p><p>우선 준비물이 필요 합니다.</p><p>라즈베리파이 본체 OS설치와 Python설치가 끝난 상태</p><p>저의 경우는 라즈베리파이 제로를 이용해서 테스트를 했습니다.</p><blockquote><ul><li>플레이트 보드</li><li>LED와 저항1KΩ</li><li>점퍼와이어 암,수가 붙어있는걸로 합니다.</li></ul></blockquote><p>이렇게 준비물이 갖춰져 있는지 확인 하시고 본격적으로 LED켜보기를 하겠습니다.</p><p><img src="002-300x161.jpg"></p><p><img src="003-300x192.jpg"></p><p><img src="004-520x402.jpg"></p><p><img src="005.jpg"></p><p><img src="006-e1590850911270.jpg"></p><p>본격적으로 라즈베리파이에서 LED를 켜보기에 앞서</p><p>LED가 연결한다고 혼자서 저절로 켜지는게 아니기때문에 코딩을 해주셔야만 합니다.</p><p>샘플 소스를 보시고 따라만 하셔도 문제없이 LED를 켜보실수가 있습니다.</p><p>컴퓨터에 개발환경이 구축이 되어있으시면 개발환경에서 하셔도 되며</p><p>개발환경이 구축이 안되어 있는 분은 가장 간단한 방법으로 메모장을 이용해서</p><p>코딩하는 방법을 알아보도록 하겠습니다.</p><p>일단 텍스트 문서파일을 추가 합니다.</p><p><img src="001_1.png"></p><p><img src="001_2.png"></p><p>파일명을 확장자까지 아래와같이 변경해 주세요.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpio_led_turn_on.py</span><br></pre></td></tr></table></figure><p><img src="001_3.png"></p><p>파일을 메모장으로 여시면 당연히 아무것도 없는 상태이므로 이제부터 코딩을 해보도록 합니다.</p><p><img src="001_4.png"></p><p>소스코드를 입력하신후 저장을 합니다.</p><p><img src="001_5-1.png"></p><p>아래는 LED를 점등하기 위한 소스코드 입니다.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">18</span> <span class="comment"># PIN번호</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line">cnt = <span class="number">15</span> <span class="comment"># 카운트 15회</span></span><br><span class="line">flag = <span class="literal">True</span> <span class="comment"># 플래그 True</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;LED is ON&quot;</span>) <span class="comment"># 콘솔에 출력할 내용</span></span><br><span class="line">GPIO.output(pinNum, flag) <span class="comment"># 핀번호에 플래그를 설정</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> cnt &gt; <span class="number">0</span>: <span class="comment"># 카운트가 0보다 크면 루프를 돌립니다.</span></span><br><span class="line"></span><br><span class="line">    cnt -= <span class="number">1</span> <span class="comment"># 카운트를 1씩 차감</span></span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 1초동안 다음처리를 하지 않습니다.</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;LED is OFF&quot;</span>) <span class="comment"># 콘솔에 출력할 내용</span></span><br><span class="line">GPIO.cleanup() <span class="comment"># GPIO를 초기화 합니다.</span></span><br></pre></td></tr></table></figure><p>그리고 두번째 소스파일을 준비합니다.</p><p>두번째 소스파일은 파일명을 확장자까지 아래와같이 변경해 주세요.</p><p><img src="001_6.png"></p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpio_led.py</span><br></pre></td></tr></table></figure><p>추가하신 파일도 메모장으로 여신후 아래의 소스코드를 입력해 주세요.</p><p><img src="001_7.png"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">18</span> <span class="comment"># PIN번호</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line">cnt = <span class="number">15</span> <span class="comment"># 카운트 15</span></span><br><span class="line">flag = <span class="literal">True</span> <span class="comment"># 플래그 True</span></span><br><span class="line"><span class="keyword">while</span> cnt &gt; <span class="number">0</span>: <span class="comment"># 카운트가 0보다 크면</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> flag: <span class="comment"># 플래그가 True인 경우</span></span><br><span class="line">        print(<span class="string">&quot;LED is ON&quot;</span>) <span class="comment"># LED가 켜졌다는 내용을 콘솔에 출력</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>: <span class="comment"># 위의 조건외의 경우</span></span><br><span class="line">        print(<span class="string">&quot;LED is OFF&quot;</span>) <span class="comment"># LED가 꺼졌다는 내용을 콘솔에 출력</span></span><br><span class="line"></span><br><span class="line">    GPIO.output(pinNum, flag) <span class="comment"># 핀번호에 플래그를 설정</span></span><br><span class="line">    cnt -= <span class="number">1</span> <span class="comment"># 카운트를 1씩 감소합니다.</span></span><br><span class="line">    flag = <span class="keyword">not</span> flag <span class="comment"># 플래그를 반대로 설정합니다.</span></span><br><span class="line">    time.sleep(<span class="number">0.5</span>) <span class="comment"># 0.5초동안 잠시 대기</span></span><br><span class="line"></span><br><span class="line">GPIO.cleanup() <span class="comment"># 루프가 종료되면 GPIO를 초기화 합니다.</span></span><br></pre></td></tr></table></figure><p>저장한 소스파일은 삼바를 통해서 라즈베리파이의 임의의 폴더에 소스파일을 배치해 주세요.</p><p>삼바가 설정이 안되어 있으신 분은 삼바 연결설정을 하시고 다음단계를 진행해 주세요.</p><p>점퍼케이블을 알맞은 PIN에 연결하기 위해선 우선</p><p>라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 확인해주시기 바랍니다.</p><p>저는 PIN번호 18번 GPIO 24번에 빨간색 점퍼케이블을 연결을 했습니다.</p><p>두번째 점퍼 케이블은 GND와 연결을 해주시면 되겠습다.</p><p>저의 경우는 PIN번호 34번에 있는 GND에 연결을 했습니다.</p><p>플레이트 보드에 LED와 저항과 점퍼케이블 연결이 끝나셨으면</p><p>VNC를 이용해 라즈베리파이에 접속하신후 터미널을 실행 하십니다.</p><p>터미널을 여신후 라즈베리파이에 넣어두신 소스파일이 있는 경로까지 이동 하십니다.</p><p><img src="001-9.png"></p><p>첨 실행해 볼것은 15초동안 LED가 점등되는 gpio_led_turn_on.py를 실행을 합니다.</p><p>아래와 같이 콘솔에 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python ./gpio_led_turn_on.py</span><br></pre></td></tr></table></figure><p><img src="004-6.png"></p><p>LED점등 프로그램을 기동하시면 아래의 사진과 같이 잘 안보이시겠지만 미묘하게</p><p>15초동안 불이 켜지는것을 확인 하실수 있습니다.</p><p><img src="007-e1590850952194.jpg"></p><p><img src="008-e1590850971744.jpg"></p><p>이번에는 두번째 소스파일을 실행 합니다.</p><p><img src="006-5.png"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python ./gpio_led.py</span><br></pre></td></tr></table></figure><p>두번째 LED점등 소스파일을 실행하시면</p><p>0.5초간격으로 15번 LED가 켜졌다 꺼졌다를 반복하는것을 확인 하실수 있습니다.</p><p>시작은 간단한 LED키고 끄는것을 해보았습니다.</p><p>다음에는 좀더 복잡한것을 가지고 오도록 하겠습니다.</p>]]></content:encoded>
       
       
       <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
       
       
       <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
@@ -39,15 +41,59 @@
       
       <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
       
-      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/">파이썬 - apt</category>
+      <category domain="https://playneko.github.io/tags/PIN/">PIN</category>
       
-      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
+      <category domain="https://playneko.github.io/tags/GPIO-LED/">GPIO - LED</category>
       
-      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
+      <category domain="https://playneko.github.io/tags/Python/">Python</category>
       
-      <category domain="https://playneko.github.io/tags/python/">python</category>
       
-      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      <comments>https://playneko.github.io/2020/05/30/rasberry-pi-013/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</title>
+      <link>https://playneko.github.io/2020/05/28/rasberry-pi-012/</link>
+      <guid>https://playneko.github.io/2020/05/28/rasberry-pi-012/</guid>
+      <pubDate>Wed, 27 May 2020 17:00:01 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기&lt;br&gt;이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기"><a href="#htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기" class="headerlink" title=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기"></a>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.</p><p>사이트를 운영을 하시다 보면 특정 URL로 접속을 하거나 할경우 다른페이지로 이동을 시키고 싶은경우</p><p>아니면 웹서버를 호스팅서버로 이용을 하고 있어서 Apache 또는 Nginx서버를 직접 수정할수 없는 경우</p><p>그럴경우를 위해서 각 사이트별로 간단하게 리다이렉트 처리를 할수있는 방법을 알려드리도록 하겠습니다.</p><p>.htaccess를 수정해서 URL 리다이렉트 처리를 위해선</p><p>기본적으로 각 웹서버에서 도메인이 연결된 홈디렉토리의 root디렉토리에</p><p>.htaccess파일이 없을경우 추가해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span>또는 test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>|test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>에 www가 없을경우 www를 붙이게끔 하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.test.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 test.<span class="keyword">com</span>/xxx로 확장 변경하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>|www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) /xxx/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>/xxx로 접속한 하위 주소까지 playneko.<span class="keyword">com</span>로 리다이렉트 처리(영구이동)</span><br><span class="line"># test.<span class="keyword">com</span>/xxx/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line">다른방법으로는 아래와 같습니다.</span><br><span class="line"># test.<span class="keyword">com</span>/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule ^xxx/(.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line"># R=<span class="number">301</span>은 해당 도메인으로 영구적으로 리다이렉트를 나타내며</span><br><span class="line"># 이럴경우 도메인이 변경되었을때도 검색봇들이 변경을 인지하고</span><br><span class="line"># 기존 도메인에서 새로운 도메인으로 갱신을 하게 됩니다.</span><br></pre></td></tr></table></figure><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 포함하는 서브도메인을 포함한 URL의 경우 playneko.<span class="keyword">com</span>으로 접속</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; test\.<span class="keyword">com</span></span><br><span class="line">RewriteRule ^(.+) %&#123;HTTP_HOST&#125;$<span class="number">1</span> [C]</span><br><span class="line">RewriteRule ^([^.]+)\.test\.<span class="keyword">com</span>(.*) http://$<span class="number">1</span>.playneko.<span class="keyword">com</span>/$<span class="number">2</span> [L]</span><br><span class="line">RewriteRule ^test\.<span class="keyword">com</span>(.*) http://playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br><span class="line"></span><br><span class="line">#해당 라인에서 끝이란 표현으로 [L]을 추가 합니다.</span><br><span class="line">#그리고 그 이후 나오는 모든 구문은 무시하는 형식 (break;)와 동일합니다.</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/">리눅스</category>
+      
+      <category domain="https://playneko.github.io/tags/apache-htaccess/">apache - htaccess</category>
+      
+      <category domain="https://playneko.github.io/tags/nginx/">nginx</category>
+      
+      <category domain="https://playneko.github.io/tags/redirect/">redirect</category>
+      
+      <category domain="https://playneko.github.io/tags/webserver/">webserver</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/">웹서버</category>
       
       
       <comments>https://playneko.github.io/2020/05/28/rasberry-pi-012/#disqus_thread</comments>
@@ -58,7 +104,7 @@
       <title>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</title>
       <link>https://playneko.github.io/2020/05/28/rasberry-pi-011/</link>
       <guid>https://playneko.github.io/2020/05/28/rasberry-pi-011/</guid>
-      <pubDate>Wed, 27 May 2020 17:00:00 GMT</pubDate>
+      <pubDate>Wed, 27 May 2020 17:00:01 GMT</pubDate>
       
       <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO를 이용하여 코딩을 위해 파이썬 준비 입니다.&lt;/p&gt;</description>
@@ -69,6 +115,8 @@
       
       
       <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
       
       
       <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
@@ -144,7 +192,7 @@
       <title>라즈베리파이 또는 리눅스에서 TOUCH를 이용해 날짜 변경하기</title>
       <link>https://playneko.github.io/2020/05/27/rasberry-pi-009/</link>
       <guid>https://playneko.github.io/2020/05/27/rasberry-pi-009/</guid>
-      <pubDate>Tue, 26 May 2020 16:00:00 GMT</pubDate>
+      <pubDate>Tue, 26 May 2020 16:00:01 GMT</pubDate>
       
       <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;라즈베리파이 또는 리눅스에서 TOUCH를 이용해 날짜 변경하기&lt;br&gt;라즈베리파이 또는 리눅스상에서 파일을 업로드후 최신 날짜로 변경이 필요한 경우가 있습니다.&lt;/p&gt;</description>
@@ -155,6 +203,8 @@
       
       
       <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
       
       
       <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
@@ -180,7 +230,7 @@
       <title>라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기</title>
       <link>https://playneko.github.io/2020/05/26/rasberry-pi-008/</link>
       <guid>https://playneko.github.io/2020/05/26/rasberry-pi-008/</guid>
-      <pubDate>Mon, 25 May 2020 17:00:00 GMT</pubDate>
+      <pubDate>Mon, 25 May 2020 17:00:01 GMT</pubDate>
       
       <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기&lt;br&gt;라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…&lt;/p&gt;</description>
@@ -191,6 +241,8 @@
       
       
       <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
       
       
       <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>

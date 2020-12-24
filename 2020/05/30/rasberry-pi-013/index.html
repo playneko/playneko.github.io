@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,GPIO - LED,PIN,Python">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자안녕하세요.\n이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.\n우선 준비물이 필요 합니다.\n라즈베리파이 본체 OS설치와 Python설치가 끝난 상태\n저의 경우는 라즈베리파이 제로를 이용해서 테스트를 했습니다.\n\n\n플레이트 보드\nLED와 저항1KΩ\n점퍼와이어 암,수가 붙어있는걸로 합니다.\n\n\n이렇게 준비물이 갖춰져 있는지 확인 하시고 본격적으로 LED켜보기를 하겠습니다.\n\n\n\n\n\n본격적으로 라즈베리파이에서 LED를 켜보기에 앞서\nLED가 연결한다고 혼자서 저절로 켜지는게 아니기때문에 코딩을 해주셔야만 합니다.\n샘플 소스를 보시고 따라만 하셔도 문제없이 LED를 켜보실수가 있습니다.\n컴퓨터에 개발환경이 구축이 되어있으시면 개발환경에서 하셔도 되며\n개발환경이 구축이 안되어 있는 분은 가장 간단한 방법으로 메모장을 이용해서\n코딩하는 방법을 알아보도록 하겠습니다.\n일단 텍스트 문서파일을 추가 합니다.\n\n\n파일명을 확장자까지 아래와같이 변경해 주세요.\n1gpio_led_turn_on.py\n\n파일을 메모장으로 여시면 당연히 아무것도 없는 상태이므로 이제부터 코딩을 해보도록 합니다.\n\n소스코드를 입력하신후 저장을 합니다.\n\n아래는 LED를 점등하기 위한 소스코드 입니다.\n1234567891011121314151617181920import timeimport RPi.GPIO as GPIOpinNum = 18 # PIN번호GPIO.setmode(GPIO.BCM)GPIO.setup(pinNum, GPIO.OUT)cnt = 15 # 카운트 15회flag = True # 플래그 Trueprint(&quot;LED is ON&quot;) # 콘솔에 출력할 내용GPIO.output(pinNum, flag) # 핀번호에 플래그를 설정while cnt &gt; 0: # 카운트가 0보다 크면 루프를 돌립니다.    cnt -= 1 # 카운트를 1씩 차감    time.sleep(1) # 1초동안 다음처리를 하지 않습니다.print(&quot;LED is OFF&quot;) # 콘솔에 출력할 내용GPIO.cleanup() # GPIO를 초기화 합니다.\n그리고 두번째 소스파일을 준비합니다.\n두번째 소스파일은 파일명을 확장자까지 아래와같이 변경해 주세요.\n\n1gpio_led.py\n추가하신 파일도 메모장으로 여신후 아래의 소스코드를 입력해 주세요.\n\n1234567891011121314151617181920212223import timeimport RPi.GPIO as GPIOpinNum = 18 # PIN번호GPIO.setmode(GPIO.BCM)GPIO.setup(pinNum, GPIO.OUT)cnt = 15 # 카운트 15flag = True # 플래그 Truewhile cnt &gt; 0: # 카운트가 0보다 크면    if flag: # 플래그가 True인 경우        print(&quot;LED is ON&quot;) # LED가 켜졌다는 내용을 콘솔에 출력    else: # 위의 조건외의 경우        print(&quot;LED is OFF&quot;) # LED가 꺼졌다는 내용을 콘솔에 출력    GPIO.output(pinNum, flag) # 핀번호에 플래그를 설정    cnt -= 1 # 카운트를 1씩 감소합니다.    flag = not flag # 플래그를 반대로 설정합니다.    time.sleep(0.5) # 0.5초동안 잠시 대기GPIO.cleanup() # 루프가 종료되면 GPIO를 초기화 합니다.\n저장한 소스파일은 삼바를 통해서 라즈베리파이의 임의의 폴더에 소스파일을 배치해 주세요.\n삼바가 설정이 안되어 있으신 분은 삼바 연결설정을 하시고 다음단계를 진행해 주세요.\n점퍼케이블을 알맞은 PIN에 연결하기 위해선 우선\n라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 확인해주시기 바랍니다.\n저는 PIN번호 18번 GPIO 24번에 빨간색 점퍼케이블을 연결을 했습니다.\n두번째 점퍼 케이블은 GND와 연결을 해주시면 되겠습다.\n저의 경우는 PIN번호 34번에 있는 GND에 연결을 했습니다.\n플레이트 보드에 LED와 저항과 점퍼케이블 연결이 끝나셨으면\nVNC를 이용해 라즈베리파이에 접속하신후 터미널을 실행 하십니다.\n터미널을 여신후 라즈베리파이에 넣어두신 소스파일이 있는 경로까지 이동 하십니다.\n\n첨 실행해 볼것은 15초동안 LED가 점등되는 gpio_led_turn_on.py를 실행을 합니다.\n아래와 같이 콘솔에 명령어를 입력해 주세요.\n1$ sudo python ./gpio_led_turn_on.py\n\nLED점등 프로그램을 기동하시면 아래의 사진과 같이 잘 안보이시겠지만 미묘하게\n15초동안 불이 켜지는것을 확인 하실수 있습니다.\n\n\n이번에는 두번째 소스파일을 실행 합니다.\n\n1$ sudo python ./gpio_led.py\n두번째 LED점등 소스파일을 실행하시면\n0.5초간격으로 15번 LED가 켜졌다 꺼졌다를 반복하는것을 확인 하실수 있습니다.\n시작은 간단한 LED키고 끄는것을 해보았습니다.\n다음에는 좀더 복잡한것을 가지고 오도록 하겠습니다.","dateCreated":"2020-05-30T01:00:00+09:00","dateModified":"2020-12-24T18:16:29+09:00","datePublished":"2020-05-30T01:00:00+09:00","description":"\n라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.","headline":"라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/30/rasberry-pi-013/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/30/rasberry-pi-013/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, PIN, GPIO - LED, Python","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자">
+<meta property="og:url" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/002-300x161.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/003-300x192.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/004-520x402.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/005.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/006-e1590850911270.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_5-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001_7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/001-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/004-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/007-e1590850952194.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/008-e1590850971744.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/006-5.png">
+<meta property="article:published_time" content="2020-05-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T09:16:29.670Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="PIN">
+<meta property="article:tag" content="GPIO - LED">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/002-300x161.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/30/rasberry-pi-013/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-30T01:00:00+09:00">
+	
+		    2020/05/30 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/">Linux</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이에-GPIO와-파이선을-이용해서-LED를-켜보자"><a href="#라즈베리파이에-GPIO와-파이선을-이용해서-LED를-켜보자" class="headerlink" title="라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자"></a>라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이에 GPIO를 이용해서 LED를 켜보자 입니다.</p>
+<p>우선 준비물이 필요 합니다.</p>
+<p>라즈베리파이 본체 OS설치와 Python설치가 끝난 상태</p>
+<p>저의 경우는 라즈베리파이 제로를 이용해서 테스트를 했습니다.</p>
+<blockquote>
+<ul>
+<li>플레이트 보드</li>
+<li>LED와 저항1KΩ</li>
+<li>점퍼와이어 암,수가 붙어있는걸로 합니다.</li>
+</ul>
+</blockquote>
+<p>이렇게 준비물이 갖춰져 있는지 확인 하시고 본격적으로 LED켜보기를 하겠습니다.</p>
+<p><img src="002-300x161.jpg"></p>
+<p><img src="003-300x192.jpg"></p>
+<p><img src="004-520x402.jpg"></p>
+<p><img src="005.jpg"></p>
+<p><img src="006-e1590850911270.jpg"></p>
+<p>본격적으로 라즈베리파이에서 LED를 켜보기에 앞서</p>
+<p>LED가 연결한다고 혼자서 저절로 켜지는게 아니기때문에 코딩을 해주셔야만 합니다.</p>
+<p>샘플 소스를 보시고 따라만 하셔도 문제없이 LED를 켜보실수가 있습니다.</p>
+<p>컴퓨터에 개발환경이 구축이 되어있으시면 개발환경에서 하셔도 되며</p>
+<p>개발환경이 구축이 안되어 있는 분은 가장 간단한 방법으로 메모장을 이용해서</p>
+<p>코딩하는 방법을 알아보도록 하겠습니다.</p>
+<p>일단 텍스트 문서파일을 추가 합니다.</p>
+<p><img src="001_1.png"></p>
+<p><img src="001_2.png"></p>
+<p>파일명을 확장자까지 아래와같이 변경해 주세요.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpio_led_turn_on.py</span><br></pre></td></tr></table></figure>
+<p><img src="001_3.png"></p>
+<p>파일을 메모장으로 여시면 당연히 아무것도 없는 상태이므로 이제부터 코딩을 해보도록 합니다.</p>
+<p><img src="001_4.png"></p>
+<p>소스코드를 입력하신후 저장을 합니다.</p>
+<p><img src="001_5-1.png"></p>
+<p>아래는 LED를 점등하기 위한 소스코드 입니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">18</span> <span class="comment"># PIN번호</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line">cnt = <span class="number">15</span> <span class="comment"># 카운트 15회</span></span><br><span class="line">flag = <span class="literal">True</span> <span class="comment"># 플래그 True</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;LED is ON&quot;</span>) <span class="comment"># 콘솔에 출력할 내용</span></span><br><span class="line">GPIO.output(pinNum, flag) <span class="comment"># 핀번호에 플래그를 설정</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> cnt &gt; <span class="number">0</span>: <span class="comment"># 카운트가 0보다 크면 루프를 돌립니다.</span></span><br><span class="line"></span><br><span class="line">    cnt -= <span class="number">1</span> <span class="comment"># 카운트를 1씩 차감</span></span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 1초동안 다음처리를 하지 않습니다.</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;LED is OFF&quot;</span>) <span class="comment"># 콘솔에 출력할 내용</span></span><br><span class="line">GPIO.cleanup() <span class="comment"># GPIO를 초기화 합니다.</span></span><br></pre></td></tr></table></figure>
+<p>그리고 두번째 소스파일을 준비합니다.</p>
+<p>두번째 소스파일은 파일명을 확장자까지 아래와같이 변경해 주세요.</p>
+<p><img src="001_6.png"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpio_led.py</span><br></pre></td></tr></table></figure>
+<p>추가하신 파일도 메모장으로 여신후 아래의 소스코드를 입력해 주세요.</p>
+<p><img src="001_7.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">18</span> <span class="comment"># PIN번호</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line">cnt = <span class="number">15</span> <span class="comment"># 카운트 15</span></span><br><span class="line">flag = <span class="literal">True</span> <span class="comment"># 플래그 True</span></span><br><span class="line"><span class="keyword">while</span> cnt &gt; <span class="number">0</span>: <span class="comment"># 카운트가 0보다 크면</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> flag: <span class="comment"># 플래그가 True인 경우</span></span><br><span class="line">        print(<span class="string">&quot;LED is ON&quot;</span>) <span class="comment"># LED가 켜졌다는 내용을 콘솔에 출력</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>: <span class="comment"># 위의 조건외의 경우</span></span><br><span class="line">        print(<span class="string">&quot;LED is OFF&quot;</span>) <span class="comment"># LED가 꺼졌다는 내용을 콘솔에 출력</span></span><br><span class="line"></span><br><span class="line">    GPIO.output(pinNum, flag) <span class="comment"># 핀번호에 플래그를 설정</span></span><br><span class="line">    cnt -= <span class="number">1</span> <span class="comment"># 카운트를 1씩 감소합니다.</span></span><br><span class="line">    flag = <span class="keyword">not</span> flag <span class="comment"># 플래그를 반대로 설정합니다.</span></span><br><span class="line">    time.sleep(<span class="number">0.5</span>) <span class="comment"># 0.5초동안 잠시 대기</span></span><br><span class="line"></span><br><span class="line">GPIO.cleanup() <span class="comment"># 루프가 종료되면 GPIO를 초기화 합니다.</span></span><br></pre></td></tr></table></figure>
+<p>저장한 소스파일은 삼바를 통해서 라즈베리파이의 임의의 폴더에 소스파일을 배치해 주세요.</p>
+<p>삼바가 설정이 안되어 있으신 분은 삼바 연결설정을 하시고 다음단계를 진행해 주세요.</p>
+<p>점퍼케이블을 알맞은 PIN에 연결하기 위해선 우선</p>
+<p>라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 확인해주시기 바랍니다.</p>
+<p>저는 PIN번호 18번 GPIO 24번에 빨간색 점퍼케이블을 연결을 했습니다.</p>
+<p>두번째 점퍼 케이블은 GND와 연결을 해주시면 되겠습다.</p>
+<p>저의 경우는 PIN번호 34번에 있는 GND에 연결을 했습니다.</p>
+<p>플레이트 보드에 LED와 저항과 점퍼케이블 연결이 끝나셨으면</p>
+<p>VNC를 이용해 라즈베리파이에 접속하신후 터미널을 실행 하십니다.</p>
+<p>터미널을 여신후 라즈베리파이에 넣어두신 소스파일이 있는 경로까지 이동 하십니다.</p>
+<p><img src="001-9.png"></p>
+<p>첨 실행해 볼것은 15초동안 LED가 점등되는 gpio_led_turn_on.py를 실행을 합니다.</p>
+<p>아래와 같이 콘솔에 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python ./gpio_led_turn_on.py</span><br></pre></td></tr></table></figure>
+<p><img src="004-6.png"></p>
+<p>LED점등 프로그램을 기동하시면 아래의 사진과 같이 잘 안보이시겠지만 미묘하게</p>
+<p>15초동안 불이 켜지는것을 확인 하실수 있습니다.</p>
+<p><img src="007-e1590850952194.jpg"></p>
+<p><img src="008-e1590850971744.jpg"></p>
+<p>이번에는 두번째 소스파일을 실행 합니다.</p>
+<p><img src="006-5.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python ./gpio_led.py</span><br></pre></td></tr></table></figure>
+<p>두번째 LED점등 소스파일을 실행하시면</p>
+<p>0.5초간격으로 15번 LED가 켜졌다 꺼졌다를 반복하는것을 확인 하실수 있습니다.</p>
+<p>시작은 간단한 LED키고 끄는것을 해보았습니다.</p>
+<p>다음에는 좀더 복잡한것을 가지고 오도록 하겠습니다.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/GPIO-LED/" rel="tag">GPIO - LED</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PIN/" rel="tag">PIN</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/30/rasberry-pi-013/';
+              
+            this.page.identifier = '2020/05/30/rasberry-pi-013/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

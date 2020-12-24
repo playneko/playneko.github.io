@@ -17,7 +17,7 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
         
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면\n불필요한 파일이나 로그파일을 삭제하고싶지만 자동으로 하는방법을 설명해 드리겠습니다.\n일정 시간이 지난 파일을 찾는 방법 : find 명령어\nfind명령어에 여러가지 옵션이 많이 있습니다만 일단 파일삭제에 필요한 옵션만 이용해 보도록 하겠습니다.\n12$ find 명령어를 통해 변경된지 하루가 넘은 파일을 찾기 위해서는 다음과 같이 옵션이 주어져야 합니다.$ find /home/pi/Documents/* -mtime +1\n다음과 같이 리스트 파일을 출력해 보신후 파일이 존재한다고 가정했을때\n\n12-rwxrw-rw-  1 pi pi    0  5月 24 12:00 txt1.txt-rwxrw-rw-  1 pi pi    0  5月 23 12:00 txt2.txt\n현재 날짜가 5월 26일 이라고 하면..\ntxt1.txt파일은 약1일 전에 만들어진 파일 입니다.\ntxt2.txt파일은 2일 전에 만들어진 파일 입니다.\n\n1$ find /home/pi/Documents/* -mtime +1 명령어를 통해서 txt2.txt가 검색이 됩니다.\n1234-mtime은 수정된 시간을 기준으로 합니다.-atime은 접근 시간을 기준으로 합니다.-ctime은 변경된 시간을 기준으로 합니다.-amin, -cmin, -mmin은 분을 기준으로 사용합니다.\n일정 시간이 지난 파일을 지우는 방법 : find + exec + rm명령어\n일정 시간이 지난 파일을 찾아서 지우는것도 역시 find 명령어를 사용하는데요.\n이번에는 exec라는 옵션을 사용하면 됩니다.\n\n1$ find /home/pi/Documents/* -mtime +1 -exec rm &#123;&#125; \\;\ntxt2.txt 파일이 삭제된것을 확인 하실수 있습니다.\n\nPHP공식사이트\nhttps://www.php.net/","dateCreated":"2020-05-26T02:00:00+09:00","dateModified":"2020-12-24T09:02:17+09:00","datePublished":"2020-05-26T02:00:00+09:00","description":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…","headline":"라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/26/rasberry-pi-008/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/26/rasberry-pi-008/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, exec, find, linux, mtime, 리눅스, rm","thumbnailUrl":"000.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면\n불필요한 파일이나 로그파일을 삭제하고싶지만 자동으로 하는방법을 설명해 드리겠습니다.\n일정 시간이 지난 파일을 찾는 방법 : find 명령어\nfind명령어에 여러가지 옵션이 많이 있습니다만 일단 파일삭제에 필요한 옵션만 이용해 보도록 하겠습니다.\n12$ find 명령어를 통해 변경된지 하루가 넘은 파일을 찾기 위해서는 다음과 같이 옵션이 주어져야 합니다.$ find /home/pi/Documents/* -mtime +1\n다음과 같이 리스트 파일을 출력해 보신후 파일이 존재한다고 가정했을때\n\n12-rwxrw-rw-  1 pi pi    0  5月 24 12:00 txt1.txt-rwxrw-rw-  1 pi pi    0  5月 23 12:00 txt2.txt\n현재 날짜가 5월 26일 이라고 하면..\ntxt1.txt파일은 약1일 전에 만들어진 파일 입니다.\ntxt2.txt파일은 2일 전에 만들어진 파일 입니다.\n\n1$ find /home/pi/Documents/* -mtime +1 명령어를 통해서 txt2.txt가 검색이 됩니다.\n1234-mtime은 수정된 시간을 기준으로 합니다.-atime은 접근 시간을 기준으로 합니다.-ctime은 변경된 시간을 기준으로 합니다.-amin, -cmin, -mmin은 분을 기준으로 사용합니다.\n일정 시간이 지난 파일을 지우는 방법 : find + exec + rm명령어\n일정 시간이 지난 파일을 찾아서 지우는것도 역시 find 명령어를 사용하는데요.\n이번에는 exec라는 옵션을 사용하면 됩니다.\n\n1$ find /home/pi/Documents/* -mtime +1 -exec rm &#123;&#125; \\;\ntxt2.txt 파일이 삭제된것을 확인 하실수 있습니다.\n\nPHP공식사이트\nhttps://www.php.net/","dateCreated":"2020-05-26T02:00:01+09:00","dateModified":"2020-12-24T12:49:23+09:00","datePublished":"2020-05-26T02:00:01+09:00","description":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…","headline":"라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/26/rasberry-pi-008/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/26/rasberry-pi-008/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, exec, find, linux, mtime, 리눅스, rm","thumbnailUrl":"000.png"}</script>
     <meta name="description" content="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기">
@@ -29,8 +29,8 @@
 <meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/002-6.png">
 <meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/003-6.png">
 <meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/004-4.png">
-<meta property="article:published_time" content="2020-05-25T17:00:00.000Z">
-<meta property="article:modified_time" content="2020-12-24T00:02:17.726Z">
+<meta property="article:published_time" content="2020-05-25T17:00:01.000Z">
+<meta property="article:modified_time" content="2020-12-24T03:49:23.314Z">
 <meta property="article:author" content="Playneko">
 <meta property="article:tag" content="Rasberry Pi">
 <meta property="article:tag" content="SSH">
@@ -218,7 +218,7 @@
     
     
         <div class="post-meta">
-    <time datetime="2020-05-26T02:00:00+09:00">
+    <time datetime="2020-05-26T02:00:01+09:00">
 	
 		    2020/05/26 02:00
     	
@@ -226,7 +226,7 @@
     
         <span>카테고리 </span>
         
-    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/">Linux</a>
 
 
     
