@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,파이썬 - apt,apt-get,GPIO,python,sudo">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기안녕하세요.\n이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.\n사이트를 운영을 하시다 보면 특정 URL로 접속을 하거나 할경우 다른페이지로 이동을 시키고 싶은경우\n아니면 웹서버를 호스팅서버로 이용을 하고 있어서 Apache 또는 Nginx서버를 직접 수정할수 없는 경우\n그럴경우를 위해서 각 사이트별로 간단하게 리다이렉트 처리를 할수있는 방법을 알려드리도록 하겠습니다.\n.htaccess를 수정해서 URL 리다이렉트 처리를 위해선\n기본적으로 각 웹서버에서 도메인이 연결된 홈디렉토리의 root디렉토리에\n.htaccess파일이 없을경우 추가해 주시기 바랍니다.\n1234www.test.com URL로 접속할경우 www.playneko.com으로 리다이렉트처리RewriteEngine OnRewriteCond %&#123;HTTP_HOST&#125; ^(www\\.test\\.com)RewriteRule (.*) http://www.playneko.com/$1 [L]\n1234www.test.com또는 test.com URL로 접속할경우 www.playneko.com으로 리다이렉트처리RewriteEngine OnRewriteCond %&#123;HTTP_HOST&#125; ^(www\\.test\\.com|test\\.com)RewriteRule (.*) http://www.playneko.com/$1 [L]\n1234test.com에 www가 없을경우 www를 붙이게끔 하기RewriteEngine OnRewriteCond %&#123;HTTP_HOST&#125; ^(test\\.com)RewriteRule (.*) http://www.test.com/$1 [L]\n1234test.com을 test.com/xxx로 확장 변경하기RewriteEngine OnRewriteCond %&#123;HTTP_HOST&#125; ^(test\\.com|www\\.test\\.com)RewriteRule (.*) /xxx/$1 [L]\n12345678910111213test.com/xxx로 접속한 하위 주소까지 playneko.com로 리다이렉트 처리(영구이동)# test.com/xxx/ 하위 폴더안에 .htaccess파일을 추가 합니다.RewriteEngine OnRewriteRule (.*) http://www.playneko.com/$1 [R=301,L]다른방법으로는 아래와 같습니다.# test.com/ 하위 폴더안에 .htaccess파일을 추가 합니다.RewriteEngine OnRewriteRule ^xxx/(.*) http://www.playneko.com/$1 [R=301,L]# R=301은 해당 도메인으로 영구적으로 리다이렉트를 나타내며# 이럴경우 도메인이 변경되었을때도 검색봇들이 변경을 인지하고# 기존 도메인에서 새로운 도메인으로 갱신을 하게 됩니다.\n123456789test.com을 포함하는 서브도메인을 포함한 URL의 경우 playneko.com으로 접속RewriteEngine OnRewriteCond %&#123;HTTP_HOST&#125; test\\.comRewriteRule ^(.+) %&#123;HTTP_HOST&#125;$1 [C]RewriteRule ^([^.]+)\\.test\\.com(.*) http://$1.playneko.com/$2 [L]RewriteRule ^test\\.com(.*) http://playneko.com/$1 [L]#해당 라인에서 끝이란 표현으로 [L]을 추가 합니다.#그리고 그 이후 나오는 모든 구문은 무시하는 형식 (break;)와 동일합니다.","dateCreated":"2020-05-28T02:00:00+09:00","dateModified":"2020-12-24T12:43:24+09:00","datePublished":"2020-05-28T02:00:00+09:00","description":"\n.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.","headline":".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/28/rasberry-pi-012/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/28/rasberry-pi-012/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, 파이썬 - apt, apt-get, GPIO, python, sudo","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/28/rasberry-pi-012/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2020-05-27T17:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T03:43:24.584Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="파이썬 - apt">
+<meta property="article:tag" content="apt-get">
+<meta property="article:tag" content="GPIO">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="sudo">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/28/rasberry-pi-012/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/28/rasberry-pi-012/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            .htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-28T02:00:00+09:00">
+	
+		    2020/05/28 02:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기"><a href="#htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기" class="headerlink" title=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기"></a>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.</p>
+<p>사이트를 운영을 하시다 보면 특정 URL로 접속을 하거나 할경우 다른페이지로 이동을 시키고 싶은경우</p>
+<p>아니면 웹서버를 호스팅서버로 이용을 하고 있어서 Apache 또는 Nginx서버를 직접 수정할수 없는 경우</p>
+<p>그럴경우를 위해서 각 사이트별로 간단하게 리다이렉트 처리를 할수있는 방법을 알려드리도록 하겠습니다.</p>
+<p>.htaccess를 수정해서 URL 리다이렉트 처리를 위해선</p>
+<p>기본적으로 각 웹서버에서 도메인이 연결된 홈디렉토리의 root디렉토리에</p>
+<p>.htaccess파일이 없을경우 추가해 주시기 바랍니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span>또는 test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>|test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>에 www가 없을경우 www를 붙이게끔 하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.test.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 test.<span class="keyword">com</span>/xxx로 확장 변경하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>|www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) /xxx/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>/xxx로 접속한 하위 주소까지 playneko.<span class="keyword">com</span>로 리다이렉트 처리(영구이동)</span><br><span class="line"># test.<span class="keyword">com</span>/xxx/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line">다른방법으로는 아래와 같습니다.</span><br><span class="line"># test.<span class="keyword">com</span>/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule ^xxx/(.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line"># R=<span class="number">301</span>은 해당 도메인으로 영구적으로 리다이렉트를 나타내며</span><br><span class="line"># 이럴경우 도메인이 변경되었을때도 검색봇들이 변경을 인지하고</span><br><span class="line"># 기존 도메인에서 새로운 도메인으로 갱신을 하게 됩니다.</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 포함하는 서브도메인을 포함한 URL의 경우 playneko.<span class="keyword">com</span>으로 접속</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; test\.<span class="keyword">com</span></span><br><span class="line">RewriteRule ^(.+) %&#123;HTTP_HOST&#125;$<span class="number">1</span> [C]</span><br><span class="line">RewriteRule ^([^.]+)\.test\.<span class="keyword">com</span>(.*) http://$<span class="number">1</span>.playneko.<span class="keyword">com</span>/$<span class="number">2</span> [L]</span><br><span class="line">RewriteRule ^test\.<span class="keyword">com</span>(.*) http://playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br><span class="line"></span><br><span class="line">#해당 라인에서 끝이란 표현으로 [L]을 추가 합니다.</span><br><span class="line">#그리고 그 이후 나오는 모든 구문은 무시하는 형식 (break;)와 동일합니다.</span><br></pre></td></tr></table></figure>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/GPIO/" rel="tag">GPIO</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apt-get/" rel="tag">apt-get</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/python/" rel="tag">python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/sudo/" rel="tag">sudo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/" rel="tag">파이썬 - apt</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/28/rasberry-pi-012/';
+              
+            this.page.identifier = '2020/05/28/rasberry-pi-012/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

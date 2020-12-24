@@ -9,8 +9,92 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 24 Dec 2020 00:07:12 GMT</pubDate>
+    <pubDate>Thu, 24 Dec 2020 03:43:24 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</title>
+      <link>https://playneko.github.io/2020/05/28/rasberry-pi-012/</link>
+      <guid>https://playneko.github.io/2020/05/28/rasberry-pi-012/</guid>
+      <pubDate>Wed, 27 May 2020 17:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기&lt;br&gt;이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기"><a href="#htaccess를-수정해서-URL-리다이렉트-Redirect-처리하기" class="headerlink" title=".htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기"></a>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 .htaccess를 수정해서 URL 리다이렉트 처리하기 입니다.</p><p>사이트를 운영을 하시다 보면 특정 URL로 접속을 하거나 할경우 다른페이지로 이동을 시키고 싶은경우</p><p>아니면 웹서버를 호스팅서버로 이용을 하고 있어서 Apache 또는 Nginx서버를 직접 수정할수 없는 경우</p><p>그럴경우를 위해서 각 사이트별로 간단하게 리다이렉트 처리를 할수있는 방법을 알려드리도록 하겠습니다.</p><p>.htaccess를 수정해서 URL 리다이렉트 처리를 위해선</p><p>기본적으로 각 웹서버에서 도메인이 연결된 홈디렉토리의 root디렉토리에</p><p>.htaccess파일이 없을경우 추가해 주시기 바랍니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">www.test.<span class="keyword">com</span>또는 test.<span class="keyword">com</span> URL로 접속할경우 www.playneko.<span class="keyword">com</span>으로 리다이렉트처리</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(www\.test\.<span class="keyword">com</span>|test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>에 www가 없을경우 www를 붙이게끔 하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) http://www.test.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 test.<span class="keyword">com</span>/xxx로 확장 변경하기</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(test\.<span class="keyword">com</span>|www\.test\.<span class="keyword">com</span>)</span><br><span class="line">RewriteRule (.*) /xxx/$<span class="number">1</span> [L]</span><br></pre></td></tr></table></figure><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>/xxx로 접속한 하위 주소까지 playneko.<span class="keyword">com</span>로 리다이렉트 처리(영구이동)</span><br><span class="line"># test.<span class="keyword">com</span>/xxx/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule (.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line">다른방법으로는 아래와 같습니다.</span><br><span class="line"># test.<span class="keyword">com</span>/ 하위 폴더안에 .htaccess파일을 추가 합니다.</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteRule ^xxx/(.*) http://www.playneko.<span class="keyword">com</span>/$<span class="number">1</span> [R=<span class="number">301</span>,L]</span><br><span class="line"></span><br><span class="line"># R=<span class="number">301</span>은 해당 도메인으로 영구적으로 리다이렉트를 나타내며</span><br><span class="line"># 이럴경우 도메인이 변경되었을때도 검색봇들이 변경을 인지하고</span><br><span class="line"># 기존 도메인에서 새로운 도메인으로 갱신을 하게 됩니다.</span><br></pre></td></tr></table></figure><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test.<span class="keyword">com</span>을 포함하는 서브도메인을 포함한 URL의 경우 playneko.<span class="keyword">com</span>으로 접속</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;HTTP_HOST&#125; test\.<span class="keyword">com</span></span><br><span class="line">RewriteRule ^(.+) %&#123;HTTP_HOST&#125;$<span class="number">1</span> [C]</span><br><span class="line">RewriteRule ^([^.]+)\.test\.<span class="keyword">com</span>(.*) http://$<span class="number">1</span>.playneko.<span class="keyword">com</span>/$<span class="number">2</span> [L]</span><br><span class="line">RewriteRule ^test\.<span class="keyword">com</span>(.*) http://playneko.<span class="keyword">com</span>/$<span class="number">1</span> [L]</span><br><span class="line"></span><br><span class="line">#해당 라인에서 끝이란 표현으로 [L]을 추가 합니다.</span><br><span class="line">#그리고 그 이후 나오는 모든 구문은 무시하는 형식 (break;)와 동일합니다.</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/">파이썬 - apt</category>
+      
+      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
+      
+      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
+      
+      <category domain="https://playneko.github.io/tags/python/">python</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/28/rasberry-pi-012/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</title>
+      <link>https://playneko.github.io/2020/05/28/rasberry-pi-011/</link>
+      <guid>https://playneko.github.io/2020/05/28/rasberry-pi-011/</guid>
+      <pubDate>Wed, 27 May 2020 17:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO를 이용하여 코딩을 위해 파이썬 준비 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비"><a href="#라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비" class="headerlink" title="라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비"></a>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</h2><p>일단 라즈베리파이에 VNC로 접속후 터미널을 실행 합니다.</p><p>터미널에서 아래의 명령어를 실행 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure><p><img src="001-8.png"></p><p>최신버전으로 업데이트를 하게 됩니다.</p><p><img src="002-8-e1590627633446.png"></p><p><img src="003-8-e1590627697120.png"></p><p>파이썬을 설치하기 위해 아래의 명령어를 입력합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y python-dev python-setuptools</span><br></pre></td></tr></table></figure><p><img src="004-5.png"></p><p><img src="005-6.png"></p><p>설치가 완료 되었습니다.</p><p>이렇게해서 라즈베리파이에서 파이썬을 사용할수 있는 준비가 되었습니다.</p><p>라즈베리파이 공식 사이트</p><p><a href="https://www.raspberrypi.org/">https://www.raspberrypi.org/</a></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/">파이썬 - apt</category>
+      
+      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
+      
+      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
+      
+      <category domain="https://playneko.github.io/tags/python/">python</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/28/rasberry-pi-011/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>라즈베리파이 GPIO Pin I2C 제어하기를 사용하기 전 주의사항</title>
