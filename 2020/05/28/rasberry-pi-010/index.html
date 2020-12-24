@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 GPIO Pin I2C 제어하기를 사용하기 전 주의사항 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,GPIO - ICT,LED,PCB,PIN,PORT,Servo Motor">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항안녕하세요.\n이번에 소개할 내용은 라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 작성해 보았습니다.\nGPIO는 General Purpose Input / Output 으로 말 그대로 범용 입출력 인터페이스입니다.\nPCB, ICT보드 등 다양한 전자기판에서 내부 회로 이외 외부적으로 물리적으로 소통할 수 있는 장치로,\n이를 이용해서 LED, Servo Motor 등 다양한 물리적 외부 장치들에 대해서 배선하고 연결하여 제어 할수 있습니다.\n아래는 GPIO 배치도 입니다.\n무엇을 만드냐에 따라 PIN PORT에 연결하여 제어를 하실수 있습니다.\n\n아래의 명령어로 자신의 라즈베리파이의 GPIO pin을 확인 하실수 있습니다.\n1$ gpio readall\n라즈베리파이 공식 사이트\nhttps://www.raspberrypi.org/","dateCreated":"2020-05-28T01:00:00+09:00","dateModified":"2020-12-24T09:07:12+09:00","datePublished":"2020-05-28T01:00:00+09:00","description":"\n라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항이번에 소개할 내용은 라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 작성해 보았습니다.","headline":"라즈베리파이 GPIO Pin I2C 제어하기를 사용하기 전 주의사항","image":["001.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/28/rasberry-pi-010/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/28/rasberry-pi-010/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, GPIO - ICT, LED, PCB, PIN, PORT, Servo Motor","thumbnailUrl":"001.png"}</script>
+    <meta name="description" content="라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항이번에 소개할 내용은 라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 작성해 보았습니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 GPIO Pin I2C 제어하기를 사용하기 전 주의사항">
+<meta property="og:url" content="https://playneko.github.io/2020/05/28/rasberry-pi-010/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항이번에 소개할 내용은 라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 작성해 보았습니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/28/rasberry-pi-010/RasPiLED.png">
+<meta property="article:published_time" content="2020-05-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T00:07:12.118Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="GPIO - ICT">
+<meta property="article:tag" content="LED">
+<meta property="article:tag" content="PCB">
+<meta property="article:tag" content="PIN">
+<meta property="article:tag" content="PORT">
+<meta property="article:tag" content="Servo Motor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/28/rasberry-pi-010/RasPiLED.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/28/rasberry-pi-010/001.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/28/rasberry-pi-010/001.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 GPIO Pin I2C 제어하기를 사용하기 전 주의사항
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-28T01:00:00+09:00">
+	
+		    2020/05/28 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리-파이-GPIO-I2C-제어하기를-사용하기전-알아두어야-할-사항"><a href="#라즈베리-파이-GPIO-I2C-제어하기를-사용하기전-알아두어야-할-사항" class="headerlink" title="라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항"></a>라즈베리 파이 GPIO I2C 제어하기를 사용하기전 알아두어야 할 사항</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항을 작성해 보았습니다.</p>
+<p>GPIO는 General Purpose Input / Output 으로 말 그대로 범용 입출력 인터페이스입니다.</p>
+<p>PCB, ICT보드 등 다양한 전자기판에서 내부 회로 이외 외부적으로 물리적으로 소통할 수 있는 장치로,</p>
+<p>이를 이용해서 LED, Servo Motor 등 다양한 물리적 외부 장치들에 대해서 배선하고 연결하여 제어 할수 있습니다.</p>
+<p>아래는 GPIO 배치도 입니다.</p>
+<p>무엇을 만드냐에 따라 PIN PORT에 연결하여 제어를 하실수 있습니다.</p>
+<p><img src="RasPiLED.png"></p>
+<p>아래의 명령어로 자신의 라즈베리파이의 GPIO pin을 확인 하실수 있습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gpio readall</span><br></pre></td></tr></table></figure>
+<p>라즈베리파이 공식 사이트</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.raspberrypi.org/">https://www.raspberrypi.org/</a></p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/GPIO-ICT/" rel="tag">GPIO - ICT</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/LED/" rel="tag">LED</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PCB/" rel="tag">PCB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PIN/" rel="tag">PIN</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PORT/" rel="tag">PORT</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Servo-Motor/" rel="tag">Servo Motor</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/28/rasberry-pi-010/';
+              
+            this.page.identifier = '2020/05/28/rasberry-pi-010/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

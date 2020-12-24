@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,exec,find,linux,mtime,SSH,VNC,ラズベリーパイ,라즈베리파이,리눅스,rm">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면\n불필요한 파일이나 로그파일을 삭제하고싶지만 자동으로 하는방법을 설명해 드리겠습니다.\n일정 시간이 지난 파일을 찾는 방법 : find 명령어\nfind명령어에 여러가지 옵션이 많이 있습니다만 일단 파일삭제에 필요한 옵션만 이용해 보도록 하겠습니다.\n12$ find 명령어를 통해 변경된지 하루가 넘은 파일을 찾기 위해서는 다음과 같이 옵션이 주어져야 합니다.$ find /home/pi/Documents/* -mtime +1\n다음과 같이 리스트 파일을 출력해 보신후 파일이 존재한다고 가정했을때\n\n12-rwxrw-rw-  1 pi pi    0  5月 24 12:00 txt1.txt-rwxrw-rw-  1 pi pi    0  5月 23 12:00 txt2.txt\n현재 날짜가 5월 26일 이라고 하면..\ntxt1.txt파일은 약1일 전에 만들어진 파일 입니다.\ntxt2.txt파일은 2일 전에 만들어진 파일 입니다.\n\n1$ find /home/pi/Documents/* -mtime +1 명령어를 통해서 txt2.txt가 검색이 됩니다.\n1234-mtime은 수정된 시간을 기준으로 합니다.-atime은 접근 시간을 기준으로 합니다.-ctime은 변경된 시간을 기준으로 합니다.-amin, -cmin, -mmin은 분을 기준으로 사용합니다.\n일정 시간이 지난 파일을 지우는 방법 : find + exec + rm명령어\n일정 시간이 지난 파일을 찾아서 지우는것도 역시 find 명령어를 사용하는데요.\n이번에는 exec라는 옵션을 사용하면 됩니다.\n\n1$ find /home/pi/Documents/* -mtime +1 -exec rm &#123;&#125; \\;\ntxt2.txt 파일이 삭제된것을 확인 하실수 있습니다.\n\nPHP공식사이트\nhttps://www.php.net/","dateCreated":"2020-05-26T02:00:00+09:00","dateModified":"2020-12-24T09:02:17+09:00","datePublished":"2020-05-26T02:00:00+09:00","description":"\n라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…","headline":"라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/26/rasberry-pi-008/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/26/rasberry-pi-008/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, exec, find, linux, mtime, 리눅스, rm","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면…">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/001-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/002-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/003-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/004-4.png">
+<meta property="article:published_time" content="2020-05-25T17:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T00:02:17.726Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="exec">
+<meta property="article:tag" content="find">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="mtime">
+<meta property="article:tag" content="리눅스">
+<meta property="article:tag" content="rm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/001-6.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/26/rasberry-pi-008/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-26T02:00:00+09:00">
+	
+		    2020/05/26 02:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이-또는-리눅스-find-명령어로-오래된-파일-삭제하기"><a href="#라즈베리파이-또는-리눅스-find-명령어로-오래된-파일-삭제하기" class="headerlink" title="라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기"></a>라즈베리파이 또는 리눅스 find 명령어로 오래된 파일 삭제하기</h2><p>라즈베리파이 또는 리눅스 서버를 운영하다보면 일정시간이 지나면</p>
+<p>불필요한 파일이나 로그파일을 삭제하고싶지만 자동으로 하는방법을 설명해 드리겠습니다.</p>
+<p>일정 시간이 지난 파일을 찾는 방법 : find 명령어</p>
+<p>find명령어에 여러가지 옵션이 많이 있습니다만 일단 파일삭제에 필요한 옵션만 이용해 보도록 하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ find 명령어를 통해 변경된지 하루가 넘은 파일을 찾기 위해서는 다음과 같이 옵션이 주어져야 합니다.</span><br><span class="line">$ find /home/pi/Documents/* -mtime +1</span><br></pre></td></tr></table></figure>
+<p>다음과 같이 리스트 파일을 출력해 보신후 파일이 존재한다고 가정했을때</p>
+<p><img src="001-6.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rwxrw-rw-  1 pi pi    0  5月 24 12:00 txt1.txt</span><br><span class="line">-rwxrw-rw-  1 pi pi    0  5月 23 12:00 txt2.txt</span><br></pre></td></tr></table></figure>
+<p>현재 날짜가 5월 26일 이라고 하면..</p>
+<p>txt1.txt파일은 약1일 전에 만들어진 파일 입니다.</p>
+<p>txt2.txt파일은 2일 전에 만들어진 파일 입니다.</p>
+<p><img src="002-6.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /home/pi/Documents/* -mtime +1 명령어를 통해서 txt2.txt가 검색이 됩니다.</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-mtime은 수정된 시간을 기준으로 합니다.</span><br><span class="line">-atime은 접근 시간을 기준으로 합니다.</span><br><span class="line">-ctime은 변경된 시간을 기준으로 합니다.</span><br><span class="line">-amin, -cmin, -mmin은 분을 기준으로 사용합니다.</span><br></pre></td></tr></table></figure>
+<p>일정 시간이 지난 파일을 지우는 방법 : find + exec + rm명령어</p>
+<p>일정 시간이 지난 파일을 찾아서 지우는것도 역시 find 명령어를 사용하는데요.</p>
+<p>이번에는 exec라는 옵션을 사용하면 됩니다.</p>
+<p><img src="003-6.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /home/pi/Documents/* -mtime +1 -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<p>txt2.txt 파일이 삭제된것을 확인 하실수 있습니다.</p>
+<p><img src="004-4.png"></p>
+<p>PHP공식사이트</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.php.net/">https://www.php.net/</a></p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/exec/" rel="tag">exec</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/find/" rel="tag">find</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/mtime/" rel="tag">mtime</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/rm/" rel="tag">rm</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/" rel="tag">리눅스</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/26/rasberry-pi-008/';
+              
+            this.page.identifier = '2020/05/26/rasberry-pi-008/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
