@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="link,ln,Python,Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,심볼릭링크,파이썬">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기안녕하세요.\n이번에 소개할 내용은 라즈베리파이를 설치후 파이썬을 설치했습니다만\n최신버전을 사용하지 않고 기본버전 2.x버전대를 사용하게 되는것을 알수가 있습니다.\n그래서 기본버전대에서 최신버전인 3.x버전으로 변경하는 방법을 소개해 드리도록 하겠습니다.\n\n주의사항아래의 방법은 꼭 필요하신 분들에게만 추천 합니다.apt-get에서 최신버전 업데이트를 할경우 여러가지 에러나 문제점이 발생할 가능성이 있습니다.\n\n우선 라즈베리파이를 VNC를 이용해서 접속후 터미널을 실행해 주세요.\n\n아래의 명령어를 입력해서 파이선 버전을 확인 합니다.\n1$ python --version\n아래와 같이 2.x버전대가 출력되는것을 알수가 있습니다.\n\n아래의 명령어를 입력하시기 바랍니다.\n1$ cd /usr/bin\n\n최신버전의 파이썬이 설치가 되어있는지 확인을 위해서 아래의 명령어를 입력해 주세요.\n1$ ls -al python3*\n\n\n설치되어있는 3버전대의 파이썬이 있는것을 확인하실수 있습니다.\n이젠 python3을 python으로 변경을 할것입니다.\n나는 변경하지 않고 그냥사용하실 분들은 파이썬을 실행하실때 python이 아닌 python3을 입력해서\n사용하셔도 되지만 깜빡하고 3을 빼먹는 경우가 있기때문에 재설정을 해주겠습니다.\n이때 기존의 파이썬 링크를 3버전대의 링크로 재설정을 하기위해선 심볼릭링크란 명령어를 사용하게 됩니다.\n심볼릭링크는 유닉스,리눅스 시스템에서 사용하는것으로 윈도우에서 쇼트컷(바로가기)와 동일한 기능입니다.\n아래의 명령어를 콘솔에 입력해 주시기 바랍니다.\n1$ sudo ls -sf /usr/bin/python3.7 /usr/bin/python\n\n실행을 하시면 아래와 같이 나오게 됩니다.\n\n그럼 이제 버전이 제대로 설정이 되었는지 확인을 해봐야 합니다.\n아래의 명령어를 입력해서 2.x버전대에서 3.x버전대로 변경이 되었는지 확인해 보시면 되겠습니다.\n파이썬 공식 홈페이지","dateCreated":"2020-05-31T02:00:00+09:00","dateModified":"2020-12-24T20:01:13+09:00","datePublished":"2020-05-31T02:00:00+09:00","description":"\n라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기이번에 소개할 내용은 라즈베리파이를 설치후 파이썬을 설치했습니다만….","headline":"라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/31/rasberry-pi-015/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/31/rasberry-pi-015/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, Python, link, ln, 심볼릭링크, 파이썬","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기이번에 소개할 내용은 라즈베리파이를 설치후 파이썬을 설치했습니다만….">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기이번에 소개할 내용은 라즈베리파이를 설치후 파이썬을 설치했습니다만….">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/001-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/002-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/003-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/004-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/005-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/006-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/007-7.png">
+<meta property="article:published_time" content="2020-05-30T17:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T11:01:13.811Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="link">
+<meta property="article:tag" content="ln">
+<meta property="article:tag" content="심볼릭링크">
+<meta property="article:tag" content="파이썬">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/001-11.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/31/rasberry-pi-015/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-31T02:00:00+09:00">
+	
+		    2020/05/31 02:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Python/">Python</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이-파이썬-기본버전을-최신버전으로-변경하기"><a href="#라즈베리파이-파이썬-기본버전을-최신버전으로-변경하기" class="headerlink" title="라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기"></a>라즈베리파이 파이썬 기본버전을 최신버전으로 변경하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이를 설치후 파이썬을 설치했습니다만</p>
+<p>최신버전을 사용하지 않고 기본버전 2.x버전대를 사용하게 되는것을 알수가 있습니다.</p>
+<p>그래서 기본버전대에서 최신버전인 3.x버전으로 변경하는 방법을 소개해 드리도록 하겠습니다.</p>
+<blockquote>
+<h5 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h5><p>아래의 방법은 꼭 필요하신 분들에게만 추천 합니다.<br>apt-get에서 최신버전 업데이트를 할경우 여러가지 에러나 문제점이 발생할 가능성이 있습니다.</p>
+</blockquote>
+<p>우선 라즈베리파이를 VNC를 이용해서 접속후 터미널을 실행해 주세요.</p>
+<p><img src="001-11.png" alt="image"></p>
+<p>아래의 명령어를 입력해서 파이선 버전을 확인 합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python --version</span><br></pre></td></tr></table></figure>
+<p>아래와 같이 2.x버전대가 출력되는것을 알수가 있습니다.</p>
+<p><img src="002-10.png" alt="image"></p>
+<p>아래의 명령어를 입력하시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/bin</span><br></pre></td></tr></table></figure>
+<p><img src="003-10.png" alt="image"></p>
+<p>최신버전의 파이썬이 설치가 되어있는지 확인을 위해서 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al python3*</span><br></pre></td></tr></table></figure>
+<p><img src="004-8.png" alt="image"></p>
+<p><img src="005-8.png" alt="image"></p>
+<p>설치되어있는 3버전대의 파이썬이 있는것을 확인하실수 있습니다.</p>
+<p>이젠 python3을 python으로 변경을 할것입니다.</p>
+<p>나는 변경하지 않고 그냥사용하실 분들은 파이썬을 실행하실때 python이 아닌 python3을 입력해서</p>
+<p>사용하셔도 되지만 깜빡하고 3을 빼먹는 경우가 있기때문에 재설정을 해주겠습니다.</p>
+<p>이때 기존의 파이썬 링크를 3버전대의 링크로 재설정을 하기위해선 심볼릭링크란 명령어를 사용하게 됩니다.</p>
+<p>심볼릭링크는 유닉스,리눅스 시스템에서 사용하는것으로 윈도우에서 쇼트컷(바로가기)와 동일한 기능입니다.</p>
+<p>아래의 명령어를 콘솔에 입력해 주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ls -sf /usr/bin/python3.7 /usr/bin/python</span><br></pre></td></tr></table></figure>
+<p><img src="006-7.png" alt="image"></p>
+<p>실행을 하시면 아래와 같이 나오게 됩니다.</p>
+<p><img src="007-7.png" alt="image"></p>
+<p>그럼 이제 버전이 제대로 설정이 되었는지 확인을 해봐야 합니다.</p>
+<p>아래의 명령어를 입력해서 2.x버전대에서 3.x버전대로 변경이 되었는지 확인해 보시면 되겠습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.python.org/">파이썬 공식 홈페이지</a></p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/link/" rel="tag">link</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/ln/" rel="tag">ln</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%AC%EB%B3%BC%EB%A6%AD%EB%A7%81%ED%81%AC/" rel="tag">심볼릭링크</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/" rel="tag">파이썬</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/31/rasberry-pi-015/';
+              
+            this.page.identifier = '2020/05/31/rasberry-pi-015/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
