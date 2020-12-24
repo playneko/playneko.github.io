@@ -9,7 +9,7 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 24 Dec 2020 09:16:29 GMT</pubDate>
+    <pubDate>Thu, 24 Dec 2020 09:18:17 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -28,7 +28,7 @@
       
       <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
       
-      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
       
       
       <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
