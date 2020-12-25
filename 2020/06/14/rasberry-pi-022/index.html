@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Button,GPIO,LED,Push,Push Button,Python,Rasberry Pi,SSH,Visual Studio Code,VNC,ラズベリーパイ,라즈베리파이,버튼,비주얼 스튜디오 코드,파이썬,푸쉬버튼">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2안녕하세요.\n이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.\n우리가 일상적으로 집에 들어왔을경우 버튼을 누르고 거실의 등을 키는것과 같은 역활로\n버튼을 누르게 되면 LED 2개가 순차적으로 점등이 되는것을 만들어 보도록 하겠습니다.\n\n준비물\n라즈베리파이 OS, 파이썬 설치가 완료된 상태\n점퍼케이블 암/수 5줄, 수컷 3줄\n플레이트 보드\n저항 330Ω 2개, 10KΩ 1개\nLED전구 2개\n푸쉬버튼\n\n\n\n색깔별 점퍼케이블의 연결순서는 아래의 표를 참고해 주세요.\n\n\n\nColor\nPi GPIO Pin\nNotes\n\n\n\nRed\n1\n3.3V\n\n\nWhite\n40\n21(SP1_SCLK)\n\n\nBrown\n10\n15(UART_RXD)\n\n\nYellow\n8\n14(UART_TXD)\n\n\nGray\n39\nGND\n\n\nGPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.\n라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항\n위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면\n이제 본격적인 코딩을 해야만 합니다.\nVisual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.\n\n실행을 하셨으면 파일명을 gpio_multi_push_led.py로 추가를 해주시기 바랍니다.\n\n간단한 예제로 버튼을 누르면 첫번째 LED가 5초간 켜지고 꺼진뒤 2번째 LED가 켜지고 꺼지는 소스를 작성 하겠습니다.\n아래의 코드를 입력해 주세요.\n123456789101112131415161718192021222324252627282930313233343536373839404142434445import timeimport RPi.GPIO as GPIOGPIO.setmode(GPIO.BCM)# PUSH Button# 40Pin 21(SP1_SCLK)GPIO.setup(21, GPIO.IN)# LED# 8 14(UART_TXD)GPIO.setup(14, GPIO.OUT)# 10 15(UART_RXD)GPIO.setup(15, GPIO.OUT)try:    while True:        # 40Pin의 버튼에 대한 입력값        inputIO = GPIO.input(21)        # 버튼이 눌렸는지 체크        if inputIO == False:            # LED를 켜기            GPIO.output(14, GPIO.HIGH)            time.sleep(5)            GPIO.output(14, GPIO.LOW)            time.sleep(1)            GPIO.output(15, GPIO.HIGH)            time.sleep(5)            GPIO.output(15, GPIO.LOW)        else:            # LED를 끄기            GPIO.output(14, GPIO.LOW)            GPIO.output(15, GPIO.LOW)# Ctrl + C키를 누르면 종료 됩니다.except KeyboardInterrupt:    # 종료시 LED를 무조건 끄기    GPIO.output(14, GPIO.LOW)    GPIO.output(15, GPIO.LOW)# GPIO 클린업finally:    GPIO.cleanup()\n작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해\n소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.\n그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.\n\n라즈베리파이의 리스트 목록을 보시면 gpio_multi_push_led.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.\n이제 명령어로 버튼을 눌렀을경우 순차적으로 LED가 켜지고 꺼지는지 확인 해보도록 하겠습니다.\n아래의 명령어를 입력해 주세요.\n12# 파이썬 2.x버전대를 이용하실경우$ sudo python ./gpio_multi_push_led.py\n12# 파이썬 3.x버전대를 이용하실경우$ sudo python3 ./gpio_multi_push_led.py\n저의 경우는 3.x버전대를 이용하기에 3.x버전대의 명령어로 실행을 하겠습니다.\n\n위와같이 실행이 된 상태에서 버튼을 눌러보시면 첫번째 LED가 켜지고 5초뒤에 두번째 LED가 켜지는것을 확인하실수 있습니다.\n만일 LED가 켜키지 않을경우 배선이 맞게 되어있는지 LED를 (+,-)가 맞게 꼽혀있는지 확인해 주세요.\n프로그램을 종료를 하실경우에는 Ctrl + C키를 눌러주시면 프로그램이 종료 됩니다.\n이렇게해서 푸쉬버튼을 이용한 멀티 LED 켜고 끄기가 끝났습니다.\n다음에도 더 다양한 방식을 소개하도록 하겠습니다.","dateCreated":"2020-06-14T01:00:00+09:00","dateModified":"2020-12-25T09:28:37+09:00","datePublished":"2020-06-14T01:00:00+09:00","description":"\n라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.","headline":"라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/14/rasberry-pi-022/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/14/rasberry-pi-022/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, LED, GPIO, Python, 파이썬, Visual Studio Code, 비주얼 스튜디오 코드, Button, Push, Push Button, 버튼, 푸쉬버튼","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등">
+<meta property="og:url" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/001-3.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/002-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/003-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/004-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/005-1-1.png">
+<meta property="article:published_time" content="2020-06-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-25T00:28:37.128Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="LED">
+<meta property="article:tag" content="GPIO">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="파이썬">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="Button">
+<meta property="article:tag" content="Push">
+<meta property="article:tag" content="Push Button">
+<meta property="article:tag" content="버튼">
+<meta property="article:tag" content="푸쉬버튼">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/001-3.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/14/rasberry-pi-022/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-14T01:00:00+09:00">
+	
+		    2020/06/14 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Python/">Python</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-GPIO-파이썬을-이용해서-PUSH버튼으로-LED점등-2"><a href="#라즈베리파이에서-GPIO-파이썬을-이용해서-PUSH버튼으로-LED점등-2" class="headerlink" title="라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2"></a>라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.</p>
+<p>우리가 일상적으로 집에 들어왔을경우 버튼을 누르고 거실의 등을 키는것과 같은 역활로</p>
+<p>버튼을 누르게 되면 LED 2개가 순차적으로 점등이 되는것을 만들어 보도록 하겠습니다.</p>
+<blockquote>
+<h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul>
+<li>라즈베리파이 OS, 파이썬 설치가 완료된 상태</li>
+<li>점퍼케이블 암/수 5줄, 수컷 3줄</li>
+<li>플레이트 보드</li>
+<li>저항 330Ω 2개, 10KΩ 1개</li>
+<li>LED전구 2개</li>
+<li>푸쉬버튼</li>
+</ul>
+</blockquote>
+<p><img src="001-3.jpg" alt="image"></p>
+<p>색깔별 점퍼케이블의 연결순서는 아래의 표를 참고해 주세요.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Color</th>
+<th align="center">Pi GPIO Pin</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Red</td>
+<td align="center">1</td>
+<td align="center">3.3V</td>
+</tr>
+<tr>
+<td align="center">White</td>
+<td align="center">40</td>
+<td align="center">21(SP1_SCLK)</td>
+</tr>
+<tr>
+<td align="center">Brown</td>
+<td align="center">10</td>
+<td align="center">15(UART_RXD)</td>
+</tr>
+<tr>
+<td align="center">Yellow</td>
+<td align="center">8</td>
+<td align="center">14(UART_TXD)</td>
+</tr>
+<tr>
+<td align="center">Gray</td>
+<td align="center">39</td>
+<td align="center">GND</td>
+</tr>
+</tbody></table>
+<p>GPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.</p>
+<p><a href="https://playneko.github.io/2020/05/28/rasberry-pi-011/">라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항</a></p>
+<p>위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면</p>
+<p>이제 본격적인 코딩을 해야만 합니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p>
+<p><img src="002-9.png" alt="image"></p>
+<p>실행을 하셨으면 파일명을 gpio_multi_push_led.py로 추가를 해주시기 바랍니다.</p>
+<p><img src="003-10.png" alt="image"></p>
+<p>간단한 예제로 버튼을 누르면 첫번째 LED가 5초간 켜지고 꺼진뒤 2번째 LED가 켜지고 꺼지는 소스를 작성 하겠습니다.</p>
+<p>아래의 코드를 입력해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PUSH Button</span></span><br><span class="line"><span class="comment"># 40Pin 21(SP1_SCLK)</span></span><br><span class="line">GPIO.setup(<span class="number">21</span>, GPIO.IN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># LED</span></span><br><span class="line"><span class="comment"># 8 14(UART_TXD)</span></span><br><span class="line">GPIO.setup(<span class="number">14</span>, GPIO.OUT)</span><br><span class="line"><span class="comment"># 10 15(UART_RXD)</span></span><br><span class="line">GPIO.setup(<span class="number">15</span>, GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 40Pin의 버튼에 대한 입력값</span></span><br><span class="line">        inputIO = GPIO.<span class="built_in">input</span>(<span class="number">21</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 버튼이 눌렸는지 체크</span></span><br><span class="line">        <span class="keyword">if</span> inputIO == <span class="literal">False</span>:</span><br><span class="line">            <span class="comment"># LED를 켜기</span></span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.HIGH)</span><br><span class="line">            time.sleep(<span class="number">5</span>)</span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.HIGH)</span><br><span class="line">            time.sleep(<span class="number">5</span>)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># LED를 끄기</span></span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ctrl + C키를 누르면 종료 됩니다.</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="comment"># 종료시 LED를 무조건 끄기</span></span><br><span class="line">    GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">    GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPIO 클린업</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    GPIO.cleanup()</span><br></pre></td></tr></table></figure>
+<p>작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해</p>
+<p>소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.</p>
+<p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p>
+<p><img src="004-9.png" alt="image"></p>
+<p>라즈베리파이의 리스트 목록을 보시면 gpio_multi_push_led.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.</p>
+<p>이제 명령어로 버튼을 눌렀을경우 순차적으로 LED가 켜지고 꺼지는지 확인 해보도록 하겠습니다.</p>
+<p>아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_multi_push_led.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_multi_push_led.py</span><br></pre></td></tr></table></figure>
+<p>저의 경우는 3.x버전대를 이용하기에 3.x버전대의 명령어로 실행을 하겠습니다.</p>
+<p><img src="005-1-1.png" alt="image"></p>
+<p>위와같이 실행이 된 상태에서 버튼을 눌러보시면 첫번째 LED가 켜지고 5초뒤에 두번째 LED가 켜지는것을 확인하실수 있습니다.</p>
+<p>만일 LED가 켜키지 않을경우 배선이 맞게 되어있는지 LED를 (+,-)가 맞게 꼽혀있는지 확인해 주세요.</p>
+<p>프로그램을 종료를 하실경우에는 Ctrl + C키를 눌러주시면 프로그램이 종료 됩니다.</p>
+<p>이렇게해서 푸쉬버튼을 이용한 멀티 LED 켜고 끄기가 끝났습니다.</p>
+<p>다음에도 더 다양한 방식을 소개하도록 하겠습니다.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Button/" rel="tag">Button</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/GPIO/" rel="tag">GPIO</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/LED/" rel="tag">LED</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Push/" rel="tag">Push</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Push-Button/" rel="tag">Push Button</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B2%84%ED%8A%BC/" rel="tag">버튼</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/" rel="tag">파이썬</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%91%B8%EC%89%AC%EB%B2%84%ED%8A%BC/" rel="tag">푸쉬버튼</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/14/rasberry-pi-022/';
+              
+            this.page.identifier = '2020/06/14/rasberry-pi-022/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

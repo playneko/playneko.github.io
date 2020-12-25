@@ -9,8 +9,300 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 24 Dec 2020 14:23:50 GMT</pubDate>
+    <pubDate>Fri, 25 Dec 2020 00:29:51 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>라즈베리파이로 레트로(ReTroPie) 게임기 만들기</title>
+      <link>https://playneko.github.io/2020/06/20/rasberry-pi-026/</link>
+      <guid>https://playneko.github.io/2020/06/20/rasberry-pi-026/</guid>
+      <pubDate>Fri, 19 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이로 레트로(ReTroPie) 게임기 만들기&lt;br&gt;이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이로-레트로-ReTroPie-게임기-만들기"><a href="#라즈베리파이로-레트로-ReTroPie-게임기-만들기" class="headerlink" title="라즈베리파이로 레트로(ReTroPie) 게임기 만들기"></a>라즈베리파이로 레트로(ReTroPie) 게임기 만들기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.</p><p>고전게임을 좋아하시거나 고전게임이 무엇인지 잘 모르시는 분들께 한번 만들어서 즐기시는것을</p><p>한번쯤 추천을 드리겠습니다.</p><p>오랜만에 옛날게임을 즐기며 추억의 향수를 느끼실수 있습니다.</p><blockquote><h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul><li>라즈베리파이 3(Raspberry Pi 3 model B)</li><li>레트로파이용 전용 케이스</li><li>SD카드 8기가 이상</li><li>HDMI케이블</li><li>5V 2A USB 케이블과 어뎁터</li><li>USB키보드 또는 게임기 패드</li></ul></blockquote><p>위의 준비물이 갖춰졌으면 본격적으로 레트로 게임기를 만들어 보겠습니다.</p><h4 id="라즈베리파이-오락실"><a href="#라즈베리파이-오락실" class="headerlink" title="라즈베리파이 오락실"></a>라즈베리파이 오락실</h4><p>레트로파이 간략한 준비물의 상태는 아래와 같습니다.</p><p><img src="001-5.jpg" alt="image"></p><p>케이스를 꺼내기전 박스포장된 상태 입니다.</p><p>박스포장도 레트로 게임기 디자인으로 되어 있습니다.</p><p><img src="002-3.jpg" alt="image"></p><p>박스에서 레트로게임기 케이스를 꺼낸 모습 입니다.</p><p>옆에는 각 구조 설명과 조립방법이 적혀져 있습니다.</p><p><img src="003-1.jpg" alt="image"></p><p>조립하기전 부품 상세 내용물 입니다.</p><p><img src="004-1.jpg" alt="image"></p><p>조립이 완성되었습니다.</p><p>본격적으로 게임기로 사용할수 있게 다음 준비를 하도록 하겠습니다.</p><p>우선 SD카드에 레트로파이용 OS를 설치부터 진행을 하도록 하겠습니다.</p><p>SD카드를 컴퓨터에 삽입후 balenaEtcher를 실행해 주세요.</p><p>balenaEtcher에 대해 잘 모르실경우 라즈베리파이3 B 설치하기를 참고해 주세요.</p><p>SD카드를 삽입을 하시고 balenaEtcher를 실행을 해주셨으면</p><p>아래의 레트로파이 사이트에서 레트로파이용 OS를 다운로드 받아주세요.</p><p><a href="https://retropie.org.uk/download/">https://retropie.org.uk/download/</a></p><p><img src="001-13.png" alt="image"></p><p>보유하신 라즈베리파이 기종에 맞게 다운로드를 해주시기 바랍니다.</p><p><img src="002-13.png" alt="image"></p><p>balenaEtcher를 실행한 상태 입니다.</p><p><img src="003-14.png" alt="image"></p><p>첫번째에 다운로드 받으신 레트로파이 OS 이미지파일을 선택하시고</p><p>두번째는 컴퓨터에 삽입하신 SD카드를 선택해 주세요. 그리고 마지막 Flash!버튼을 눌러주시기 바랍니다.</p><p><img src="004-13.png" alt="image"></p><p><img src="005-9.png" alt="image"></p><p>위와같이 나오면 SD카드를 포맷후 레트로파이 OS 설치가 진행 됩니다.</p><p><img src="006-10.png" alt="image"></p><p>레트로파이 OS 설치가 완료 되었습니다.</p><p>SD카드를 추출하시고 라즈베리파이에 삽입을 해주시기 바랍니다.</p><p>그리고 모니터 또는 티비에 연결을 하신후 전원을 넣어주시기 바랍니다.</p><p><img src="006.jpg" alt="image"></p><p>그러면 레트로파이 OS가 기동을 하는게 나오게 됩니다.</p><p>조금 기다리시면 자동으로 넘어가게 됩니다.</p><p><img src="007.jpg" alt="image"></p><p>처음 화면 입니다.</p><p><img src="008.jpg" alt="image"></p><p>USB키보드 또는 게임기 패드로 조작키 설정을 하는 화면이 나오게 되며</p><p>안내대로 따라서 설정을 하시고 완료를 하시면 됩니다.</p><p><img src="009.jpg" alt="image"></p><p>모든 설정이 끝나면 이런 화면이 나오고 이제 게임을 즐기실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/balenaEtcher/">balenaEtcher</category>
+      
+      <category domain="https://playneko.github.io/tags/HDMI/">HDMI</category>
+      
+      <category domain="https://playneko.github.io/tags/OS/">OS</category>
+      
+      <category domain="https://playneko.github.io/tags/ReTroPie/">ReTroPie</category>
+      
+      <category domain="https://playneko.github.io/tags/SD%EC%B9%B4%EB%93%9C/">SD카드</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B2%8C%EC%9E%84%EA%B8%B0/">게임기</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B2%8C%EC%9E%84%EA%B8%B0-%ED%8C%A8%EB%93%9C/">게임기 패드</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B3%A0%EC%A0%84%EA%B2%8C%EC%9E%84/">고전게임</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A0%88%ED%8A%B8%EB%A1%9C/">레트로</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%98%A4%EB%9D%BD%EC%8B%A4/">오락실</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/20/rasberry-pi-026/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기</title>
+      <link>https://playneko.github.io/2020/06/19/rasberry-pi-025/</link>
+      <guid>https://playneko.github.io/2020/06/19/rasberry-pi-025/</guid>
+      <pubDate>Thu, 18 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에-GPIO-파이썬을-이용해-초음파-센서-HC-SR04-제어하기"><a href="#라즈베리파이에-GPIO-파이썬을-이용해-초음파-센서-HC-SR04-제어하기" class="headerlink" title="라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기"></a>라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.</p><p>초음파 센서를 통해서 거리를 계산을 하거나 할경우 이용을 하실수가 있습니다.</p><p>초음파 센서를 제어하기 위해선 우선 준비물이 필요합니다.</p><blockquote><h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul><li>라즈베리파이 OS가 설치된 라즈베리파이</li><li>ELEGOO Arduino용 HC-SR04 초음파 센서 1개</li><li>점퍼케이블 암,수 4줄</li><li>플레이트 보드 1개</li><li>1KΩ 저항 1개, 2KΩ저항 1개</li></ul></blockquote><p>준비물이 준비가 되셨으면 본격적으로 초음파 센서 제어를 해보도록 하겠습니다.</p><p>아래의 회로도를 참고하셔서 케이블과 센서를 연결을 해주시기 바랍니다.</p><p><img src="001-12.png" alt="image"></p><p><img src="RasPiGPIO.png" alt="image"></p><p><img src="001-4.jpg" alt="image"></p><p><img src="002-2.jpg" alt="image"></p><blockquote><ul><li>1KΩ 저항은 Echo와 연결을 해주세요.</li><li>2KΩ 저항은 GND와 연결을 해주세요.</li><li>Trig는 GPIO 17번과 연결을 해주세요.</li><li>Echo는 GPIO 18번과 연결을 해주세요.</li></ul></blockquote><p>Echo의 경우 5V의 전압을 사용하기 때문에</p><p>저항을 이용해서 라즈베리파이에 부담을 주지않는 3.3V로 다시 낮춰 주셔야만 합니다.</p><table><thead><tr><th align="center">Color</th><th align="center">Pi GPIO Pin</th><th align="center">Notes</th></tr></thead><tbody><tr><td align="center">Red</td><td align="center">2</td><td align="center">5V</td></tr><tr><td align="center">Yellow</td><td align="center">11</td><td align="center">17</td></tr><tr><td align="center">White</td><td align="center">12</td><td align="center">18(PWM0)</td></tr><tr><td align="center">Gray</td><td align="center">39</td><td align="center">GND</td></tr></tbody></table><p>GPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.</p><p><a href="https://playneko.github.io/2020/05/28/rasberry-pi-011/">라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항</a></p><p>위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면</p><p>이제 본격적인 코딩을 해야만 합니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다</p><p><img src="002-12.png" alt="image"></p><p>실행을 하셨으면 파일명을 gpio_HC-SR04.py로 추가를 해주시기 바랍니다.</p><p><img src="003-13.png" alt="image"></p><p>간단한 예제로 파이썬을 이용해 초음파 센서(HC-SR04)를 제어할 소스를 작성 하겠습니다.</p><p>아래의 코드를 입력해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;AkibaTV HC-SR04 Start&quot;</span>)</span><br><span class="line"></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line"><span class="comment"># Yellow : Pin 11 : 17(Trig)</span></span><br><span class="line">GPIO.setup(<span class="number">17</span>, GPIO.OUT)</span><br><span class="line"><span class="comment"># White : Pin 12 : 18(Echo)</span></span><br><span class="line">GPIO.setup(<span class="number">18</span>, GPIO.IN)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">False</span>)</span><br><span class="line">        time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">True</span>)</span><br><span class="line">        time.sleep(<span class="number">0.00001</span>)</span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 18번이 OFF가 되는 시점을 시작시간으로 설정</span></span><br><span class="line">        <span class="keyword">while</span> GPIO.<span class="built_in">input</span>(<span class="number">18</span>) == <span class="number">0</span>:</span><br><span class="line">            start = time.time()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 18번이 ON이 되는 시점을 반사파 수신시간으로 설정</span></span><br><span class="line">        <span class="keyword">while</span> GPIO.<span class="built_in">input</span>(<span class="number">18</span>) == <span class="number">1</span>:</span><br><span class="line">            stop = time.time()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 초음파가 되돌아오는 시간차로 거리를 계산한다</span></span><br><span class="line">        time_interval = stop - start</span><br><span class="line">        distance = time_interval * <span class="number">17000</span></span><br><span class="line">        distance = <span class="built_in">round</span>(distance, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&quot;Distance =&gt; &quot;</span>, distance, <span class="string">&quot;cm&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    GPIO.cleanup()</span><br><span class="line">    print(<span class="string">&quot;AkibaTV HC-SR04 End&quot;</span>)</span><br></pre></td></tr></table></figure><p>작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해</p><p>소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.</p><p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p><p><img src="004-1-2.png" alt="image"></p><p>라즈베리파이의 리스트 목록을 보시면 gpio_HC-SR04.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.</p><p>이제 명령어로 초음파 센서(HC-SR04)가 작동하는지 확인 해보도록 하겠습니다.</p><p>아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_HC-SR04.py</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_HC-SR04.py</span><br></pre></td></tr></table></figure><p>저의 경우는 파이썬을 3.x버전대를 사용하고 있기에 3.x의 명령어로 실행을 하도록 하겠습니다.</p><p><img src="005-8.png" alt="image"></p><p>위와같이 초음파가 실행되면 거리에 대한 값이 터미널에 출력되는것을 확인 하실수 있습니다.</p><p>미묘한 오차는 발생할수는 있을수가 있겠습니다.</p><p>초음파 센서를 이용하시면 원거리의 값이나 가까이에 무엇인가 있을경우 측정을 하실때</p><p>유용하게 사용할수가 있겠습니다.</p><p>다음에는 좀더 다양한 방법으로 초음파 센서를 이용한 방법을 소개해 드리도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
+      
+      <category domain="https://playneko.github.io/tags/Python/">Python</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/">파이썬</category>
+      
+      <category domain="https://playneko.github.io/tags/Visual-Studio-Code/">Visual Studio Code</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/">비주얼 스튜디오 코드</category>
+      
+      <category domain="https://playneko.github.io/tags/Echo/">Echo</category>
+      
+      <category domain="https://playneko.github.io/tags/HC-SR04/">HC-SR04</category>
+      
+      <category domain="https://playneko.github.io/tags/Trig/">Trig</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B4%88%EC%9D%8C%ED%8C%8C/">초음파</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B4%88%EC%9D%8C%ED%8C%8C-%EC%84%BC%EC%84%9C/">초음파 센서</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/19/rasberry-pi-025/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 또는 리눅스에서 OpenJDK JAVA_HOME설정</title>
+      <link>https://playneko.github.io/2020/06/16/rasberry-pi-024/</link>
+      <guid>https://playneko.github.io/2020/06/16/rasberry-pi-024/</guid>
+      <pubDate>Mon, 15 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 또는 리눅스에서 OpenJDK JAVA_HOME설정&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-또는-리눅스에서-OpenJDK-JAVA-HOME설정"><a href="#라즈베리파이-또는-리눅스에서-OpenJDK-JAVA-HOME설정" class="headerlink" title="라즈베리파이 또는 리눅스에서 OpenJDK JAVA_HOME설정"></a>라즈베리파이 또는 리눅스에서 OpenJDK JAVA_HOME설정</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK JAVA_HOME설정 입니다.</p><p>저번시간에 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 하셨으면</p><p>이부분을 필수로 설정을 해주셔야만 앞으로 JAVA프로그램을 라즈베리파이에서</p><p>구동하실때 문제없이 구동을 하실수가 있겠습니다.</p><p>JAVA_HOME은 설치하신 OpenJDK 경로와 버전을 신경쓰지 않고 바로 참조할수 있도록 하는</p><p>바로가기 기능이라고 보시면 되겠습니다.</p><p>아래는 설치하신 OpenJDK 에 따라서 설치 되어있는 경로 입니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OpenJDK 11 버전</span></span><br><span class="line">$ OpenJDK 11 path – /usr/lib/jvm/java-11-openjdk-armhf/bin/java</span><br><span class="line"><span class="comment"># OpenJDK 8 버전</span></span><br><span class="line">$ OpenJDK 8 path – /usr/lib/jvm/java-8-openjdk-armhf/jre/bin/java</span><br></pre></td></tr></table></figure><p>이제 본격적으로 설정을 해보도록 하겠습니다.</p><h3 id="라즈베리파이-OpenJDK-11-또는-OpenJDK-8-JAVA-HOME-설정하기"><a href="#라즈베리파이-OpenJDK-11-또는-OpenJDK-8-JAVA-HOME-설정하기" class="headerlink" title="라즈베리파이 OpenJDK 11 또는 OpenJDK 8 JAVA_HOME 설정하기"></a>라즈베리파이 OpenJDK 11 또는 OpenJDK 8 JAVA_HOME 설정하기</h3><p>우선 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p><p><img src="001-11.png" alt="image"></p><p>그럼 터미널에 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi 에디터로 environment 파일을 엽니다.</span></span><br><span class="line">$ sudo vi /etc/environment</span><br></pre></td></tr></table></figure><p><img src="002-11.png" alt="image"></p><p>vi 에디터로 여시게 되면 아무것도 없는 빈페이지가 나오게 됩니다.</p><p>그럼 아래의 내용을 입력을 하시면 되겠습니다만</p><p>자신이 사용하시는 OpenJDK의 버전에 맞게 경로를 설정을 해주시면 되겠습니다.</p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># OpenJDK <span class="number">11</span>을 사용하시면 아래의 내용을 입력해 주시기 바랍니다.</span><br><span class="line">JAVA_HOME=<span class="string">&quot;path_of_your_default_version_of_java&quot;</span></span><br><span class="line"></span><br><span class="line"># OpenJDK <span class="number">8</span>을 설치하셨으면 아래의 내용을 입력해 주시기 바랍니다.</span><br><span class="line">JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/java-8-openjdk-armhf/jre/bin/java&quot;</span></span><br><span class="line"></span><br><span class="line"># 주의사항 위의 내용을 두개다 적으시면 안됩니다. 무조건 <span class="number">1</span>개만 입력해 주세요.</span><br></pre></td></tr></table></figure><p><img src="003-12.png" alt="image"></p><p>입력을 다 하셨으면 :wq를 입력후 vi 에디터를 종료 합니다.</p><p>그리고 재부팅을 해야만 적용이 되니 아래의 명령어를 입력해서 재부팅을 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 재부팅</span></span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure><p><img src="004-11.png" alt="image"></p><p>재부팅을 하셨으면 다시 라즈베리파이를 VNC로 실행후 터미널을 실행해 주시기 바랍니다.</p><p><img src="001-11.png" alt="image"></p><p>아래의 명령어를 입력하셔서 JAVA_HOME이 정상적으로 등록되었는지 확인해 보도록 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># JAVA_HOME 확인</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br></pre></td></tr></table></figure><p><img src="005-7.png" alt="image"></p><p>이렇게 해서 JAVA_HOME이 정상 등록이 되었습니다.</p><p>만일 설치하신 OpenJDK를 삭제를 하시고 싶으실 경우는 아래와 같이 하시면 되겠습니다.</p><p>자신의 환경에 맞게 버전을 선택하셔서 삭제를 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OpenJDK 11 버전을 삭제하실 경우</span></span><br><span class="line">$ sudo apt remove default-jdk</span><br><span class="line"></span><br><span class="line"><span class="comment"># OpenJDK 8 버전을 삭제하실 경우</span></span><br><span class="line">$ sudo apt remove openjdk-8-jdk</span><br></pre></td></tr></table></figure><p>저는 OpenJDK 8을 사용하고 있기에 OpenJDK 11을 삭제하도록 하겠습니다.</p><p><img src="006-9.png" alt="image"></p><p>삭제 명령어를 하시면 위와같이 삭제를 할건지 물어보게 되면 삭제를 하실경우 Y를 입력해 주세요.</p><p><img src="007-9.png" alt="image"></p><p>이렇게해서 OpenJDK 삭제가 완료 되었습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Java/">Java</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Java/Linux/">Linux</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/vi/">vi</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/">리눅스</category>
+      
+      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
+      
+      <category domain="https://playneko.github.io/tags/apt/">apt</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/Java/">Java</category>
+      
+      <category domain="https://playneko.github.io/tags/java-version/">java -version</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK/">OpenJDK</category>
+      
+      <category domain="https://playneko.github.io/tags/openjdk-8-jre/">openjdk-8-jre</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK11/">OpenJDK11</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK8/">OpenJDK8</category>
+      
+      <category domain="https://playneko.github.io/tags/version/">version</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9E%90%EB%B0%94/">자바</category>
+      
+      <category domain="https://playneko.github.io/tags/JAVA-HOME/">JAVA_HOME</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/16/rasberry-pi-024/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 또는 리눅스에서 OpenJDK 설치하기</title>
+      <link>https://playneko.github.io/2020/06/15/rasberry-pi-023/</link>
+      <guid>https://playneko.github.io/2020/06/15/rasberry-pi-023/</guid>
+      <pubDate>Sun, 14 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 또는 리눅스에서 OpenJDK 설치하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-또는-리눅스에서-OpenJDK-설치하기"><a href="#라즈베리파이-또는-리눅스에서-OpenJDK-설치하기" class="headerlink" title="라즈베리파이 또는 리눅스에서 OpenJDK 설치하기"></a>라즈베리파이 또는 리눅스에서 OpenJDK 설치하기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.</p><p>라즈베리파이를 처음 설치하시면 일단 기본적으로 JDK가 설치가 되어있지 않기때문에</p><p>JAVA개발 또는 Tomcat과 연동후 홈페이지를 운영하실 분들은 OpenJDK를 수동으로</p><p>설치를 해주셔야만 합니다.</p><h3 id="라즈베리파이-OpenJDK-11-설치하기"><a href="#라즈베리파이-OpenJDK-11-설치하기" class="headerlink" title="라즈베리파이 OpenJDK 11 설치하기"></a>라즈베리파이 OpenJDK 11 설치하기</h3><p>우선 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p><p><img src="001-10.png" alt="image"></p><p>우선 자바가 설치되어 있는지 확인을 위해 아래의 명령어를 터미널에 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -version</span><br></pre></td></tr></table></figure><p><img src="002-10.png" alt="image"></p><p>명령어를 입력후 위와같이 알수없는 명령어라고 나오면 JAVA관련 패키지가 설치가 되어있지 않은것 입니다.</p><p>그럼 설치를 위해 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자동 인스톨 프로그램을 최신화 합니다.</span></span><br><span class="line">$ sudo apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 기본적은 가장 최신버전의 jdk를 설치 합니다.</span></span><br><span class="line">$ sudo apt install default-jdk</span><br></pre></td></tr></table></figure><p><img src="003-11.png" alt="image"></p><p>가지고 계신 라즈베리파이의 성능에 따라서 업데이트 시간에 조금 차이가 있을수 있겠습니다.</p><p><img src="004-10.png" alt="image"></p><p>OpenJDK설치가 완료 되었습니다만</p><p>위와 같이 에러가 나오면 라즈베리파이의 cpu코어가 최신의 JDK를 실행을 할수가 없는것 입니다.</p><p>그래도 설치가 제대로 되었는지 확인을 해야하기에 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자바 버전확인</span></span><br><span class="line">$ java –version</span><br></pre></td></tr></table></figure><p>터미널에 자바버전이 출력이 되시면 정상적으로 설치가 되신것 입니다.</p><p>그래도 구형 라즈베리파이를 사용하시는 분들이 좌절하지 않으시도록</p><p>어떻게하면 구형 라즈베리파이에서도 JDK를 사용할수 있는지 해보도록 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 아래의 명령어를 터미널에 입력해 주세요.</span></span><br><span class="line"><span class="comment"># 일단은 OpenJDK8버전을 설치를 합니다.</span></span><br><span class="line">$ sudo apt-get install openjdk-8-jre</span><br></pre></td></tr></table></figure><p><img src="005-0.png" alt="image"></p><p><img src="006-8.png" alt="image"></p><p>명령어를 입력하시면 OpenJDK8버전을 설치하기 시작 합니다.</p><p><img src="007-8.png" alt="image"></p><p>이번에는 아무런 에러가 없이 무사히 설치가 완료 되었습니다.</p><p>설치가 완료되었으면 기존 기본으로 설치한 OpenJDK의 버전을 변경하도록 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 설치가 완료되셨으면 아래의 명령어를 입력해 주세요.</span></span><br><span class="line">$ sudo update-alternatives --config java</span><br></pre></td></tr></table></figure><p><img src="008-8.png" alt="image"></p><p>위와같은 화면이 나오시게 되면 기본으로 사용하실 OpenJDK 버전을 변경하실수 있습니다.</p><p>그럼 새롭게 설치한 OpenJDK8버전인 2를 입력하시기 바랍니다.</p><p><img src="009-6.png" alt="image"></p><p>그러면 설정이 변경이 되었습니다.</p><p>그러면 이제 자바가 정상 설치와 버전변경이 되었는지 확인을 해보도록 하겠습니다.</p><p>아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자바 버전확인</span></span><br><span class="line">$ java –version</span><br></pre></td></tr></table></figure><p><img src="010-6.png" alt="image"></p><p>OpenJDK버전도 정상적으로 출력되신것을 확인 하실수 있습니다.</p><p>이것으로 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 해보았습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Java/">Java</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Java/Linux/">Linux</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/">리눅스</category>
+      
+      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
+      
+      <category domain="https://playneko.github.io/tags/apt/">apt</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/Java/">Java</category>
+      
+      <category domain="https://playneko.github.io/tags/java-version/">java -version</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK/">OpenJDK</category>
+      
+      <category domain="https://playneko.github.io/tags/openjdk-8-jre/">openjdk-8-jre</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK11/">OpenJDK11</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenJDK8/">OpenJDK8</category>
+      
+      <category domain="https://playneko.github.io/tags/version/">version</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9E%90%EB%B0%94/">자바</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/15/rasberry-pi-023/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등</title>
+      <link>https://playneko.github.io/2020/06/14/rasberry-pi-022/</link>
+      <guid>https://playneko.github.io/2020/06/14/rasberry-pi-022/</guid>
+      <pubDate>Sat, 13 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2&lt;br&gt;이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-GPIO-파이썬을-이용해서-PUSH버튼으로-LED점등-2"><a href="#라즈베리파이에서-GPIO-파이썬을-이용해서-PUSH버튼으로-LED점등-2" class="headerlink" title="라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2"></a>라즈베리파이에서 GPIO 파이썬을 이용해서 PUSH버튼으로 LED점등 #2</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 라즈베리파이에서 GPIO, 파이썬을 이용해서 PUSH버튼으로 LED점등하기 #2 입니다.</p><p>우리가 일상적으로 집에 들어왔을경우 버튼을 누르고 거실의 등을 키는것과 같은 역활로</p><p>버튼을 누르게 되면 LED 2개가 순차적으로 점등이 되는것을 만들어 보도록 하겠습니다.</p><blockquote><h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul><li>라즈베리파이 OS, 파이썬 설치가 완료된 상태</li><li>점퍼케이블 암/수 5줄, 수컷 3줄</li><li>플레이트 보드</li><li>저항 330Ω 2개, 10KΩ 1개</li><li>LED전구 2개</li><li>푸쉬버튼</li></ul></blockquote><p><img src="001-3.jpg" alt="image"></p><p>색깔별 점퍼케이블의 연결순서는 아래의 표를 참고해 주세요.</p><table><thead><tr><th align="center">Color</th><th align="center">Pi GPIO Pin</th><th align="center">Notes</th></tr></thead><tbody><tr><td align="center">Red</td><td align="center">1</td><td align="center">3.3V</td></tr><tr><td align="center">White</td><td align="center">40</td><td align="center">21(SP1_SCLK)</td></tr><tr><td align="center">Brown</td><td align="center">10</td><td align="center">15(UART_RXD)</td></tr><tr><td align="center">Yellow</td><td align="center">8</td><td align="center">14(UART_TXD)</td></tr><tr><td align="center">Gray</td><td align="center">39</td><td align="center">GND</td></tr></tbody></table><p>GPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.</p><p><a href="https://playneko.github.io/2020/05/28/rasberry-pi-011/">라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항</a></p><p>위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면</p><p>이제 본격적인 코딩을 해야만 합니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p><p><img src="002-9.png" alt="image"></p><p>실행을 하셨으면 파일명을 gpio_multi_push_led.py로 추가를 해주시기 바랍니다.</p><p><img src="003-10.png" alt="image"></p><p>간단한 예제로 버튼을 누르면 첫번째 LED가 5초간 켜지고 꺼진뒤 2번째 LED가 켜지고 꺼지는 소스를 작성 하겠습니다.</p><p>아래의 코드를 입력해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PUSH Button</span></span><br><span class="line"><span class="comment"># 40Pin 21(SP1_SCLK)</span></span><br><span class="line">GPIO.setup(<span class="number">21</span>, GPIO.IN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># LED</span></span><br><span class="line"><span class="comment"># 8 14(UART_TXD)</span></span><br><span class="line">GPIO.setup(<span class="number">14</span>, GPIO.OUT)</span><br><span class="line"><span class="comment"># 10 15(UART_RXD)</span></span><br><span class="line">GPIO.setup(<span class="number">15</span>, GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 40Pin의 버튼에 대한 입력값</span></span><br><span class="line">        inputIO = GPIO.<span class="built_in">input</span>(<span class="number">21</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 버튼이 눌렸는지 체크</span></span><br><span class="line">        <span class="keyword">if</span> inputIO == <span class="literal">False</span>:</span><br><span class="line">            <span class="comment"># LED를 켜기</span></span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.HIGH)</span><br><span class="line">            time.sleep(<span class="number">5</span>)</span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.HIGH)</span><br><span class="line">            time.sleep(<span class="number">5</span>)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># LED를 끄기</span></span><br><span class="line">            GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">            GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ctrl + C키를 누르면 종료 됩니다.</span></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="comment"># 종료시 LED를 무조건 끄기</span></span><br><span class="line">    GPIO.output(<span class="number">14</span>, GPIO.LOW)</span><br><span class="line">    GPIO.output(<span class="number">15</span>, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPIO 클린업</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    GPIO.cleanup()</span><br></pre></td></tr></table></figure><p>작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해</p><p>소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.</p><p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p><p><img src="004-9.png" alt="image"></p><p>라즈베리파이의 리스트 목록을 보시면 gpio_multi_push_led.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.</p><p>이제 명령어로 버튼을 눌렀을경우 순차적으로 LED가 켜지고 꺼지는지 확인 해보도록 하겠습니다.</p><p>아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_multi_push_led.py</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_multi_push_led.py</span><br></pre></td></tr></table></figure><p>저의 경우는 3.x버전대를 이용하기에 3.x버전대의 명령어로 실행을 하겠습니다.</p><p><img src="005-1-1.png" alt="image"></p><p>위와같이 실행이 된 상태에서 버튼을 눌러보시면 첫번째 LED가 켜지고 5초뒤에 두번째 LED가 켜지는것을 확인하실수 있습니다.</p><p>만일 LED가 켜키지 않을경우 배선이 맞게 되어있는지 LED를 (+,-)가 맞게 꼽혀있는지 확인해 주세요.</p><p>프로그램을 종료를 하실경우에는 Ctrl + C키를 눌러주시면 프로그램이 종료 됩니다.</p><p>이렇게해서 푸쉬버튼을 이용한 멀티 LED 켜고 끄기가 끝났습니다.</p><p>다음에도 더 다양한 방식을 소개하도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/LED/">LED</category>
+      
+      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
+      
+      <category domain="https://playneko.github.io/tags/Python/">Python</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/">파이썬</category>
+      
+      <category domain="https://playneko.github.io/tags/Visual-Studio-Code/">Visual Studio Code</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/">비주얼 스튜디오 코드</category>
+      
+      <category domain="https://playneko.github.io/tags/Button/">Button</category>
+      
+      <category domain="https://playneko.github.io/tags/Push/">Push</category>
+      
+      <category domain="https://playneko.github.io/tags/Push-Button/">Push Button</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B2%84%ED%8A%BC/">버튼</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%91%B8%EC%89%AC%EB%B2%84%ED%8A%BC/">푸쉬버튼</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/14/rasberry-pi-022/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>라즈베리파이 GPIO 파이썬을 이용 PUSH버튼으로 LED점등</title>

@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이로 레트로(ReTroPie) 게임기 만들기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="balenaEtcher,HDMI,OS,Rasberry Pi,ReTroPie,SD카드,SSH,VNC,ラズベリーパイ,게임기,게임기 패드,고전게임,라즈베리파이,레트로,오락실">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이로 레트로(ReTroPie) 게임기 만들기안녕하세요.\n이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.\n고전게임을 좋아하시거나 고전게임이 무엇인지 잘 모르시는 분들께 한번 만들어서 즐기시는것을\n한번쯤 추천을 드리겠습니다.\n오랜만에 옛날게임을 즐기며 추억의 향수를 느끼실수 있습니다.\n\n준비물\n라즈베리파이 3(Raspberry Pi 3 model B)\n레트로파이용 전용 케이스\nSD카드 8기가 이상\nHDMI케이블\n5V 2A USB 케이블과 어뎁터\nUSB키보드 또는 게임기 패드\n\n\n위의 준비물이 갖춰졌으면 본격적으로 레트로 게임기를 만들어 보겠습니다.\n라즈베리파이 오락실레트로파이 간략한 준비물의 상태는 아래와 같습니다.\n\n케이스를 꺼내기전 박스포장된 상태 입니다.\n박스포장도 레트로 게임기 디자인으로 되어 있습니다.\n\n박스에서 레트로게임기 케이스를 꺼낸 모습 입니다.\n옆에는 각 구조 설명과 조립방법이 적혀져 있습니다.\n\n조립하기전 부품 상세 내용물 입니다.\n\n조립이 완성되었습니다.\n본격적으로 게임기로 사용할수 있게 다음 준비를 하도록 하겠습니다.\n우선 SD카드에 레트로파이용 OS를 설치부터 진행을 하도록 하겠습니다.\nSD카드를 컴퓨터에 삽입후 balenaEtcher를 실행해 주세요.\nbalenaEtcher에 대해 잘 모르실경우 라즈베리파이3 B 설치하기를 참고해 주세요.\nSD카드를 삽입을 하시고 balenaEtcher를 실행을 해주셨으면\n아래의 레트로파이 사이트에서 레트로파이용 OS를 다운로드 받아주세요.\nhttps://retropie.org.uk/download/\n\n보유하신 라즈베리파이 기종에 맞게 다운로드를 해주시기 바랍니다.\n\nbalenaEtcher를 실행한 상태 입니다.\n\n첫번째에 다운로드 받으신 레트로파이 OS 이미지파일을 선택하시고\n두번째는 컴퓨터에 삽입하신 SD카드를 선택해 주세요. 그리고 마지막 Flash!버튼을 눌러주시기 바랍니다.\n\n\n위와같이 나오면 SD카드를 포맷후 레트로파이 OS 설치가 진행 됩니다.\n\n레트로파이 OS 설치가 완료 되었습니다.\nSD카드를 추출하시고 라즈베리파이에 삽입을 해주시기 바랍니다.\n그리고 모니터 또는 티비에 연결을 하신후 전원을 넣어주시기 바랍니다.\n\n그러면 레트로파이 OS가 기동을 하는게 나오게 됩니다.\n조금 기다리시면 자동으로 넘어가게 됩니다.\n\n처음 화면 입니다.\n\nUSB키보드 또는 게임기 패드로 조작키 설정을 하는 화면이 나오게 되며\n안내대로 따라서 설정을 하시고 완료를 하시면 됩니다.\n\n모든 설정이 끝나면 이런 화면이 나오고 이제 게임을 즐기실수 있습니다.","dateCreated":"2020-06-20T01:00:00+09:00","dateModified":"2020-12-25T09:29:51+09:00","datePublished":"2020-06-20T01:00:00+09:00","description":"\n라즈베리파이로 레트로(ReTroPie) 게임기 만들기이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.","headline":"라즈베리파이로 레트로(ReTroPie) 게임기 만들기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/20/rasberry-pi-026/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/20/rasberry-pi-026/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, balenaEtcher, HDMI, OS, ReTroPie, SD카드, 게임기, 게임기 패드, 고전게임, 레트로, 오락실","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이로 레트로(ReTroPie) 게임기 만들기이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이로 레트로(ReTroPie) 게임기 만들기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이로 레트로(ReTroPie) 게임기 만들기이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/001-5.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/002-3.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/003-1.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/004-1.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/001-13.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/002-13.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/003-14.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/004-13.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/005-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/006-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/006.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/007.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/008.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/009.jpg">
+<meta property="article:published_time" content="2020-06-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-25T00:29:51.333Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="balenaEtcher">
+<meta property="article:tag" content="HDMI">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="ReTroPie">
+<meta property="article:tag" content="SD카드">
+<meta property="article:tag" content="게임기">
+<meta property="article:tag" content="게임기 패드">
+<meta property="article:tag" content="고전게임">
+<meta property="article:tag" content="레트로">
+<meta property="article:tag" content="오락실">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/001-5.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/20/rasberry-pi-026/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이로 레트로(ReTroPie) 게임기 만들기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-20T01:00:00+09:00">
+	
+		    2020/06/20 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이로-레트로-ReTroPie-게임기-만들기"><a href="#라즈베리파이로-레트로-ReTroPie-게임기-만들기" class="headerlink" title="라즈베리파이로 레트로(ReTroPie) 게임기 만들기"></a>라즈베리파이로 레트로(ReTroPie) 게임기 만들기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이를 이용해서 레트로(ReTroPie) 게임기를 만들어 보겠습니다.</p>
+<p>고전게임을 좋아하시거나 고전게임이 무엇인지 잘 모르시는 분들께 한번 만들어서 즐기시는것을</p>
+<p>한번쯤 추천을 드리겠습니다.</p>
+<p>오랜만에 옛날게임을 즐기며 추억의 향수를 느끼실수 있습니다.</p>
+<blockquote>
+<h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul>
+<li>라즈베리파이 3(Raspberry Pi 3 model B)</li>
+<li>레트로파이용 전용 케이스</li>
+<li>SD카드 8기가 이상</li>
+<li>HDMI케이블</li>
+<li>5V 2A USB 케이블과 어뎁터</li>
+<li>USB키보드 또는 게임기 패드</li>
+</ul>
+</blockquote>
+<p>위의 준비물이 갖춰졌으면 본격적으로 레트로 게임기를 만들어 보겠습니다.</p>
+<h4 id="라즈베리파이-오락실"><a href="#라즈베리파이-오락실" class="headerlink" title="라즈베리파이 오락실"></a>라즈베리파이 오락실</h4><p>레트로파이 간략한 준비물의 상태는 아래와 같습니다.</p>
+<p><img src="001-5.jpg" alt="image"></p>
+<p>케이스를 꺼내기전 박스포장된 상태 입니다.</p>
+<p>박스포장도 레트로 게임기 디자인으로 되어 있습니다.</p>
+<p><img src="002-3.jpg" alt="image"></p>
+<p>박스에서 레트로게임기 케이스를 꺼낸 모습 입니다.</p>
+<p>옆에는 각 구조 설명과 조립방법이 적혀져 있습니다.</p>
+<p><img src="003-1.jpg" alt="image"></p>
+<p>조립하기전 부품 상세 내용물 입니다.</p>
+<p><img src="004-1.jpg" alt="image"></p>
+<p>조립이 완성되었습니다.</p>
+<p>본격적으로 게임기로 사용할수 있게 다음 준비를 하도록 하겠습니다.</p>
+<p>우선 SD카드에 레트로파이용 OS를 설치부터 진행을 하도록 하겠습니다.</p>
+<p>SD카드를 컴퓨터에 삽입후 balenaEtcher를 실행해 주세요.</p>
+<p>balenaEtcher에 대해 잘 모르실경우 라즈베리파이3 B 설치하기를 참고해 주세요.</p>
+<p>SD카드를 삽입을 하시고 balenaEtcher를 실행을 해주셨으면</p>
+<p>아래의 레트로파이 사이트에서 레트로파이용 OS를 다운로드 받아주세요.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://retropie.org.uk/download/">https://retropie.org.uk/download/</a></p>
+<p><img src="001-13.png" alt="image"></p>
+<p>보유하신 라즈베리파이 기종에 맞게 다운로드를 해주시기 바랍니다.</p>
+<p><img src="002-13.png" alt="image"></p>
+<p>balenaEtcher를 실행한 상태 입니다.</p>
+<p><img src="003-14.png" alt="image"></p>
+<p>첫번째에 다운로드 받으신 레트로파이 OS 이미지파일을 선택하시고</p>
+<p>두번째는 컴퓨터에 삽입하신 SD카드를 선택해 주세요. 그리고 마지막 Flash!버튼을 눌러주시기 바랍니다.</p>
+<p><img src="004-13.png" alt="image"></p>
+<p><img src="005-9.png" alt="image"></p>
+<p>위와같이 나오면 SD카드를 포맷후 레트로파이 OS 설치가 진행 됩니다.</p>
+<p><img src="006-10.png" alt="image"></p>
+<p>레트로파이 OS 설치가 완료 되었습니다.</p>
+<p>SD카드를 추출하시고 라즈베리파이에 삽입을 해주시기 바랍니다.</p>
+<p>그리고 모니터 또는 티비에 연결을 하신후 전원을 넣어주시기 바랍니다.</p>
+<p><img src="006.jpg" alt="image"></p>
+<p>그러면 레트로파이 OS가 기동을 하는게 나오게 됩니다.</p>
+<p>조금 기다리시면 자동으로 넘어가게 됩니다.</p>
+<p><img src="007.jpg" alt="image"></p>
+<p>처음 화면 입니다.</p>
+<p><img src="008.jpg" alt="image"></p>
+<p>USB키보드 또는 게임기 패드로 조작키 설정을 하는 화면이 나오게 되며</p>
+<p>안내대로 따라서 설정을 하시고 완료를 하시면 됩니다.</p>
+<p><img src="009.jpg" alt="image"></p>
+<p>모든 설정이 끝나면 이런 화면이 나오고 이제 게임을 즐기실수 있습니다.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/HDMI/" rel="tag">HDMI</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OS/" rel="tag">OS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/ReTroPie/" rel="tag">ReTroPie</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SD%EC%B9%B4%EB%93%9C/" rel="tag">SD카드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/balenaEtcher/" rel="tag">balenaEtcher</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B2%8C%EC%9E%84%EA%B8%B0/" rel="tag">게임기</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B2%8C%EC%9E%84%EA%B8%B0-%ED%8C%A8%EB%93%9C/" rel="tag">게임기 패드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B3%A0%EC%A0%84%EA%B2%8C%EC%9E%84/" rel="tag">고전게임</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A0%88%ED%8A%B8%EB%A1%9C/" rel="tag">레트로</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%98%A4%EB%9D%BD%EC%8B%A4/" rel="tag">오락실</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/20/rasberry-pi-026/';
+              
+            this.page.identifier = '2020/06/20/rasberry-pi-026/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

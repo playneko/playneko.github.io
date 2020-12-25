@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Echo,GPIO,HC-SR04,Python,Rasberry Pi,SSH,Trig,Visual Studio Code,VNC,ラズベリーパイ,라즈베리파이,비주얼 스튜디오 코드,초음파,초음파 센서,파이썬">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기안녕하세요.\n이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.\n초음파 센서를 통해서 거리를 계산을 하거나 할경우 이용을 하실수가 있습니다.\n초음파 센서를 제어하기 위해선 우선 준비물이 필요합니다.\n\n준비물\n라즈베리파이 OS가 설치된 라즈베리파이\nELEGOO Arduino용 HC-SR04 초음파 센서 1개\n점퍼케이블 암,수 4줄\n플레이트 보드 1개\n1KΩ 저항 1개, 2KΩ저항 1개\n\n\n준비물이 준비가 되셨으면 본격적으로 초음파 센서 제어를 해보도록 하겠습니다.\n아래의 회로도를 참고하셔서 케이블과 센서를 연결을 해주시기 바랍니다.\n\n\n\n\n\n\n1KΩ 저항은 Echo와 연결을 해주세요.\n2KΩ 저항은 GND와 연결을 해주세요.\nTrig는 GPIO 17번과 연결을 해주세요.\nEcho는 GPIO 18번과 연결을 해주세요.\n\n\nEcho의 경우 5V의 전압을 사용하기 때문에\n저항을 이용해서 라즈베리파이에 부담을 주지않는 3.3V로 다시 낮춰 주셔야만 합니다.\n\n\n\nColor\nPi GPIO Pin\nNotes\n\n\n\nRed\n2\n5V\n\n\nYellow\n11\n17\n\n\nWhite\n12\n18(PWM0)\n\n\nGray\n39\nGND\n\n\nGPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.\n라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항\n위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면\n이제 본격적인 코딩을 해야만 합니다.\nVisual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다\n\n실행을 하셨으면 파일명을 gpio_HC-SR04.py로 추가를 해주시기 바랍니다.\n\n간단한 예제로 파이썬을 이용해 초음파 센서(HC-SR04)를 제어할 소스를 작성 하겠습니다.\n아래의 코드를 입력해 주세요.\n1234567891011121314151617181920212223242526272829303132333435363738import RPi.GPIO as GPIOimport timeprint(&quot;AkibaTV HC-SR04 Start&quot;)GPIO.setmode(GPIO.BCM)# Yellow : Pin 11 : 17(Trig)GPIO.setup(17, GPIO.OUT)# White : Pin 12 : 18(Echo)GPIO.setup(18, GPIO.IN)try:    while True:        GPIO.output(17, False)        time.sleep(0.5)        GPIO.output(17, True)        time.sleep(0.00001)        GPIO.output(17, False)        # 18번이 OFF가 되는 시점을 시작시간으로 설정        while GPIO.input(18) == 0:            start = time.time()        # 18번이 ON이 되는 시점을 반사파 수신시간으로 설정        while GPIO.input(18) == 1:            stop = time.time()        # 초음파가 되돌아오는 시간차로 거리를 계산한다        time_interval = stop - start        distance = time_interval * 17000        distance = round(distance, 2)        print(&quot;Distance =&gt; &quot;, distance, &quot;cm&quot;)except KeyboardInterrupt:    GPIO.cleanup()    print(&quot;AkibaTV HC-SR04 End&quot;)\n작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해\n소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.\n그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.\n\n라즈베리파이의 리스트 목록을 보시면 gpio_HC-SR04.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.\n이제 명령어로 초음파 센서(HC-SR04)가 작동하는지 확인 해보도록 하겠습니다.\n아래의 명령어를 입력해 주세요.\n12# 파이썬 2.x버전대를 이용하실경우$ sudo python ./gpio_HC-SR04.py\n12# 파이썬 3.x버전대를 이용하실경우$ sudo python3 ./gpio_HC-SR04.py\n저의 경우는 파이썬을 3.x버전대를 사용하고 있기에 3.x의 명령어로 실행을 하도록 하겠습니다.\n\n위와같이 초음파가 실행되면 거리에 대한 값이 터미널에 출력되는것을 확인 하실수 있습니다.\n미묘한 오차는 발생할수는 있을수가 있겠습니다.\n초음파 센서를 이용하시면 원거리의 값이나 가까이에 무엇인가 있을경우 측정을 하실때\n유용하게 사용할수가 있겠습니다.\n다음에는 좀더 다양한 방법으로 초음파 센서를 이용한 방법을 소개해 드리도록 하겠습니다.","dateCreated":"2020-06-19T01:00:00+09:00","dateModified":"2020-12-25T09:29:31+09:00","datePublished":"2020-06-19T01:00:00+09:00","description":"\n라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.","headline":"라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/19/rasberry-pi-025/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/19/rasberry-pi-025/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, GPIO, Python, 파이썬, Visual Studio Code, 비주얼 스튜디오 코드, Echo, HC-SR04, Trig, 초음파, 초음파 센서","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/001-12.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/RasPiGPIO.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/001-4.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/002-2.jpg">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/002-12.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/003-13.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/004-1-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/005-8.png">
+<meta property="article:published_time" content="2020-06-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-25T00:29:31.138Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="GPIO">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="파이썬">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="Echo">
+<meta property="article:tag" content="HC-SR04">
+<meta property="article:tag" content="Trig">
+<meta property="article:tag" content="초음파">
+<meta property="article:tag" content="초음파 센서">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/001-12.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/19/rasberry-pi-025/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-19T01:00:00+09:00">
+	
+		    2020/06/19 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Python/">Python</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+<h2 id="라즈베리파이에-GPIO-파이썬을-이용해-초음파-센서-HC-SR04-제어하기"><a href="#라즈베리파이에-GPIO-파이썬을-이용해-초음파-센서-HC-SR04-제어하기" class="headerlink" title="라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기"></a>라즈베리파이에 GPIO 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이에 GPIO, 파이썬을 이용해 초음파 센서(HC-SR04) 제어하기 입니다.</p>
+<p>초음파 센서를 통해서 거리를 계산을 하거나 할경우 이용을 하실수가 있습니다.</p>
+<p>초음파 센서를 제어하기 위해선 우선 준비물이 필요합니다.</p>
+<blockquote>
+<h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul>
+<li>라즈베리파이 OS가 설치된 라즈베리파이</li>
+<li>ELEGOO Arduino용 HC-SR04 초음파 센서 1개</li>
+<li>점퍼케이블 암,수 4줄</li>
+<li>플레이트 보드 1개</li>
+<li>1KΩ 저항 1개, 2KΩ저항 1개</li>
+</ul>
+</blockquote>
+<p>준비물이 준비가 되셨으면 본격적으로 초음파 센서 제어를 해보도록 하겠습니다.</p>
+<p>아래의 회로도를 참고하셔서 케이블과 센서를 연결을 해주시기 바랍니다.</p>
+<p><img src="001-12.png" alt="image"></p>
+<p><img src="RasPiGPIO.png" alt="image"></p>
+<p><img src="001-4.jpg" alt="image"></p>
+<p><img src="002-2.jpg" alt="image"></p>
+<blockquote>
+<ul>
+<li>1KΩ 저항은 Echo와 연결을 해주세요.</li>
+<li>2KΩ 저항은 GND와 연결을 해주세요.</li>
+<li>Trig는 GPIO 17번과 연결을 해주세요.</li>
+<li>Echo는 GPIO 18번과 연결을 해주세요.</li>
+</ul>
+</blockquote>
+<p>Echo의 경우 5V의 전압을 사용하기 때문에</p>
+<p>저항을 이용해서 라즈베리파이에 부담을 주지않는 3.3V로 다시 낮춰 주셔야만 합니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Color</th>
+<th align="center">Pi GPIO Pin</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Red</td>
+<td align="center">2</td>
+<td align="center">5V</td>
+</tr>
+<tr>
+<td align="center">Yellow</td>
+<td align="center">11</td>
+<td align="center">17</td>
+</tr>
+<tr>
+<td align="center">White</td>
+<td align="center">12</td>
+<td align="center">18(PWM0)</td>
+</tr>
+<tr>
+<td align="center">Gray</td>
+<td align="center">39</td>
+<td align="center">GND</td>
+</tr>
+</tbody></table>
+<p>GPIO핀에 대한 자세한 내용을 원하시는 분은 아래의 링크를 들어가셔서 참고해 주세요.</p>
+<p><a href="https://playneko.github.io/2020/05/28/rasberry-pi-011/">라즈베리파이에서 GPIO를 사용하기전 알아두어야 할 사항</a></p>
+<p>위와같이 라즈베리파이와 플레이트 보드의 구성을 모두 마치셨으면</p>
+<p>이제 본격적인 코딩을 해야만 합니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다</p>
+<p><img src="002-12.png" alt="image"></p>
+<p>실행을 하셨으면 파일명을 gpio_HC-SR04.py로 추가를 해주시기 바랍니다.</p>
+<p><img src="003-13.png" alt="image"></p>
+<p>간단한 예제로 파이썬을 이용해 초음파 센서(HC-SR04)를 제어할 소스를 작성 하겠습니다.</p>
+<p>아래의 코드를 입력해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;AkibaTV HC-SR04 Start&quot;</span>)</span><br><span class="line"></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line"><span class="comment"># Yellow : Pin 11 : 17(Trig)</span></span><br><span class="line">GPIO.setup(<span class="number">17</span>, GPIO.OUT)</span><br><span class="line"><span class="comment"># White : Pin 12 : 18(Echo)</span></span><br><span class="line">GPIO.setup(<span class="number">18</span>, GPIO.IN)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">False</span>)</span><br><span class="line">        time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">True</span>)</span><br><span class="line">        time.sleep(<span class="number">0.00001</span>)</span><br><span class="line">        GPIO.output(<span class="number">17</span>, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 18번이 OFF가 되는 시점을 시작시간으로 설정</span></span><br><span class="line">        <span class="keyword">while</span> GPIO.<span class="built_in">input</span>(<span class="number">18</span>) == <span class="number">0</span>:</span><br><span class="line">            start = time.time()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 18번이 ON이 되는 시점을 반사파 수신시간으로 설정</span></span><br><span class="line">        <span class="keyword">while</span> GPIO.<span class="built_in">input</span>(<span class="number">18</span>) == <span class="number">1</span>:</span><br><span class="line">            stop = time.time()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 초음파가 되돌아오는 시간차로 거리를 계산한다</span></span><br><span class="line">        time_interval = stop - start</span><br><span class="line">        distance = time_interval * <span class="number">17000</span></span><br><span class="line">        distance = <span class="built_in">round</span>(distance, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&quot;Distance =&gt; &quot;</span>, distance, <span class="string">&quot;cm&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    GPIO.cleanup()</span><br><span class="line">    print(<span class="string">&quot;AkibaTV HC-SR04 End&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>작성하신 소스를 라즈베리파이에 넣고 실행을 하기위해</p>
+<p>소스파일을 라즈베리파이의 임의의 폴더에 올려주시기 바랍니다.</p>
+<p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p>
+<p><img src="004-1-2.png" alt="image"></p>
+<p>라즈베리파이의 리스트 목록을 보시면 gpio_HC-SR04.py 파일명으로 파일이 올라가 있는걸 확인할수 있습니다.</p>
+<p>이제 명령어로 초음파 센서(HC-SR04)가 작동하는지 확인 해보도록 하겠습니다.</p>
+<p>아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_HC-SR04.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_HC-SR04.py</span><br></pre></td></tr></table></figure>
+<p>저의 경우는 파이썬을 3.x버전대를 사용하고 있기에 3.x의 명령어로 실행을 하도록 하겠습니다.</p>
+<p><img src="005-8.png" alt="image"></p>
+<p>위와같이 초음파가 실행되면 거리에 대한 값이 터미널에 출력되는것을 확인 하실수 있습니다.</p>
+<p>미묘한 오차는 발생할수는 있을수가 있겠습니다.</p>
+<p>초음파 센서를 이용하시면 원거리의 값이나 가까이에 무엇인가 있을경우 측정을 하실때</p>
+<p>유용하게 사용할수가 있겠습니다.</p>
+<p>다음에는 좀더 다양한 방법으로 초음파 센서를 이용한 방법을 소개해 드리도록 하겠습니다.</p>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Echo/" rel="tag">Echo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/GPIO/" rel="tag">GPIO</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/HC-SR04/" rel="tag">HC-SR04</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Trig/" rel="tag">Trig</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%B4%88%EC%9D%8C%ED%8C%8C/" rel="tag">초음파</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%B4%88%EC%9D%8C%ED%8C%8C-%EC%84%BC%EC%84%9C/" rel="tag">초음파 센서</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/" rel="tag">파이썬</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/19/rasberry-pi-025/';
+              
+            this.page.identifier = '2020/06/19/rasberry-pi-025/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
