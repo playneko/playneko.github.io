@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="date,mktime,PHP,strtotime,time,timestamp,시간,시간관련,함수">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nPHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function안녕하세요.\n이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.\n날짜시간 관련 함수는 주로 많이 사용되는 함수이므로 참고를 해두시면\n앞으로 코딩을 하면서 날짜시간 관련 개발을 할때 유용한 정보가 될수가 있겠습니다.\n대충 한번이라도 봐두시면 나중에 반듯이 생각이나는 경우가 있겠습니다.\n\ntime : int time(void)현재 시간을 timestamp로 반환\nstrtotime : int strtotime ( string $time [, int $now = time() ] )string을 timestamp로 반환\ndate : string date ( string $format [, int $timestamp ] )정수형으로 주어지는 timestamp나, timestamp가 주어지지 않았을 경우에는현재 로컬시간을 사용하여, 주어진 포맷 문자열에 따라 형식화한 문자열을 반환합니다.즉 timestamp는 선택적이고 기본값은 time()의 값입니다.\n\n아래는 date format 형식1234567891011121314151617181920212223d : 일, 앞에 0이 붙는 2 숫자(01에서 31)D : 요일 글자 표현, 3문자(Mon에서 Sun)j : 앞에 0이 붙지 않는 일(1에서 31)l : 요일의 완전한 글자 표현(Sunday에서 Saturday)N : 요일의 ISO-8601 숫자 표현(1(월요일)에서 7(일요일))w : 요일 숫자 표현(0(일요일)에서 6(토요일))W : ISO-8601 주차, 주는 월요이에 시작(42(그 해의 42번째 주))F : January나 March 같은 월의 완전한 글자 표현(Januray에서 December)m : 0이 붙는 월 숫자 표현(01에서 12)M : 월의 축약 글자 표현, 3문자(Jan에서 Dec)n : 0이 붙지 않는 월 숫자 표현(1에서 12)t : 주어진 월의 일 수(28에서 31)L : 윤년 여부(윤년엔 1, 그 외엔 0)Y : 연도의 완전한 숫자 표현, 4 숫자(1999나 2012)y : 연도의 두 숫자 표현(99나 12)a : 오전과 오후의 소문자(am 또는 pm)A : 오전과 오후의 대문자(AM 또는 PM)g : 0이 붙지 않는 12시간 형식 시(1에서 12)G : 0이 붙지 않는 24시간 형식 시(1에서 24)h : 0이 붙는 12시간 형식 시(01에서 12)H : 0이 붙는 24시간 형식 시(00에서 24)i : 0이 붙는 분(00에서 59)s : 초, 0이 붙음(00에서 59)\n\nmktime : int mktime ([ int $hour = date(“H”) [, int $minute = date(“i”) [, int $second = date(“s”) [, int $month = date(“n”) [, int $day = date(“j”) [, int $year = date(“Y”) [, int $is_dst = -1 ]]]]]]] )\n\n아래의 인자값을 대입하면 timestamp를 반환 합니다.123456hour : 시간minute : 분second : 초month : 월day : 일year : 년도\n123456&lt;?php$nextWeek = time() + (7 * 24 * 60 * 60); // 현재시간에 7일에 해당하는 시간을 더한다echo &quot;현재 날짜 : &quot; . date(&#x27;Y-m-d&#x27;) . &quot;\\n&quot;;echo &quot;다음주 날짜 : &quot; . date(&#x27;Y-m-d&#x27;, $nextWeek) .&quot;\\n&quot;;echo &quot;다음주 날짜 : &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&#x27;+1 week&#x27;)) .&quot;\\n&quot;;?&gt;\n1234결과값 :현재 날짜 : 2020-05-28다음주 날짜 : 2020-06-04다음주 날짜 : 2020-06-04\n1234567&lt;?php$recentdate = mktime(0, 0, 0, 5, 28, 2020);$year=date(&#x27;Y&#x27;, $recentdate);$month=date(&#x27;m&#x27;, $recentdate);$day=date(&#x27;d&#x27;, $recentdate);echo &quot;현재 : &quot; . $year . &quot;년 &quot; . $month . &quot;월 &quot; . $day . &quot;일&quot;;?&gt;\n12결과값 :현재 : 2020년 05월 28일\n123456789&lt;?phpecho &quot;현재: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;now&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;10 September 2000&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;+1 day&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;+1 week&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;+1 week 2 days&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;next Thursday&quot;)).&quot;\\n&quot;;echo &quot;날짜: &quot; . date(&#x27;Y-m-d&#x27;, strtotime(&quot;last Monday&quot;)).&quot;\\n&quot;;?&gt;\n12345678결과값 :현재: 2020-05-28날짜: 2000-09-10날짜: 2020-05-29날짜: 2020-06-04날짜: 2020-06-06날짜: 2020-06-04날짜: 2020-05-25","dateCreated":"2020-05-28T01:00:00+09:00","dateModified":"2020-12-26T20:10:15+09:00","datePublished":"2020-05-28T01:00:00+09:00","description":"\nPHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.","headline":"PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/28/php/php-001/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/28/php/php-001/","keywords":"PHP, date, mktime, strtotime, time, timestamp, 시간, 시간관련, 함수","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="PHP 날짜시간 함수 사용하기(date&#x2F;strtotime&#x2F;mktime) Function이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="PHP 날짜시간 함수 사용하기(date&#x2F;strtotime&#x2F;mktime) Function">
+<meta property="og:url" content="https://playneko.github.io/2020/05/28/php/php-001/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="PHP 날짜시간 함수 사용하기(date&#x2F;strtotime&#x2F;mktime) Function이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2020-05-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T11:10:15.525Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="date">
+<meta property="article:tag" content="mktime">
+<meta property="article:tag" content="strtotime">
+<meta property="article:tag" content="time">
+<meta property="article:tag" content="timestamp">
+<meta property="article:tag" content="시간">
+<meta property="article:tag" content="시간관련">
+<meta property="article:tag" content="함수">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/28/php/php-001/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/28/php/php-001/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-28T01:00:00+09:00">
+	
+		    2020/05/28 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/PHP/">PHP</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function"><a href="#PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function" class="headerlink" title="PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function"></a>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.</p>
+<p>날짜시간 관련 함수는 주로 많이 사용되는 함수이므로 참고를 해두시면</p>
+<p>앞으로 코딩을 하면서 날짜시간 관련 개발을 할때 유용한 정보가 될수가 있겠습니다.</p>
+<p>대충 한번이라도 봐두시면 나중에 반듯이 생각이나는 경우가 있겠습니다.</p>
+<blockquote>
+<p>time : int time(void)<br>현재 시간을 timestamp로 반환</p>
+<p>strtotime : int strtotime ( string $time [, int $now = time() ] )<br>string을 timestamp로 반환</p>
+<p>date : string date ( string $format [, int $timestamp ] )<br>정수형으로 주어지는 timestamp나, timestamp가 주어지지 않았을 경우에는<br>현재 로컬시간을 사용하여, 주어진 포맷 문자열에 따라 형식화한 문자열을 반환합니다.<br>즉 timestamp는 선택적이고 기본값은 time()의 값입니다.</p>
+</blockquote>
+<h5 id="아래는-date-format-형식"><a href="#아래는-date-format-형식" class="headerlink" title="아래는 date format 형식"></a>아래는 date format 형식</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">d : 일, 앞에 0이 붙는 2 숫자(01에서 31)</span><br><span class="line">D : 요일 글자 표현, 3문자(Mon에서 Sun)</span><br><span class="line">j : 앞에 0이 붙지 않는 일(1에서 31)</span><br><span class="line">l : 요일의 완전한 글자 표현(Sunday에서 Saturday)</span><br><span class="line">N : 요일의 ISO-8601 숫자 표현(1(월요일)에서 7(일요일))</span><br><span class="line">w : 요일 숫자 표현(0(일요일)에서 6(토요일))</span><br><span class="line">W : ISO-8601 주차, 주는 월요이에 시작(42(그 해의 42번째 주))</span><br><span class="line">F : January나 March 같은 월의 완전한 글자 표현(Januray에서 December)</span><br><span class="line">m : 0이 붙는 월 숫자 표현(01에서 12)</span><br><span class="line">M : 월의 축약 글자 표현, 3문자(Jan에서 Dec)</span><br><span class="line">n : 0이 붙지 않는 월 숫자 표현(1에서 12)</span><br><span class="line">t : 주어진 월의 일 수(28에서 31)</span><br><span class="line">L : 윤년 여부(윤년엔 1, 그 외엔 0)</span><br><span class="line">Y : 연도의 완전한 숫자 표현, 4 숫자(1999나 2012)</span><br><span class="line">y : 연도의 두 숫자 표현(99나 12)</span><br><span class="line">a : 오전과 오후의 소문자(am 또는 pm)</span><br><span class="line">A : 오전과 오후의 대문자(AM 또는 PM)</span><br><span class="line">g : 0이 붙지 않는 12시간 형식 시(1에서 12)</span><br><span class="line">G : 0이 붙지 않는 24시간 형식 시(1에서 24)</span><br><span class="line">h : 0이 붙는 12시간 형식 시(01에서 12)</span><br><span class="line">H : 0이 붙는 24시간 형식 시(00에서 24)</span><br><span class="line">i : 0이 붙는 분(00에서 59)</span><br><span class="line">s : 초, 0이 붙음(00에서 59)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mktime : int mktime ([ int $hour = date(“H”) [, int $minute = date(“i”) [, int $second = date(“s”) [, int $month = date(“n”) [, int $day = date(“j”) [, int $year = date(“Y”) [, int $is_dst = -1 ]]]]]]] )</p>
+</blockquote>
+<h5 id="아래의-인자값을-대입하면-timestamp를-반환-합니다"><a href="#아래의-인자값을-대입하면-timestamp를-반환-합니다" class="headerlink" title="아래의 인자값을 대입하면 timestamp를 반환 합니다."></a>아래의 인자값을 대입하면 timestamp를 반환 합니다.</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hour : 시간</span><br><span class="line">minute : 분</span><br><span class="line">second : 초</span><br><span class="line">month : 월</span><br><span class="line">day : 일</span><br><span class="line">year : 년도</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$nextWeek</span> = time() + (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span>); <span class="comment">// 현재시간에 7일에 해당하는 시간을 더한다</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, <span class="variable">$nextWeek</span>) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&#x27;+1 week&#x27;</span>)) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 날짜 : 2020-05-28</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$recentdate</span> = mktime(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">28</span>, <span class="number">2020</span>);</span><br><span class="line"><span class="variable">$year</span>=date(<span class="string">&#x27;Y&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$month</span>=date(<span class="string">&#x27;m&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$day</span>=date(<span class="string">&#x27;d&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 : &quot;</span> . <span class="variable">$year</span> . <span class="string">&quot;년 &quot;</span> . <span class="variable">$month</span> . <span class="string">&quot;월 &quot;</span> . <span class="variable">$day</span> . <span class="string">&quot;일&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 : 2020년 05월 28일</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;now&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;10 September 2000&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 day&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week 2 days&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;next Thursday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;last Monday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재: 2020-05-28</span><br><span class="line">날짜: 2000-09-10</span><br><span class="line">날짜: 2020-05-29</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-06-06</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-05-25</span><br></pre></td></tr></table></figure>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/date/" rel="tag">date</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/mktime/" rel="tag">mktime</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/strtotime/" rel="tag">strtotime</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/time/" rel="tag">time</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/timestamp/" rel="tag">timestamp</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%9C%EA%B0%84/" rel="tag">시간</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%9C%EA%B0%84%EA%B4%80%EB%A0%A8/" rel="tag">시간관련</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%95%A8%EC%88%98/" rel="tag">함수</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/28/php/php-001/';
+              
+            this.page.identifier = '2020/05/28/php/php-001/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
