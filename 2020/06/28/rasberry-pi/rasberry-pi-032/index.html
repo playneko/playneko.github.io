@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에 openmediavault(OMV) 5 설치하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="BitTorrent,DAAP,FTP,linux,NAS,OMV,openmediavault,OS,PHP,Rasberry Pi,root,RSync,SMB/CIFS,SSH,VNC,zero,ラズベリーパイ,데비안 리눅스,라즈베리파이,웹브라우저,프레임 워크">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에 openmediavault(OMV) 5 설치하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.\nopenmediavault 란 무엇입니까?openmediavault는 데비안 리눅스 기반의 차세대 NAS (Network Attached Storage) 솔루션입니다.\nSSH, (S) FTP, SMB / CIFS, DAAP 미디어 서버, RSync, BitTorrent 클라이언트 등의 서비스가 포함되어 있습니다.\n프레임 워크의 모듈식 설계 덕분에 플러그인을 통해 기능을 향상시킬 수 있습니다.\nopenmediavault는 주로 소규모 사무실이나 본사에서 사용하도록 설계되었지만 이러한 시나리오에만 국한되지는 않습니다.\n모든 사용자가 심도있는 지식없이 Network Attached Storage를 설치 및 관리 할 수있는 간편하고 사용하기 쉬운 솔루션입니다.\nhttps://www.openmediavault.org/\n\nopenmediavault(OMV) 5를 설치하시기 위해선 우선 라즈베리파이에\n라즈베리파이 OS를 설치를 해주시기 바랍니다.\n설치 방법은 [모니터없이 라즈베리파이3 B 설치하기]를 참고해 주시기 바랍니다.\n\n라즈베리파이 OS가 설치 완료된 상태 입니다.\n\n라즈베리파이의 모든 설정과 업데이트가 끝났습니다.\n재시작을 해주시기 바랍니다.\n재시작을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.\n\n이제 본격적으로 openmediavault(OMV)를 설치하기에 앞서 아래의 명령어로 업데이트 및 업그레이드를 합니다.\n123456# 업데이트$ sudo apt-get update# 업그레이드$ sudo apt-get upgrade# 재부팅$ sudo reboot\n\n\n재부팅을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.\n아래의 명령어를 입력해서 openmediavault(OMV) 설치를 하도록 하겠습니다.\n명령여는 omv-5.txt 링크를 여시면 나오는 내용을 복사해서 붙여넣어서 실행 하는것을 추천합니다.\n12# openmediavault(OMV) 5 설치 명령어$ wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash\n\n한참 설치후 VNC접속이 끊긴후 이와같은 화면이 나오게 되면 설치가 완료가 된것입니다.\n\nopenmediavault(OMV)를 확인하기 위해선 브라우저를 실행하시기 바랍니다.\n웹브라우저의 URL에 http://OMV가 설치된 라즈베리파이 IP 를 입력하시고 접속해 주세요.\n\n\n초기 ID : admin초기 Password :openmediavault\n\n\n정상적으로 접속이 되었으면 이걸로 라즈베리파이에 openmediavault(OMV) 5 설치하기가 완료 되었습니다.","dateCreated":"2020-06-28T01:00:00+09:00","dateModified":"2020-12-26T19:49:27+09:00","datePublished":"2020-06-28T01:00:00+09:00","description":"\n라즈베리파이에 openmediavault(OMV) 5 설치하기이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.","headline":"라즈베리파이에 openmediavault(OMV) 5 설치하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, PHP, root, zero, OS, 웹브라우저, BitTorrent, DAAP, FTP, NAS, OMV, openmediavault, RSync, SMB/CIFS, 데비안 리눅스, 프레임 워크","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에 openmediavault(OMV) 5 설치하기이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에 openmediavault(OMV) 5 설치하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에 openmediavault(OMV) 5 설치하기이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/001-21.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/005-16.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/006-16.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/007-13.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/008-12.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/009-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/010-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/011-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/012-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/013-8.png">
+<meta property="article:published_time" content="2020-06-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:49:27.571Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="BitTorrent">
+<meta property="article:tag" content="DAAP">
+<meta property="article:tag" content="FTP">
+<meta property="article:tag" content="NAS">
+<meta property="article:tag" content="OMV">
+<meta property="article:tag" content="openmediavault">
+<meta property="article:tag" content="RSync">
+<meta property="article:tag" content="SMB&#x2F;CIFS">
+<meta property="article:tag" content="데비안 리눅스">
+<meta property="article:tag" content="프레임 워크">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/001-21.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에 openmediavault(OMV) 5 설치하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-28T01:00:00+09:00">
+	
+		    2020/06/28 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/">Linux</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에-openmediavault-OMV-5-설치하기"><a href="#라즈베리파이에-openmediavault-OMV-5-설치하기" class="headerlink" title="라즈베리파이에 openmediavault(OMV) 5 설치하기"></a>라즈베리파이에 openmediavault(OMV) 5 설치하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.</p>
+<h4 id="openmediavault-란-무엇입니까"><a href="#openmediavault-란-무엇입니까" class="headerlink" title="openmediavault 란 무엇입니까?"></a>openmediavault 란 무엇입니까?</h4><p>openmediavault는 데비안 리눅스 기반의 차세대 NAS (Network Attached Storage) 솔루션입니다.</p>
+<p>SSH, (S) FTP, SMB / CIFS, DAAP 미디어 서버, RSync, BitTorrent 클라이언트 등의 서비스가 포함되어 있습니다.</p>
+<p>프레임 워크의 모듈식 설계 덕분에 플러그인을 통해 기능을 향상시킬 수 있습니다.</p>
+<p>openmediavault는 주로 소규모 사무실이나 본사에서 사용하도록 설계되었지만 이러한 시나리오에만 국한되지는 않습니다.</p>
+<p>모든 사용자가 심도있는 지식없이 Network Attached Storage를 설치 및 관리 할 수있는 간편하고 사용하기 쉬운 솔루션입니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.openmediavault.org/">https://www.openmediavault.org/</a></p>
+<p><img src="001-21.png" alt="image"></p>
+<p>openmediavault(OMV) 5를 설치하시기 위해선 우선 라즈베리파이에</p>
+<p>라즈베리파이 OS를 설치를 해주시기 바랍니다.</p>
+<p>설치 방법은 [모니터없이 라즈베리파이3 B 설치하기]를 참고해 주시기 바랍니다.</p>
+<p><img src="005-16.png" alt="image"></p>
+<p>라즈베리파이 OS가 설치 완료된 상태 입니다.</p>
+<p><img src="006-16.png" alt="image"></p>
+<p>라즈베리파이의 모든 설정과 업데이트가 끝났습니다.</p>
+<p>재시작을 해주시기 바랍니다.</p>
+<p>재시작을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.</p>
+<p><img src="007-13.png" alt="image"></p>
+<p>이제 본격적으로 openmediavault(OMV)를 설치하기에 앞서 아래의 명령어로 업데이트 및 업그레이드를 합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 업데이트</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line"><span class="comment"># 업그레이드</span></span><br><span class="line">$ sudo apt-get upgrade</span><br><span class="line"><span class="comment"># 재부팅</span></span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+<p><img src="008-12.png" alt="image"></p>
+<p><img src="009-9.png" alt="image"></p>
+<p>재부팅을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.</p>
+<p>아래의 명령어를 입력해서 openmediavault(OMV) 설치를 하도록 하겠습니다.</p>
+<p>명령여는 omv-5.txt 링크를 여시면 나오는 내용을 복사해서 붙여넣어서 실행 하는것을 추천합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># openmediavault(OMV) 5 설치 명령어</span></span><br><span class="line">$ wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash</span><br></pre></td></tr></table></figure>
+<p><img src="010-9.png" alt="image"></p>
+<p>한참 설치후 VNC접속이 끊긴후 이와같은 화면이 나오게 되면 설치가 완료가 된것입니다.</p>
+<p><img src="011-8.png" alt="image"></p>
+<p>openmediavault(OMV)를 확인하기 위해선 브라우저를 실행하시기 바랍니다.</p>
+<p>웹브라우저의 URL에 <a target="_blank" rel="external nofollow noopener noreferrer" href="http://omv가/">http://OMV가</a> 설치된 라즈베리파이 IP 를 입력하시고 접속해 주세요.</p>
+<p><img src="012-7.png" alt="image"></p>
+<blockquote>
+<p>초기 ID : admin<br>초기 Password :openmediavault</p>
+</blockquote>
+<p><img src="013-8.png" alt="image"></p>
+<p>정상적으로 접속이 되었으면 이걸로 라즈베리파이에 openmediavault(OMV) 5 설치하기가 완료 되었습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/BitTorrent/" rel="tag">BitTorrent</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/DAAP/" rel="tag">DAAP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/FTP/" rel="tag">FTP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NAS/" rel="tag">NAS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OMV/" rel="tag">OMV</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OS/" rel="tag">OS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/RSync/" rel="tag">RSync</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SMB-CIFS/" rel="tag">SMB/CIFS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/openmediavault/" rel="tag">openmediavault</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%8D%B0%EB%B9%84%EC%95%88-%EB%A6%AC%EB%88%85%EC%8A%A4/" rel="tag">데비안 리눅스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A0%88%EC%9E%84-%EC%9B%8C%ED%81%AC/" rel="tag">프레임 워크</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/28/rasberry-pi/rasberry-pi-032/';
+              
+            this.page.identifier = '2020/06/28/rasberry-pi/rasberry-pi-032/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 고정 IP Address 설정 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,vi,vim">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 고정 IP Address 설정라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게\nUSB용 이더넷 어뎁터를 구매하신후 이용할실수 있습니다.\nVNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.\n\n공유기의 게이트 정보를 얻기위해서 아래의 명령어를 입력해 주세요.\n1$ netstat -nr\n\n1$ sudo vi /etc/dhcpcd.conf\n아래와 같이 나오시면\n\n\n\n위의 부분이 나올때까지 커서를 내려주시기 바랍니다.\n123456# Example static IP configuration;#intercafe eth0#static ip_address=192.168.0.10/24#static ip6_address=fd51:42f8:caae:d92e::ff/64#static routers=192.168.0.1#static domain_name_servers=192.168.0.1 8.8.8.8 fd51:42f8:caae:d92e::1\n\n\n위와같이 4줄에 대해서 #(주석)을 해제하시고\n123456# Example static IP configuration;intercafe eth0static ip_address=10.0.1.30/24#static ip6_address=fd51:42f8:caae:d92e::ff/64static routers=10.0.1.1static domain_name_servers=10.0.1.1 8.8.8.8 fd51:42f8:caae:d92e::1\nstatic ip_address 부분에 고정하실 아이피로 수정해 주시기 바랍니다.\nstatic routers 부분에는 공유기 게이트 정보를 입력해 주시기 바랍니다.\nstatic domain_name_servers 부분의 첫번째 아이피도 공유기의 게이트 정보를 입력해 주시기 바랍니다.\n저장후 빠져나옵니다.\n\n설정 정보를 반영하기위해서 재가동이 필요합니다.\n아래의 명령어를 입력해 주시기 바랍니다.\n1$ sudo reboot\n\n재기동이 끝난후 새로 바꾼 아이피로 접속을 하시기 바랍니다.\n콘솔창에 아래의 명령어를 입력해 주시기 바랍니다.\n1$ ifconfig\n\n아이피 정보가 고정된 정보로 바뀐것을 확인 하실수 있습니다.","dateCreated":"2020-05-24T04:00:00+09:00","dateModified":"2020-12-26T19:47:45+09:00","datePublished":"2020-05-24T04:00:00+09:00","description":"\n라즈베리파이에서 유선랜 IP를 고정 IP 할당 설정방법 입니다.라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게 이용하는 방법 입니다…","headline":"라즈베리파이 고정 IP Address 설정","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, vi, vim","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 유선랜 IP를 고정 IP 할당 설정방법 입니다.라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게 이용하는 방법 입니다…">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 고정 IP Address 설정">
+<meta property="og:url" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 유선랜 IP를 고정 IP 할당 설정방법 입니다.라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게 이용하는 방법 입니다…">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/001-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/003-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/002-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/004-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/005-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/006-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/007-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/008-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/009-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/010-3.png">
+<meta property="article:published_time" content="2020-05-23T19:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:47:45.659Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="vi">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/001-4.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 고정 IP Address 설정
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-24T04:00:00+09:00">
+	
+		    2020/05/24 04:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이-고정-IP-Address-설정"><a href="#라즈베리파이-고정-IP-Address-설정" class="headerlink" title="라즈베리파이 고정 IP Address 설정"></a>라즈베리파이 고정 IP Address 설정</h2><p>라즈베리파이 제로를 사용하시는 분들같이 랜카드가 없으신 경우에는 저렴하게</p>
+<p>USB용 이더넷 어뎁터를 구매하신후 이용할실수 있습니다.</p>
+<p>VNC로 라즈베리파이 서버로 접속하고 콘솔창을 여시기 바랍니다.</p>
+<p><img src="001-4.png"></p>
+<p>공유기의 게이트 정보를 얻기위해서 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ netstat -nr</span><br></pre></td></tr></table></figure>
+<p><img src="003-4.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/dhcpcd.conf</span><br></pre></td></tr></table></figure>
+<p>아래와 같이 나오시면</p>
+<p><img src="002-4.png"></p>
+<p><img src="004-3.png"></p>
+<p><img src="005-4.png"></p>
+<p>위의 부분이 나올때까지 커서를 내려주시기 바랍니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Example static IP configuration;</span><br><span class="line">#intercafe eth0</span><br><span class="line">#static ip_address=<span class="number">192.168</span>.<span class="number">0.10</span>/<span class="number">24</span></span><br><span class="line">#static ip6_address=fd51:<span class="number">42</span>f8:caae:d92e::ff/<span class="number">64</span></span><br><span class="line">#static routers=<span class="number">192.168</span>.<span class="number">0.1</span></span><br><span class="line">#static domain_name_servers=<span class="number">192.168</span>.<span class="number">0.1</span> <span class="number">8.8</span>.<span class="number">8.8</span> fd51:<span class="number">42</span>f8:caae:d92e::<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><img src="006-3.png"></p>
+<p><img src="007-4.png"></p>
+<p>위와같이 4줄에 대해서 #(주석)을 해제하시고</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Example static IP configuration;</span><br><span class="line">intercafe eth0</span><br><span class="line">static ip_address=<span class="number">10.0</span>.<span class="number">1.30</span>/<span class="number">24</span></span><br><span class="line">#static ip6_address=fd51:<span class="number">42</span>f8:caae:d92e::ff/<span class="number">64</span></span><br><span class="line">static routers=<span class="number">10.0</span>.<span class="number">1.1</span></span><br><span class="line">static domain_name_servers=<span class="number">10.0</span>.<span class="number">1.1</span> <span class="number">8.8</span>.<span class="number">8.8</span> fd51:<span class="number">42</span>f8:caae:d92e::<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>static ip_address 부분에 고정하실 아이피로 수정해 주시기 바랍니다.</p>
+<p>static routers 부분에는 공유기 게이트 정보를 입력해 주시기 바랍니다.</p>
+<p>static domain_name_servers 부분의 첫번째 아이피도 공유기의 게이트 정보를 입력해 주시기 바랍니다.</p>
+<p>저장후 빠져나옵니다.</p>
+<p><img src="008-3.png"></p>
+<p>설정 정보를 반영하기위해서 재가동이 필요합니다.</p>
+<p>아래의 명령어를 입력해 주시기 바랍니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+<p><img src="009-4.png"></p>
+<p>재기동이 끝난후 새로 바꾼 아이피로 접속을 하시기 바랍니다.</p>
+<p>콘솔창에 아래의 명령어를 입력해 주시기 바랍니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure>
+<p><img src="010-3.png"></p>
+<p>아이피 정보가 고정된 정보로 바뀐것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/vi/" rel="tag">vi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/vim/" rel="tag">vim</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-005/';
+              
+            this.page.identifier = '2020/05/24/rasberry-pi/rasberry-pi-005/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

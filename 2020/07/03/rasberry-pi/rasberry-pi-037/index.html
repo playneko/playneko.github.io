@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 mIRC 채팅서버 구축하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="IP주소,irc서버,mIRC,Rasberry Pi,root,SSH,sudo,vi에디터,VNC,zero,ラズベリーパイ,라즈베리파이,채팅서버">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 mIRC 채팅서버 구축하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.\nmIRC라면 생소한 분들도 많으실거라 생각 됩니다만 2010년대에 들어오기 전까지만해도\n상당한 인기로 많은 사람들이 이용을 해온 채팅서버 입니다.\n지금은 게임회사에서 게임내 채팅서버로 mIRC 채팅서버를 많이 활용하는걸로 알고 있습니다.\nmIRC를 이용해서 불법 프로그램이나 여러가지 영상들을 공유하는 기능으로도 많이 사용했습니다.\n그래서 라즈베리파이로 mIRC 채팅서버 구축하는 방법을 알아보도록 하겠습니다.\n우선 라즈베리파이를 VNC로 접속후 터미널을 실행을 해주시기 바랍니다.\n\nirc프로그램을 설치를 위해서 아래의 명령어를 입력해 주세요.\n1$ sudo apt-get install ircd-hybrid\n\n위와같이 [Y/n]을 입력창이 나오게 되면 Y를 입력해 주세요.\n\n설치가 완료 되었으면 아래의 명령어를 입력해 주세요.\n1$ sudo vi /etc/ircd-hybrid/ircd.conf\n123# ircd.conf를 vi에디터로 여시고 한참 내리시다 보시면# 아래의 부분을 라즈베리파이의 IP주소로 변경해 주시기 바랍니다.host = &quot;127.0.0.1&quot;; # change this!\n\nIP주소를 변경을 하셨으면 :wq를 입력해서 vi에디터를 저장후 종료를 하시기 바랍니다.\n그리고 irc서버를 재기동하여 설정 정보를 적용을 해주어야만 합니다.\n아래의 명령어를 입력해서 irc서버를 재기동 합니다.\n1234# irc서버 중지$ sudo /etc/init.d/ircd-hybrid stop# irc서버 시작$ sudo /etc/init.d/ircd-hybrid start\n\nirc서버 재기동까지 완료를 하셨으면 mIRC프로그램을 받아서 설치를 해주시기 바랍니다.\nmIRC프로그램은 공식 사이트에서 다운로드 받으실수가 있습니다.\nhttps://www.mirc.com/\n\n\n\n다운로드하신 mIRC프로그램을 실행하시면 설치화면이 나오게 되며\n설치를 해주시기 바랍니다.\n\n\n\n\n\n\n처음 실행하시면 서버에 접속후 사용할 닉네임과 기본 정보를 입력하시고 Servers메뉴로 이동을 해주세요.\n\nAdd버튼을 눌러서 서버를 추가 합니다.\n\n위와같이 자신의 라즈베리파이 서버에 맞게 입력을 해주시고 OK버튼을 눌러주세요.\n\nSelect버튼을 누르시면 Connect메뉴로 돌아오게 됩니다.\n\nConnect버튼을 눌러주시기 바랍니다.\n\n접속을 하시면 라즈베리파이로 구축한 irc서버로 연결이 된것을 확인하실수 있습니다.\n위와같이 나오게 되면 하단의 입력창에 /join #채널명을 입력해서 채팅을 만드시거나 접속 하실수 있습니다.\n\n위와같이 채널에 접속이 되는것이 확인 되었습니다.\n이렇게 해서 라즈베리파이에서 mIRC 채팅서버 구축하기를 해보았습니다.","dateCreated":"2020-07-03T01:00:00+09:00","dateModified":"2020-12-26T19:49:42+09:00","datePublished":"2020-07-03T01:00:00+09:00","description":"\n라즈베리파이에서 mIRC 채팅서버 구축하기이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.","headline":"라즈베리파이에서 mIRC 채팅서버 구축하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, sudo, root, zero, IP주소, irc서버, mIRC, vi에디터, 채팅서버","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 mIRC 채팅서버 구축하기이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 mIRC 채팅서버 구축하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 mIRC 채팅서버 구축하기이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/001.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/002.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/003.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/004.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/005.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/007.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/006.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/008.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/009.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/010.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/011.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/012.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/013.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/014.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/015.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/016.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/017.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/018-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/019-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/020.png">
+<meta property="article:published_time" content="2020-07-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:49:42.425Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="sudo">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="IP주소">
+<meta property="article:tag" content="irc서버">
+<meta property="article:tag" content="mIRC">
+<meta property="article:tag" content="vi에디터">
+<meta property="article:tag" content="채팅서버">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/001.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 mIRC 채팅서버 구축하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-03T01:00:00+09:00">
+	
+		    2020/07/03 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-mIRC-채팅서버-구축하기"><a href="#라즈베리파이에서-mIRC-채팅서버-구축하기" class="headerlink" title="라즈베리파이에서 mIRC 채팅서버 구축하기"></a>라즈베리파이에서 mIRC 채팅서버 구축하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.</p>
+<p>mIRC라면 생소한 분들도 많으실거라 생각 됩니다만 2010년대에 들어오기 전까지만해도</p>
+<p>상당한 인기로 많은 사람들이 이용을 해온 채팅서버 입니다.</p>
+<p>지금은 게임회사에서 게임내 채팅서버로 mIRC 채팅서버를 많이 활용하는걸로 알고 있습니다.</p>
+<p>mIRC를 이용해서 불법 프로그램이나 여러가지 영상들을 공유하는 기능으로도 많이 사용했습니다.</p>
+<p>그래서 라즈베리파이로 mIRC 채팅서버 구축하는 방법을 알아보도록 하겠습니다.</p>
+<p>우선 라즈베리파이를 VNC로 접속후 터미널을 실행을 해주시기 바랍니다.</p>
+<p><img src="001.png" alt="image"></p>
+<p>irc프로그램을 설치를 위해서 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ircd-hybrid</span><br></pre></td></tr></table></figure>
+<p><img src="002.png" alt="image"></p>
+<p>위와같이 [Y/n]을 입력창이 나오게 되면 Y를 입력해 주세요.</p>
+<p><img src="003.png" alt="image"></p>
+<p>설치가 완료 되었으면 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/ircd-hybrid/ircd.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ircd.<span class="keyword">conf</span>를 <span class="keyword">vi</span>에디터로 여시고 한참 내리시다 보시면</span><br><span class="line"># 아래의 부분을 라즈베리파이의 IP주소로 변경해 주시기 바랍니다.</span><br><span class="line">host = &quot;127.0.0.1&quot;; # change this!</span><br></pre></td></tr></table></figure>
+<p><img src="004.png" alt="image"></p>
+<p>IP주소를 변경을 하셨으면 :wq를 입력해서 vi에디터를 저장후 종료를 하시기 바랍니다.</p>
+<p>그리고 irc서버를 재기동하여 설정 정보를 적용을 해주어야만 합니다.</p>
+<p>아래의 명령어를 입력해서 irc서버를 재기동 합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># irc서버 중지</span></span><br><span class="line">$ sudo /etc/init.d/ircd-hybrid stop</span><br><span class="line"><span class="comment"># irc서버 시작</span></span><br><span class="line">$ sudo /etc/init.d/ircd-hybrid start</span><br></pre></td></tr></table></figure>
+<p><img src="005.png" alt="image"></p>
+<p>irc서버 재기동까지 완료를 하셨으면 mIRC프로그램을 받아서 설치를 해주시기 바랍니다.</p>
+<p>mIRC프로그램은 공식 사이트에서 다운로드 받으실수가 있습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.mirc.com/">https://www.mirc.com/</a></p>
+<p><img src="007.png" alt="image"></p>
+<p><img src="006.png" alt="image"></p>
+<p><img src="008.png" alt="image"></p>
+<p>다운로드하신 mIRC프로그램을 실행하시면 설치화면이 나오게 되며</p>
+<p>설치를 해주시기 바랍니다.</p>
+<p><img src="009.png" alt="image"></p>
+<p><img src="010.png" alt="image"></p>
+<p><img src="011.png" alt="image"></p>
+<p><img src="012.png" alt="image"></p>
+<p><img src="013.png" alt="image"></p>
+<p><img src="014.png" alt="image"></p>
+<p>처음 실행하시면 서버에 접속후 사용할 닉네임과 기본 정보를 입력하시고 Servers메뉴로 이동을 해주세요.</p>
+<p><img src="015.png" alt="image"></p>
+<p>Add버튼을 눌러서 서버를 추가 합니다.</p>
+<p><img src="016.png" alt="image"></p>
+<p>위와같이 자신의 라즈베리파이 서버에 맞게 입력을 해주시고 OK버튼을 눌러주세요.</p>
+<p><img src="017.png" alt="image"></p>
+<p>Select버튼을 누르시면 Connect메뉴로 돌아오게 됩니다.</p>
+<p><img src="018-1.png" alt="image"></p>
+<p>Connect버튼을 눌러주시기 바랍니다.</p>
+<p><img src="019-3.png" alt="image"></p>
+<p>접속을 하시면 라즈베리파이로 구축한 irc서버로 연결이 된것을 확인하실수 있습니다.</p>
+<p>위와같이 나오게 되면 하단의 입력창에 /join #채널명을 입력해서 채팅을 만드시거나 접속 하실수 있습니다.</p>
+<p><img src="020.png" alt="image"></p>
+<p>위와같이 채널에 접속이 되는것이 확인 되었습니다.</p>
+<p>이렇게 해서 라즈베리파이에서 mIRC 채팅서버 구축하기를 해보았습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/IP%EC%A3%BC%EC%86%8C/" rel="tag">IP주소</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/irc%EC%84%9C%EB%B2%84/" rel="tag">irc서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/mIRC/" rel="tag">mIRC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/sudo/" rel="tag">sudo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/vi%EC%97%90%EB%94%94%ED%84%B0/" rel="tag">vi에디터</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%B1%84%ED%8C%85%EC%84%9C%EB%B2%84/" rel="tag">채팅서버</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/03/rasberry-pi/rasberry-pi-037/';
+              
+            this.page.identifier = '2020/07/03/rasberry-pi/rasberry-pi-037/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

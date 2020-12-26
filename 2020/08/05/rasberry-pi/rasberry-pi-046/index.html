@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="AkibaTV,apache,chown,Hello,linux,localhost,nginx,NPM,PHP,Python,Rasberry Pi,root,Socket,SSH,Visual Studio Code,VNC,www,zero,ラズベリーパイ,라즈베리파이,비주얼 스튜디오 코드,서버,소스파일,소켓서버,웹브라우저,웹서버,코딩,클라이언트,테스트,통신,파이썬">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 입니다.\n파이썬을 이용해서 간단하게 소켓 서버를 구축하고\nPHP를 이용한 클라이언트를 제작후 웹에서 파이썬 서버로 데이터를 주고 받는것을 해보도록 하겠습니다.\n그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.\n실행을 하셨으면 아래의 파일들을 추가를 해주시기 바랍니다.\n12php_socket_send.phppython_socket_server.py\n\n파일들을 추가를 하셨으면 php_socket_send.php에 아래와 같이 코딩을 해주시기 바랍니다.\n1234567891011121314151617181920212223242526272829303132333435363738394041424344&lt;?php    error_reporting(E_ALL);    $address = &quot;127.0.0.1&quot;; // 접속할 IP    $port = 7779; // 접속할 PORT    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP); // TCP 통신용 소켓 생성    if ($socket === false) &#123;        echo &quot;socket_create() 실패! 이유: &quot; . socket_strerror(socket_last_error()) . &quot;\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125; else &#123;        echo &quot;socket 성공적으로 생성.\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125;    echo &quot;다음 IP &#x27;$address&#x27; 와 Port &#x27;$port&#x27; 으로 접속중...&quot;;    echo &quot;&lt;br&gt;&quot;;    // 소켓 연결 및 $result에 접속값 지정    $result = socket_connect($socket, $address, $port);    if ($result === false) &#123;        echo &quot;socket_connect() 실패.\\nReason: ($result) &quot; . socket_strerror(socket_last_error($socket)) . &quot;\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125; else &#123;        echo &quot;다음 주소로 연결 성공 : $address.\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125;    $sendData = &quot;Hello, AkibaTV!&quot;;    echo &quot;서버로 보내는 메세지 : $sendData\\n&quot;;    // 실제로 소켓으로 보내는 명령어    socket_write($socket, $sendData, strlen($sendData));    // 소켓으로 부터 받은 REQUEST 정보를 $input에 지정    $input = socket_read($socket, 1024) or die(&quot;Could not read from Socket\\n&quot;);    // REQUEST 정보 출력    echo $input;    // 소켓 클로즈    socket_close($socket);?&gt;\n\npython_socket_server.py파일을 여시고 아래와 같이 코딩해 주세요.\n123456789101112131415161718192021222324252627282930313233343536373839404142434445from _ast import Iffrom _thread import *from operator import eqimport osimport socketS_HOST = &#x27;10.0.1.30&#x27;S_PORT = 7779def threaded(client_socket, addr):     print(&#x27;Connected by :&#x27;, addr[0], &#x27;:&#x27;, addr[1])    try:        data = client_socket.recv(1024)        print(&#x27;Get Message &#x27; + data.decode())        client_socket.send(data)    except:        print(&#x27;Exception by &#x27; + addr[0],&#x27;:&#x27;,addr[1])    client_socket.close()def main():    global S_HOST, S_PORT    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)    server_socket.bind((S_HOST, S_PORT))    server_socket.listen()    print(&#x27;server start&#x27;)    while True:        print(&#x27;wait&#x27;)        client_socket, addr = server_socket.accept()        start_new_thread(threaded, (client_socket, addr))    server_socket.close()main()\n\n라즈베리파이의 적당한곳에 작성하신 두개의 소스파일을 올려주시기 바랍니다.\n\n아래의 명령어로 파이썬 소켓서버를 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 python_socket_server.py\n\n소켓서버를 실행을 하시면 접속대기 상태가 나오게 됩니다.\n이제 정상적으로 소켓통신이 이루어지는지 테스트를 해보도록 하겠습니다.\n웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_socket_send.php\n위의 주소를 실행해 주시기 바랍니다.\n\n실행을 하시면 위와같이 서버에 접속과 동시에\nHello, AkibaTV!를 전송하고 다시 받은것을 확인하실수 있습니다.\n\n서버에서도 Hello, AkibaTV!를 받은것을 확인 하실수 있습니다.","dateCreated":"2020-08-05T01:00:00+09:00","dateModified":"2020-12-26T19:53:10+09:00","datePublished":"2020-08-05T01:00:00+09:00","description":"\n라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 입니다.","headline":"라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, 서버, linux, nginx, 웹서버, Python, 파이썬, Visual Studio Code, 비주얼 스튜디오 코드, apache, chown, NPM, PHP, root, zero, Hello, 웹브라우저, 코딩, localhost, www, 소스파일, 테스트, AkibaTV, Socket, 소켓서버, 클라이언트, 통신","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기">
+<meta property="og:url" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/001-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/002-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/003-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/004-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/005-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/006.png">
+<meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/007.png">
+<meta property="article:published_time" content="2020-08-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:53:10.165Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="서버">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="웹서버">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="파이썬">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="apache">
+<meta property="article:tag" content="chown">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="Hello">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="www">
+<meta property="article:tag" content="소스파일">
+<meta property="article:tag" content="테스트">
+<meta property="article:tag" content="AkibaTV">
+<meta property="article:tag" content="Socket">
+<meta property="article:tag" content="소켓서버">
+<meta property="article:tag" content="클라이언트">
+<meta property="article:tag" content="통신">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/001-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-08-05T01:00:00+09:00">
+	
+		    2020/08/05 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Python/">Python</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-파이썬을-이용해서-Socket통신-해보기"><a href="#라즈베리파이에서-파이썬을-이용해서-Socket통신-해보기" class="headerlink" title="라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기"></a>라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용해서 Socket통신 해보기 입니다.</p>
+<p>파이썬을 이용해서 간단하게 소켓 서버를 구축하고</p>
+<p>PHP를 이용한 클라이언트를 제작후 웹에서 파이썬 서버로 데이터를 주고 받는것을 해보도록 하겠습니다.</p>
+<p>그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p>
+<p>실행을 하셨으면 아래의 파일들을 추가를 해주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php_socket_send.php</span><br><span class="line">python_socket_server.py</span><br></pre></td></tr></table></figure>
+<p><img src="001-1.png" alt="image"></p>
+<p>파일들을 추가를 하셨으면 php_socket_send.php에 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    error_reporting(E_ALL);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$address</span> = <span class="string">&quot;127.0.0.1&quot;</span>; <span class="comment">// 접속할 IP</span></span><br><span class="line">    <span class="variable">$port</span> = <span class="number">7779</span>; <span class="comment">// 접속할 PORT</span></span><br><span class="line">    <span class="variable">$socket</span> = socket_create(AF_INET, SOCK_STREAM, SOL_TCP); <span class="comment">// TCP 통신용 소켓 생성</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$socket</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket_create() 실패! 이유: &quot;</span> . socket_strerror(socket_last_error()) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket 성공적으로 생성.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;다음 IP &#x27;<span class="subst">$address</span>&#x27; 와 Port &#x27;<span class="subst">$port</span>&#x27; 으로 접속중...&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓 연결 및 $result에 접속값 지정</span></span><br><span class="line">    <span class="variable">$result</span> = socket_connect(<span class="variable">$socket</span>, <span class="variable">$address</span>, <span class="variable">$port</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket_connect() 실패.\nReason: (<span class="subst">$result</span>) &quot;</span> . socket_strerror(socket_last_error(<span class="variable">$socket</span>)) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;다음 주소로 연결 성공 : <span class="subst">$address</span>.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sendData</span> = <span class="string">&quot;Hello, AkibaTV!&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;서버로 보내는 메세지 : <span class="subst">$sendData</span>\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 실제로 소켓으로 보내는 명령어</span></span><br><span class="line">    socket_write(<span class="variable">$socket</span>, <span class="variable">$sendData</span>, strlen(<span class="variable">$sendData</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓으로 부터 받은 REQUEST 정보를 $input에 지정</span></span><br><span class="line">    <span class="variable">$input</span> = socket_read(<span class="variable">$socket</span>, <span class="number">1024</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Could not read from Socket\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// REQUEST 정보 출력</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$input</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓 클로즈</span></span><br><span class="line">    socket_close(<span class="variable">$socket</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="002-1.png" alt="image"></p>
+<p>python_socket_server.py파일을 여시고 아래와 같이 코딩해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> _ast <span class="keyword">import</span> If</span><br><span class="line"><span class="keyword">from</span> _thread <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> eq</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">S_HOST = <span class="string">&#x27;10.0.1.30&#x27;</span></span><br><span class="line">S_PORT = <span class="number">7779</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threaded</span>(<span class="params">client_socket, addr</span>):</span> </span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;Connected by :&#x27;</span>, addr[<span class="number">0</span>], <span class="string">&#x27;:&#x27;</span>, addr[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;Get Message &#x27;</span> + data.decode())</span><br><span class="line"></span><br><span class="line">        client_socket.send(data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">&#x27;Exception by &#x27;</span> + addr[<span class="number">0</span>],<span class="string">&#x27;:&#x27;</span>,addr[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    client_socket.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">global</span> S_HOST, S_PORT</span><br><span class="line"></span><br><span class="line">    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line">    server_socket.bind((S_HOST, S_PORT))</span><br><span class="line">    server_socket.listen()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;server start&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"></span><br><span class="line">        print(<span class="string">&#x27;wait&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        client_socket, addr = server_socket.accept()</span><br><span class="line">        start_new_thread(threaded, (client_socket, addr))</span><br><span class="line"></span><br><span class="line">    server_socket.close()</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<p><img src="003-1.png" alt="image"></p>
+<p>라즈베리파이의 적당한곳에 작성하신 두개의 소스파일을 올려주시기 바랍니다.</p>
+<p><img src="004-1.png" alt="image"></p>
+<p>아래의 명령어로 파이썬 소켓서버를 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 python_socket_server.py</span><br></pre></td></tr></table></figure>
+<p><img src="005-2.png" alt="image"></p>
+<p>소켓서버를 실행을 하시면 접속대기 상태가 나오게 됩니다.</p>
+<p>이제 정상적으로 소켓통신이 이루어지는지 테스트를 해보도록 하겠습니다.</p>
+<p>웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_socket_send.php</p>
+<p>위의 주소를 실행해 주시기 바랍니다.</p>
+<p><img src="006.png" alt="image"></p>
+<p>실행을 하시면 위와같이 서버에 접속과 동시에</p>
+<p>Hello, AkibaTV!를 전송하고 다시 받은것을 확인하실수 있습니다.</p>
+<p><img src="007.png" alt="image"></p>
+<p>서버에서도 Hello, AkibaTV!를 받은것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/AkibaTV/" rel="tag">AkibaTV</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Hello/" rel="tag">Hello</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Socket/" rel="tag">Socket</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apache/" rel="tag">apache</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chown/" rel="tag">chown</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/nginx/" rel="tag">nginx</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/www/" rel="tag">www</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%84%9C%EB%B2%84/" rel="tag">서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%8A%A4%ED%8C%8C%EC%9D%BC/" rel="tag">소스파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%BC%93%EC%84%9C%EB%B2%84/" rel="tag">소켓서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/" rel="tag">웹서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8/" rel="tag">클라이언트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%85%8C%EC%8A%A4%ED%8A%B8/" rel="tag">테스트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%86%B5%EC%8B%A0/" rel="tag">통신</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/" rel="tag">파이썬</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/08/05/rasberry-pi/rasberry-pi-046/';
+              
+            this.page.identifier = '2020/08/05/rasberry-pi/rasberry-pi-046/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

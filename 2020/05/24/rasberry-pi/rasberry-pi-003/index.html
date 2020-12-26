@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 삼바 연결설정 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Rasberry Pi,SSH,VNC,ラズベリーパイ,라즈베리파이,samba,server,삼바,서버">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n삼바(Samba)란?삼바는 리눅스(UNIX-like)와 윈도우간에 파일 및 프린터를 공유 할 수 있게 해주는 패키지입니다.\n컴퓨터 간 파일 공유등의 서비스를 구현하는데 SMB/CIFS 프로토콜를 사용하여, UNIX-like 시스템뿐 아니라 OpenVMS, OS/2, AmigaDOS,\n그리고 Netware같은 다양한 플랫폼에서 지원됩니다. 삼바를 통해 리눅스 서버를 타운영체제와 파일을 공유할 수 있는 파일서버로도 사용할 수 있습니다.\n라즈베리파이를 NAS 대용으로 사용하게 만들어주는 기능이라고 볼 수 있습니다.\n삼바 공식 사이트\nhttps://www.samba.org/\n\n라즈베리파이에 삼바 연결하기\n\nVNC로 라즈베리파이에 접속을 한뒤 콘솔창을 실행합니다.\n\n첫 단계로 다음 apt 명령어를 사용하여 삼바(samba) 패키지를 설치합니다.\n콘솔창에 아래의 명령을 입력합니다.\n1$ sudo apt install samba samba-common-bin\n\n패키지 다운로드에 71메가 정도 용량을 사용해도 되는 물어보는 메세지가 나옵니다.\n다운로드를 할건지 Y/n가 나올경우 Y를 입력후 엔터를 치시기 바랍니다.\n\n다운로드를 시작합니다.\n\n당신의 컴퓨터가 네트워크의 DHCP서버로부터 IP정보를 취득하고있을경우 DHCP서버는 네트워크의 WINS서버\n(NetBIOS 네임서버)에 들어있는 정보를 공유하는게 가능합니다. DHCP에서 smb.conf파일의 변경이 필요한경우가 있습니다.\n이 기능을 사용을 위해선 dhcp-client 패키지가 인스톨이 되어 있어야만 합니다.\nDHCP에서 WINS설정을 사용해서 smb.conf를 변경하시겠습니까?라고 나옵니다만\n알기 어려운 내용이기에 NO를 선택후 엔터를 칩니다.\n\n일단 계속해서 패키지 설치가 진행됩니다.\n\n한참 기다리시면 아래와 같이 나오며 설치가 완료 되었습니다.\n\n설치가 완료되면 smbpasswd로 삼바를 사용할 id를 추가합니다.\n이때 설정한 ID를 사용하여 같은 네트워크에 있는 컴퓨터에서 라즈베리파이로 삼바를 접속할때 사용하게 됩니다.\n이때 설정할 ID와 비밀번호는 라즈베리파이와 똑같이 사용하지 않으셔도 됩니다.\n일단 저는 라즈베리파이와 동일하게 ID를 pi를 사용하며 비밀번호도 동일하게 설정을 하도록 하겠습니다.\n콘솔창에 아래의 명령어를 입력하시고 엔터를 치십시오. (아이디 부분은 원하시는 아이디를 입력해 주세요.)\n1$ sudo smbpasswd -a pi(아이디/ユーザーID)\n\n아이디와 비밀번호를 세팅하시면 일반 접속정보는 설정이 완료 되었습니다.\n이제는 삼바 설정을 해야합니다. 삼바 설정 파일인 smb.conf 편집합니다.\n아래의 명령어를 입력하신후 엔터를 치십시오.\n1$ sudo vi /etc/samba/smb.conf\n\n커서를 가장 아래까지 내려간뒤 키보드의 a키를 누르시면 입력가능하게 바뀌게 됩니다.\n\n아래의 내용을 입력하시기 바랍니다.\n꼭 아래와 같이 하실필요 없이 자신이 원하는 설정으로 하시면 되겠습니다.\n12345678[pi]   comment = pi shared folder   path = /home/pi   valid users = pi   browseable = yes   guest ok = no   read only = no   create mask = 0777\n\n입력을 끝내셨으면 :키를 누르신후 wq를 입력후 저장과 동시에 vi입력창에서 빠져나오게 됩니다.\n\n\n설정 완료 후에는 samba를 재시작 합니다.\n아래의 명령어를 입력후 엔터를 치십시오.\n1$ sudo /etc/init.d/smbd restart\n\n이제 윈도우 탐색기에서 \\\\10.0.1.16\\pi 와 같이 접속합니다.\n주소 형식 : \\\\[라즈베리파이 IP 주소][삼바 계정 id]\n본인 환경에 따라 주소를 입력하시면 됩니다.\n입력 주소를 윈도우 탐색기에서 입력하면 아래와같이 계정 정보를 입력 메뉴가 실행됩니다.\n\n라즈베리파이 서버로 접속이 되면 아래와 같이 폴더가 표시되게 됩니다.\n일단 파일 읽기와 쓰기가 모두 되면 권한 설정이 정상입니다.\n읽기와 쓰기에 권한 문제가 발생하면 smb.conf 파일에 설정을 점검이 필요합니다.\n","dateCreated":"2020-05-24T02:00:00+09:00","dateModified":"2020-12-26T19:47:35+09:00","datePublished":"2020-05-24T02:00:00+09:00","description":"\n삼바(Samba)란?삼바는 리눅스(UNIX-like)와 윈도우간에 파일 및 프린터를 공유 할 수 있게 해주는 패키지입니다.","headline":"라즈베리파이 삼바 연결설정","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, samba, server, 삼바, 서버","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="삼바(Samba)란?삼바는 리눅스(UNIX-like)와 윈도우간에 파일 및 프린터를 공유 할 수 있게 해주는 패키지입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 삼바 연결설정">
+<meta property="og:url" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="삼바(Samba)란?삼바는 리눅스(UNIX-like)와 윈도우간에 파일 및 프린터를 공유 할 수 있게 해주는 패키지입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/001-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/002-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/003-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/004-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/005-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/006-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/007-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/008-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/009-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/010-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/011-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/012-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/013-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/014-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/015-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/017-1.png">
+<meta property="article:published_time" content="2020-05-23T17:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:47:35.107Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="samba">
+<meta property="article:tag" content="server">
+<meta property="article:tag" content="삼바">
+<meta property="article:tag" content="서버">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/001-2.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 삼바 연결설정
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-24T02:00:00+09:00">
+	
+		    2020/05/24 02:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="삼바-Samba-란"><a href="#삼바-Samba-란" class="headerlink" title="삼바(Samba)란?"></a>삼바(Samba)란?</h2><p>삼바는 리눅스(UNIX-like)와 윈도우간에 파일 및 프린터를 공유 할 수 있게 해주는 패키지입니다.</p>
+<p>컴퓨터 간 파일 공유등의 서비스를 구현하는데 SMB/CIFS 프로토콜를 사용하여, UNIX-like 시스템뿐 아니라 OpenVMS, OS/2, AmigaDOS,</p>
+<p>그리고 Netware같은 다양한 플랫폼에서 지원됩니다. 삼바를 통해 리눅스 서버를 타운영체제와 파일을 공유할 수 있는 파일서버로도 사용할 수 있습니다.</p>
+<p>라즈베리파이를 NAS 대용으로 사용하게 만들어주는 기능이라고 볼 수 있습니다.</p>
+<p>삼바 공식 사이트</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.samba.org/">https://www.samba.org/</a></p>
+<blockquote>
+<p>라즈베리파이에 삼바 연결하기</p>
+</blockquote>
+<p>VNC로 라즈베리파이에 접속을 한뒤 콘솔창을 실행합니다.</p>
+<p><img src="001-2.png"></p>
+<p>첫 단계로 다음 apt 명령어를 사용하여 삼바(samba) 패키지를 설치합니다.</p>
+<p>콘솔창에 아래의 명령을 입력합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install samba samba-common-bin</span><br></pre></td></tr></table></figure>
+<p><img src="002-2.png"></p>
+<p>패키지 다운로드에 71메가 정도 용량을 사용해도 되는 물어보는 메세지가 나옵니다.</p>
+<p>다운로드를 할건지 Y/n가 나올경우 Y를 입력후 엔터를 치시기 바랍니다.</p>
+<p><img src="003-2.png"></p>
+<p>다운로드를 시작합니다.</p>
+<p><img src="004-2.png"></p>
+<p>당신의 컴퓨터가 네트워크의 DHCP서버로부터 IP정보를 취득하고있을경우 DHCP서버는 네트워크의 WINS서버</p>
+<p>(NetBIOS 네임서버)에 들어있는 정보를 공유하는게 가능합니다. DHCP에서 smb.conf파일의 변경이 필요한경우가 있습니다.</p>
+<p>이 기능을 사용을 위해선 dhcp-client 패키지가 인스톨이 되어 있어야만 합니다.</p>
+<p>DHCP에서 WINS설정을 사용해서 smb.conf를 변경하시겠습니까?라고 나옵니다만</p>
+<p>알기 어려운 내용이기에 NO를 선택후 엔터를 칩니다.</p>
+<p><img src="005-2.png"></p>
+<p>일단 계속해서 패키지 설치가 진행됩니다.</p>
+<p><img src="006-2.png"></p>
+<p>한참 기다리시면 아래와 같이 나오며 설치가 완료 되었습니다.</p>
+<p><img src="007-2.png"></p>
+<p>설치가 완료되면 smbpasswd로 삼바를 사용할 id를 추가합니다.</p>
+<p>이때 설정한 ID를 사용하여 같은 네트워크에 있는 컴퓨터에서 라즈베리파이로 삼바를 접속할때 사용하게 됩니다.</p>
+<p>이때 설정할 ID와 비밀번호는 라즈베리파이와 똑같이 사용하지 않으셔도 됩니다.</p>
+<p>일단 저는 라즈베리파이와 동일하게 ID를 pi를 사용하며 비밀번호도 동일하게 설정을 하도록 하겠습니다.</p>
+<p>콘솔창에 아래의 명령어를 입력하시고 엔터를 치십시오. (아이디 부분은 원하시는 아이디를 입력해 주세요.)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo smbpasswd -a pi(아이디/ユーザーID)</span><br></pre></td></tr></table></figure>
+<p><img src="008-2.png"></p>
+<p>아이디와 비밀번호를 세팅하시면 일반 접속정보는 설정이 완료 되었습니다.</p>
+<p>이제는 삼바 설정을 해야합니다. 삼바 설정 파일인 smb.conf 편집합니다.</p>
+<p>아래의 명령어를 입력하신후 엔터를 치십시오.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/samba/smb.conf</span><br></pre></td></tr></table></figure>
+<p><img src="009-2.png"></p>
+<p>커서를 가장 아래까지 내려간뒤 키보드의 a키를 누르시면 입력가능하게 바뀌게 됩니다.</p>
+<p><img src="010-2.png"></p>
+<p>아래의 내용을 입력하시기 바랍니다.</p>
+<p>꼭 아래와 같이 하실필요 없이 자신이 원하는 설정으로 하시면 되겠습니다.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[pi]</span><br><span class="line">   comment = pi shared folder</span><br><span class="line">   path = /home/pi</span><br><span class="line">   valid users = pi</span><br><span class="line">   browseable = yes</span><br><span class="line">   guest ok = <span class="keyword">no</span></span><br><span class="line">   <span class="keyword">read</span> <span class="keyword">only</span> = <span class="keyword">no</span></span><br><span class="line">   create mask = <span class="number">0777</span></span><br></pre></td></tr></table></figure>
+<p><img src="011-2.png"></p>
+<p>입력을 끝내셨으면 :키를 누르신후 wq를 입력후 저장과 동시에 vi입력창에서 빠져나오게 됩니다.</p>
+<p><img src="012-2.png"></p>
+<p><img src="013-2.png"></p>
+<p>설정 완료 후에는 samba를 재시작 합니다.</p>
+<p>아래의 명령어를 입력후 엔터를 치십시오.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /etc/init.d/smbd restart</span><br></pre></td></tr></table></figure>
+<p><img src="014-2.png"></p>
+<p>이제 윈도우 탐색기에서 \\10.0.1.16\pi 와 같이 접속합니다.</p>
+<p>주소 형식 : \\[라즈베리파이 IP 주소][삼바 계정 id]</p>
+<p>본인 환경에 따라 주소를 입력하시면 됩니다.</p>
+<p>입력 주소를 윈도우 탐색기에서 입력하면 아래와같이 계정 정보를 입력 메뉴가 실행됩니다.</p>
+<p><img src="015-1.png"></p>
+<p>라즈베리파이 서버로 접속이 되면 아래와 같이 폴더가 표시되게 됩니다.</p>
+<p>일단 파일 읽기와 쓰기가 모두 되면 권한 설정이 정상입니다.</p>
+<p>읽기와 쓰기에 권한 문제가 발생하면 smb.conf 파일에 설정을 점검이 필요합니다.</p>
+<p><img src="017-1.png"></p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/samba/" rel="tag">samba</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/server/" rel="tag">server</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%82%BC%EB%B0%94/" rel="tag">삼바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%84%9C%EB%B2%84/" rel="tag">서버</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/24/rasberry-pi/rasberry-pi-003/';
+              
+            this.page.identifier = '2020/05/24/rasberry-pi/rasberry-pi-003/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

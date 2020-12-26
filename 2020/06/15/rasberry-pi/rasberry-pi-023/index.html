@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="apt,apt-get,Java,java -version,linux,OpenJDK,openjdk-8-jre,OpenJDK11,OpenJDK8,Rasberry Pi,SSH,version,VNC,zero,ラズベリーパイ,라즈베리파이,리눅스,자바">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 또는 리눅스에서 OpenJDK 설치하기안녕하세요.\n이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.\n라즈베리파이를 처음 설치하시면 일단 기본적으로 JDK가 설치가 되어있지 않기때문에\nJAVA개발 또는 Tomcat과 연동후 홈페이지를 운영하실 분들은 OpenJDK를 수동으로\n설치를 해주셔야만 합니다.\n라즈베리파이 OpenJDK 11 설치하기우선 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.\n\n우선 자바가 설치되어 있는지 확인을 위해 아래의 명령어를 터미널에 입력해 주세요.\n1$ java -version\n\n명령어를 입력후 위와같이 알수없는 명령어라고 나오면 JAVA관련 패키지가 설치가 되어있지 않은것 입니다.\n그럼 설치를 위해 아래의 명령어를 입력해 주세요.\n12345# 자동 인스톨 프로그램을 최신화 합니다.$ sudo apt update# 기본적은 가장 최신버전의 jdk를 설치 합니다.$ sudo apt install default-jdk\n\n가지고 계신 라즈베리파이의 성능에 따라서 업데이트 시간에 조금 차이가 있을수 있겠습니다.\n\nOpenJDK설치가 완료 되었습니다만\n위와 같이 에러가 나오면 라즈베리파이의 cpu코어가 최신의 JDK를 실행을 할수가 없는것 입니다.\n그래도 설치가 제대로 되었는지 확인을 해야하기에 아래의 명령어를 입력해 주세요.\n12# 자바 버전확인$ java –version\n터미널에 자바버전이 출력이 되시면 정상적으로 설치가 되신것 입니다.\n그래도 구형 라즈베리파이를 사용하시는 분들이 좌절하지 않으시도록\n어떻게하면 구형 라즈베리파이에서도 JDK를 사용할수 있는지 해보도록 하겠습니다.\n123# 아래의 명령어를 터미널에 입력해 주세요.# 일단은 OpenJDK8버전을 설치를 합니다.$ sudo apt-get install openjdk-8-jre\n\n\n명령어를 입력하시면 OpenJDK8버전을 설치하기 시작 합니다.\n\n이번에는 아무런 에러가 없이 무사히 설치가 완료 되었습니다.\n설치가 완료되었으면 기존 기본으로 설치한 OpenJDK의 버전을 변경하도록 하겠습니다.\n12# 설치가 완료되셨으면 아래의 명령어를 입력해 주세요.$ sudo update-alternatives --config java\n\n위와같은 화면이 나오시게 되면 기본으로 사용하실 OpenJDK 버전을 변경하실수 있습니다.\n그럼 새롭게 설치한 OpenJDK8버전인 2를 입력하시기 바랍니다.\n\n그러면 설정이 변경이 되었습니다.\n그러면 이제 자바가 정상 설치와 버전변경이 되었는지 확인을 해보도록 하겠습니다.\n아래의 명령어를 입력해 주세요.\n12# 자바 버전확인$ java –version\n\nOpenJDK버전도 정상적으로 출력되신것을 확인 하실수 있습니다.\n이것으로 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 해보았습니다.","dateCreated":"2020-06-15T01:00:00+09:00","dateModified":"2020-12-26T19:48:54+09:00","datePublished":"2020-06-15T01:00:00+09:00","description":"\n라즈베리파이 또는 리눅스에서 OpenJDK 설치하기이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.","headline":"라즈베리파이 또는 리눅스에서 OpenJDK 설치하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, 리눅스, apt-get, apt, zero, Java, java -version, OpenJDK, openjdk-8-jre, OpenJDK11, OpenJDK8, version, 자바","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이 또는 리눅스에서 OpenJDK 설치하기이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 또는 리눅스에서 OpenJDK 설치하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이 또는 리눅스에서 OpenJDK 설치하기이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/001-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/002-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/003-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/004-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/005-0.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/006-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/007-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/008-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/009-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/010-6.png">
+<meta property="article:published_time" content="2020-06-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:48:54.873Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="리눅스">
+<meta property="article:tag" content="apt-get">
+<meta property="article:tag" content="apt">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="java -version">
+<meta property="article:tag" content="OpenJDK">
+<meta property="article:tag" content="openjdk-8-jre">
+<meta property="article:tag" content="OpenJDK11">
+<meta property="article:tag" content="OpenJDK8">
+<meta property="article:tag" content="version">
+<meta property="article:tag" content="자바">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/001-10.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 또는 리눅스에서 OpenJDK 설치하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-15T01:00:00+09:00">
+	
+		    2020/06/15 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Java/">Java</a>, <a class="category-link" href="/categories/Rasberry-Pi/Java/Linux/">Linux</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이-또는-리눅스에서-OpenJDK-설치하기"><a href="#라즈베리파이-또는-리눅스에서-OpenJDK-설치하기" class="headerlink" title="라즈베리파이 또는 리눅스에서 OpenJDK 설치하기"></a>라즈베리파이 또는 리눅스에서 OpenJDK 설치하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기 입니다.</p>
+<p>라즈베리파이를 처음 설치하시면 일단 기본적으로 JDK가 설치가 되어있지 않기때문에</p>
+<p>JAVA개발 또는 Tomcat과 연동후 홈페이지를 운영하실 분들은 OpenJDK를 수동으로</p>
+<p>설치를 해주셔야만 합니다.</p>
+<h3 id="라즈베리파이-OpenJDK-11-설치하기"><a href="#라즈베리파이-OpenJDK-11-설치하기" class="headerlink" title="라즈베리파이 OpenJDK 11 설치하기"></a>라즈베리파이 OpenJDK 11 설치하기</h3><p>우선 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p>
+<p><img src="001-10.png" alt="image"></p>
+<p>우선 자바가 설치되어 있는지 확인을 위해 아래의 명령어를 터미널에 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -version</span><br></pre></td></tr></table></figure>
+<p><img src="002-10.png" alt="image"></p>
+<p>명령어를 입력후 위와같이 알수없는 명령어라고 나오면 JAVA관련 패키지가 설치가 되어있지 않은것 입니다.</p>
+<p>그럼 설치를 위해 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자동 인스톨 프로그램을 최신화 합니다.</span></span><br><span class="line">$ sudo apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 기본적은 가장 최신버전의 jdk를 설치 합니다.</span></span><br><span class="line">$ sudo apt install default-jdk</span><br></pre></td></tr></table></figure>
+<p><img src="003-11.png" alt="image"></p>
+<p>가지고 계신 라즈베리파이의 성능에 따라서 업데이트 시간에 조금 차이가 있을수 있겠습니다.</p>
+<p><img src="004-10.png" alt="image"></p>
+<p>OpenJDK설치가 완료 되었습니다만</p>
+<p>위와 같이 에러가 나오면 라즈베리파이의 cpu코어가 최신의 JDK를 실행을 할수가 없는것 입니다.</p>
+<p>그래도 설치가 제대로 되었는지 확인을 해야하기에 아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자바 버전확인</span></span><br><span class="line">$ java –version</span><br></pre></td></tr></table></figure>
+<p>터미널에 자바버전이 출력이 되시면 정상적으로 설치가 되신것 입니다.</p>
+<p>그래도 구형 라즈베리파이를 사용하시는 분들이 좌절하지 않으시도록</p>
+<p>어떻게하면 구형 라즈베리파이에서도 JDK를 사용할수 있는지 해보도록 하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 아래의 명령어를 터미널에 입력해 주세요.</span></span><br><span class="line"><span class="comment"># 일단은 OpenJDK8버전을 설치를 합니다.</span></span><br><span class="line">$ sudo apt-get install openjdk-8-jre</span><br></pre></td></tr></table></figure>
+<p><img src="005-0.png" alt="image"></p>
+<p><img src="006-8.png" alt="image"></p>
+<p>명령어를 입력하시면 OpenJDK8버전을 설치하기 시작 합니다.</p>
+<p><img src="007-8.png" alt="image"></p>
+<p>이번에는 아무런 에러가 없이 무사히 설치가 완료 되었습니다.</p>
+<p>설치가 완료되었으면 기존 기본으로 설치한 OpenJDK의 버전을 변경하도록 하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 설치가 완료되셨으면 아래의 명령어를 입력해 주세요.</span></span><br><span class="line">$ sudo update-alternatives --config java</span><br></pre></td></tr></table></figure>
+<p><img src="008-8.png" alt="image"></p>
+<p>위와같은 화면이 나오시게 되면 기본으로 사용하실 OpenJDK 버전을 변경하실수 있습니다.</p>
+<p>그럼 새롭게 설치한 OpenJDK8버전인 2를 입력하시기 바랍니다.</p>
+<p><img src="009-6.png" alt="image"></p>
+<p>그러면 설정이 변경이 되었습니다.</p>
+<p>그러면 이제 자바가 정상 설치와 버전변경이 되었는지 확인을 해보도록 하겠습니다.</p>
+<p>아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 자바 버전확인</span></span><br><span class="line">$ java –version</span><br></pre></td></tr></table></figure>
+<p><img src="010-6.png" alt="image"></p>
+<p>OpenJDK버전도 정상적으로 출력되신것을 확인 하실수 있습니다.</p>
+<p>이것으로 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 해보았습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK/" rel="tag">OpenJDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK11/" rel="tag">OpenJDK11</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK8/" rel="tag">OpenJDK8</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apt/" rel="tag">apt</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apt-get/" rel="tag">apt-get</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/java-version/" rel="tag">java -version</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/openjdk-8-jre/" rel="tag">openjdk-8-jre</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/version/" rel="tag">version</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A6%AC%EB%88%85%EC%8A%A4/" rel="tag">리눅스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/15/rasberry-pi/rasberry-pi-023/';
+              
+            this.page.identifier = '2020/06/15/rasberry-pi/rasberry-pi-023/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

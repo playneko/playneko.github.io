@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="apache,chown,connection,delete,insert,select,update,linux,localhost,MariaDB,nginx,NPM,PHP,root,SSH,VNC,www,zero,Rasberry Pi,ラズベリーパイ,라즈베리파이,마리아DB,웹브라우저">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기안녕하세요. AkibaTV입니다.\n라즈베리파이 또는 리눅스의 NPM (Nginx + PHP + MariaDB)을 이용해서\nMariaDB에 접속과 Connection, Select, Insert, Update, Delete 사용법을 알아보도록 하겠습니다.\n그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.\n실행을 하셨으면 파일명을 php_mariadb.php로 추가를 해주시기 바랍니다.\n그러면 PHP를 이용해서 MariaDB에 접속후 Select, Insert, Update, Delete를 해보도록 하겠습니다만\n우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.\n아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.\n\n우선 간단한 테이블을 만들어 보도록 하겠습니다.\nphpMyAdmin에 로그인을 해주시기 바랍니다.\nakibatv 데이터베이스를 펼치시면 New를 클릭해 주시기 바랍니다.\n데이터베이스가 추가가 되어있지 않으신 분들은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기를 참고해 주시기 바랍니다.\n\n123456789101112# 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.----------+---------+-------- Name     | Type    | Size----------+---------+-------- name     | VARCHAR | 10----------+---------+-------- age      | INT     | 3----------+---------+-------- birthday | VARCHAR | 8----------+---------+-------- site_url | VARCHAR | 100----------+---------+--------\n위와같이 하셨으면 저장을해서 테이블을 추가를 해주시기 바랍니다.\n\n그러면 위와같이 test1이란 테이블이 추가가 되었습니다.\n그러면 이제 본격적으로 코딩을 시작을 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)로 돌아오셔서 아래와같이 코딩을 해주시기 바랍니다.\nMariaDB의 기반이 MySql로 되어 있기때문에 PHP에서 MariaDB를 사용하실땐 MySql라이브러리를 사용 합니다.\n123456789101112131415161718&lt;?php    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);  \t&#125;\t  echo &quot;데이터베이스 접속 성공&quot;;    $conn-&gt;close();?&gt;\n\n위와같이 작성을 하셨으면 이제 데이터베이스에 정상적으로 연결이 되는지 확인을 해보도록 하겠습니다.\n소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_mariadb.php\n\n위와같이 나오면 정상적으로 데이터베이스에 접속이 성공한것 입니다.\n이제 Select, Insert, Update, Delete를 해보도록 하겠습니다.\n파일명을 php_mariadb_insert.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.\n12345678910111213141516171819202122232425&lt;?php    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);    &#125;    $sql = &quot; INSERT INTO test1 (name, age, birthday, site_url) &quot;;    $sql .= &quot; VALUES (&#x27;AkibaTV&#x27;, &#x27;99&#x27;, &#x27;20200101&#x27;, &#x27;https://playneko.com/&#x27;); &quot;;    if ($conn-&gt;query($sql) === TRUE) &#123;        echo &quot;데이터 추가 성공&quot;;    &#125; else &#123;        echo &quot;에러 : &quot; . $sql . &quot;&lt;br&gt;&quot; . $conn-&gt;error;    &#125;    $conn-&gt;close();?&gt;\n\n위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_mariadb_insert.php\n실행후 데이터베이스 Insert가 되었는지 확인을 해보도록 하겠습니다.\n\n데이터 추가 성공이라고 출력이 되었으면 실제로 데이터베이스\n정상적으로 입력이 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 등록이 된것을 확인이 되었습니다.\n이제 Select를 해보도록 하겠습니다.\n파일명을 php_mariadb_select.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.\n123456789101112131415161718192021222324252627282930&lt;?php    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);  \t&#125;    $sql = &quot; SELECT * FROM test1 &quot;;    $result = $conn-&gt;query($sql);    if ($result-&gt;num_rows &gt; 0) &#123;        while($row = $result-&gt;fetch_assoc()) &#123;            echo $row[&#x27;name&#x27;] . &quot;&lt;br&gt;&quot;;            echo $row[&#x27;age&#x27;] . &quot;&lt;br&gt;&quot;;            echo $row[&#x27;birthday&#x27;] . &quot;&lt;br&gt;&quot;;            echo $row[&#x27;site_url&#x27;] . &quot;&lt;br&gt;&quot;;        &#125;    &#125; else &#123;        echo &quot;결과 데이터가 없습니다.&quot;;    &#125;    $conn-&gt;close();?&gt;\n\n위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_mariadb_select.php\n실행후 웹브라우저에 Select한 데이터가 출력이 된것을 확인 하실수 있습니다.\n\n이제 Update를 해보도록 하겠습니다.\n파일명을 php_mariadb_update.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.\n12345678910111213141516171819202122232425262728&lt;?php    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);    &#125;    $sql = &quot; UPDATE test1 SET &quot;;    $sql .= &quot; age = &#x27;11&#x27;, &quot;;    $sql .= &quot; birthday = &#x27;19991201&#x27;, &quot;;    $sql .= &quot; site_url = &#x27;https://akibatv.net/&#x27; &quot;;    $sql .= &quot; WHERE name = &#x27;AkibaTV&#x27; &quot;;    if ($conn-&gt;query($sql) === TRUE) &#123;        echo &quot;데이터 갱신 성공&quot;;    &#125; else &#123;        echo &quot;에러 : 데이터 업데이트 실패&lt;br&gt;&quot; . $conn-&gt;error;    &#125;    $conn-&gt;close();?&gt;\n\n위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_mariadb_update.php\n실행후 웹브라우저에 데이터 갱신 성공 이라고 출력이 되셨으면 문제없이 갱신이 되었습니다.\n\n실제로 데이터베이스 정상적으로 갱신이 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 갱신이 된것을 확인이 되었습니다.\n이제 Delete를 해보도록 하겠습니다.\n파일명을 php_mariadb_delete.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.\n123456789101112131415161718192021222324&lt;?php    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);    &#125;    $sql = &quot; DELETE FROM test1 WHERE name = &#x27;AkibaTV&#x27; &quot;;    if ($conn-&gt;query($sql) === TRUE) &#123;        echo &quot;데이터 삭제 성공&quot;;    &#125; else &#123;        echo &quot;에러 : 데이터 삭제 실패&lt;br&gt;&quot; . $conn-&gt;error;    &#125;    $conn-&gt;close();?&gt;\n\n위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_mariadb_delete.php\n실행후 웹브라우저에 데이터 삭제 성공 이라고 출력이 되셨으면 문제없이 삭제가 된것입니다.\n\n실제로 데이터베이스 정상적으로 삭제가 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 삭제가 된것을 확인이 되었습니다.\n이렇게해서 PHP로 MariaDB의 Select, Insert, Update, Delete를 해보았습니다.","dateCreated":"2020-06-26T01:00:00+09:00","dateModified":"2020-12-26T19:49:24+09:00","datePublished":"2020-06-26T01:00:00+09:00","description":"\n라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기라즈베리파이 또는 리눅스의 NPM (Nginx + PHP + MariaDB)을 이용해서….","headline":"라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, nginx, apache, chown, MariaDB, NPM, PHP, root, zero, 웹브라우저, localhost, www, connection, delete, insert, select, update, 마리아DB","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기라즈베리파이 또는 리눅스의 NPM (Nginx + PHP + MariaDB)을 이용해서….">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기라즈베리파이 또는 리눅스의 NPM (Nginx + PHP + MariaDB)을 이용해서….">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/002-18.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/003-21.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/004-20.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/001-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/006-15.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/007-12.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/005-1-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/009-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/010-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/011-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/012-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/013-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/014-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/015-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/016-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/017-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/018-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/019-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/020-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/021-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/022-3.png">
+<meta property="article:published_time" content="2020-06-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:49:24.905Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="apache">
+<meta property="article:tag" content="chown">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="www">
+<meta property="article:tag" content="connection">
+<meta property="article:tag" content="delete">
+<meta property="article:tag" content="insert">
+<meta property="article:tag" content="select">
+<meta property="article:tag" content="update">
+<meta property="article:tag" content="마리아DB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/002-18.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-26T01:00:00+09:00">
+	
+		    2020/06/26 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/PHP/">PHP</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이-또는-리눅스-PHP에서-MariaDB-사용하기"><a href="#라즈베리파이-또는-리눅스-PHP에서-MariaDB-사용하기" class="headerlink" title="라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기"></a>라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>라즈베리파이 또는 리눅스의 NPM (Nginx + PHP + MariaDB)을 이용해서</p>
+<p>MariaDB에 접속과 Connection, Select, Insert, Update, Delete 사용법을 알아보도록 하겠습니다.</p>
+<p>그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p>
+<p>실행을 하셨으면 파일명을 php_mariadb.php로 추가를 해주시기 바랍니다.</p>
+<p>그러면 PHP를 이용해서 MariaDB에 접속후 Select, Insert, Update, Delete를 해보도록 하겠습니다만</p>
+<p>우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.</p>
+<p>아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.</p>
+<p><img src="002-18.png" alt="image"></p>
+<p>우선 간단한 테이블을 만들어 보도록 하겠습니다.</p>
+<p>phpMyAdmin에 로그인을 해주시기 바랍니다.</p>
+<p>akibatv 데이터베이스를 펼치시면 New를 클릭해 주시기 바랍니다.</p>
+<p>데이터베이스가 추가가 되어있지 않으신 분들은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기를 참고해 주시기 바랍니다.</p>
+<p><img src="003-21.png" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.</span><br><span class="line">----------+---------+--------</span><br><span class="line"> Name     | Type    | Size</span><br><span class="line">----------+---------+--------</span><br><span class="line"> name     | VARCHAR | 10</span><br><span class="line">----------+---------+--------</span><br><span class="line"> age      | INT     | 3</span><br><span class="line">----------+---------+--------</span><br><span class="line"> birthday | VARCHAR | 8</span><br><span class="line">----------+---------+--------</span><br><span class="line"> site_url | VARCHAR | 100</span><br><span class="line">----------+---------+--------</span><br></pre></td></tr></table></figure>
+<p>위와같이 하셨으면 저장을해서 테이블을 추가를 해주시기 바랍니다.</p>
+<p><img src="004-20.png" alt="image"></p>
+<p>그러면 위와같이 test1이란 테이블이 추가가 되었습니다.</p>
+<p>그러면 이제 본격적으로 코딩을 시작을 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)로 돌아오셔서 아래와같이 코딩을 해주시기 바랍니다.</p>
+<p>MariaDB의 기반이 MySql로 되어 있기때문에 PHP에서 MariaDB를 사용하실땐 MySql라이브러리를 사용 합니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line">	  <span class="keyword">echo</span> <span class="string">&quot;데이터베이스 접속 성공&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="001-1-1.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 이제 데이터베이스에 정상적으로 연결이 되는지 확인을 해보도록 하겠습니다.</p>
+<p>소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="006-15.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_mariadb.php</p>
+<p><img src="007-12.png" alt="image"></p>
+<p>위와같이 나오면 정상적으로 데이터베이스에 접속이 성공한것 입니다.</p>
+<p>이제 Select, Insert, Update, Delete를 해보도록 하겠습니다.</p>
+<p>파일명을 php_mariadb_insert.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot; INSERT INTO test1 (name, age, birthday, site_url) &quot;</span>;</span><br><span class="line">    <span class="variable">$sql</span> .= <span class="string">&quot; VALUES (&#x27;AkibaTV&#x27;, &#x27;99&#x27;, &#x27;20200101&#x27;, &#x27;https://playneko.com/&#x27;); &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>) === <span class="literal">TRUE</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;데이터 추가 성공&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;에러 : &quot;</span> . <span class="variable">$sql</span> . <span class="string">&quot;&lt;br&gt;&quot;</span> . <span class="variable">$conn</span>-&gt;error;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="005-1-2.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="009-8.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_mariadb_insert.php</p>
+<p>실행후 데이터베이스 Insert가 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="010-8.png" alt="image"></p>
+<p>데이터 추가 성공이라고 출력이 되었으면 실제로 데이터베이스</p>
+<p>정상적으로 입력이 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="011-7.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 등록이 된것을 확인이 되었습니다.</p>
+<p>이제 Select를 해보도록 하겠습니다.</p>
+<p>파일명을 php_mariadb_select.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    // 데이터베이스 생성</span><br><span class="line">    <span class="variable">$conn</span> = new mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    // 데이터베이스 접속</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        die(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot; SELECT * FROM test1 &quot;</span>;</span><br><span class="line">    <span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span>-&gt;num_rows &gt; 0) &#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="variable">$row</span>[<span class="string">&#x27;name&#x27;</span>] . <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">            <span class="built_in">echo</span> <span class="variable">$row</span>[<span class="string">&#x27;age&#x27;</span>] . <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">            <span class="built_in">echo</span> <span class="variable">$row</span>[<span class="string">&#x27;birthday&#x27;</span>] . <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">            <span class="built_in">echo</span> <span class="variable">$row</span>[<span class="string">&#x27;site_url&#x27;</span>] . <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;결과 데이터가 없습니다.&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="012-6.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="013-7.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_mariadb_select.php</p>
+<p>실행후 웹브라우저에 Select한 데이터가 출력이 된것을 확인 하실수 있습니다.</p>
+<p><img src="014-4.png" alt="image"></p>
+<p>이제 Update를 해보도록 하겠습니다.</p>
+<p>파일명을 php_mariadb_update.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot; UPDATE test1 SET &quot;</span>;</span><br><span class="line">    <span class="variable">$sql</span> .= <span class="string">&quot; age = &#x27;11&#x27;, &quot;</span>;</span><br><span class="line">    <span class="variable">$sql</span> .= <span class="string">&quot; birthday = &#x27;19991201&#x27;, &quot;</span>;</span><br><span class="line">    <span class="variable">$sql</span> .= <span class="string">&quot; site_url = &#x27;https://akibatv.net/&#x27; &quot;</span>;</span><br><span class="line">    <span class="variable">$sql</span> .= <span class="string">&quot; WHERE name = &#x27;AkibaTV&#x27; &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>) === <span class="literal">TRUE</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;데이터 갱신 성공&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;에러 : 데이터 업데이트 실패&lt;br&gt;&quot;</span> . <span class="variable">$conn</span>-&gt;error;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="015-1-1.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="016-5.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_mariadb_update.php</p>
+<p>실행후 웹브라우저에 데이터 갱신 성공 이라고 출력이 되셨으면 문제없이 갱신이 되었습니다.</p>
+<p><img src="017-5.png" alt="image"></p>
+<p>실제로 데이터베이스 정상적으로 갱신이 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="018-5.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 갱신이 된것을 확인이 되었습니다.</p>
+<p>이제 Delete를 해보도록 하겠습니다.</p>
+<p>파일명을 php_mariadb_delete.php로 추가를 하시고 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot; DELETE FROM test1 WHERE name = &#x27;AkibaTV&#x27; &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>) === <span class="literal">TRUE</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;데이터 삭제 성공&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;에러 : 데이터 삭제 실패&lt;br&gt;&quot;</span> . <span class="variable">$conn</span>-&gt;error;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="019-5.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="020-5.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_mariadb_delete.php</p>
+<p>실행후 웹브라우저에 데이터 삭제 성공 이라고 출력이 되셨으면 문제없이 삭제가 된것입니다.</p>
+<p><img src="021-3.png" alt="image"></p>
+<p>실제로 데이터베이스 정상적으로 삭제가 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="022-3.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 삭제가 된것을 확인이 되었습니다.</p>
+<p>이렇게해서 PHP로 MariaDB의 Select, Insert, Update, Delete를 해보았습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/MariaDB/" rel="tag">MariaDB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apache/" rel="tag">apache</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chown/" rel="tag">chown</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/connection/" rel="tag">connection</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/delete/" rel="tag">delete</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/insert/" rel="tag">insert</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/nginx/" rel="tag">nginx</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/select/" rel="tag">select</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/update/" rel="tag">update</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/www/" rel="tag">www</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A7%88%EB%A6%AC%EC%95%84DB/" rel="tag">마리아DB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/';
+              
+            this.page.identifier = '2020/06/26/rasberry-pi/rasberry-pi-031/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

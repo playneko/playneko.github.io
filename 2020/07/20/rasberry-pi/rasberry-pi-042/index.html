@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="chmod,chmod 755,Export,jar,JAR file,Java,java -jar,jdk,library,MANIFEST.MF,META-INF,OpenJDK,root,SSH,VNC,zero,ラズベリーパイ,Rasberry Pi,라이브러리,라즈베리파이,배치프로그램,소스파일,이클립스,자바,콘솔,클래스,파일,프로젝트">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 입니다.\n자바를 이용해서 배치프로그램을 개발을 하신후 라즈베리파이 또는 리눅스에서\n실행을 위해선 JAR파일을 만드시거나 클래스파일을 그대로 올리고 실행을 해주셔야만 합니다.\n제가 소개할 내용은 JAR파일을 만든후 실행하기를 해보도록 하겠습니다.\nJAVA에서 개발한 프로젝트 JAR파일로 만들기를 아직 안보신분은 참고를 해주시기 바랍니다.\n우선 이클립스를 실행후 JAVA에서 개발한 프로젝트 JAR파일로 만들기에 덧붙여서 하겠습니다.\n\n이클립스를 실행을 하시고 기존에 만들어둔 AkibaTV프로젝트를 이용을 하겠습니다.\n이상태로 JAR파일을 만드셔서 실행을 하셔도 실행은 되시겠지만\n추가 라이브러리가 있을경우에는 추가 라이브러리도 JAR파일에서 인식이 되게끔\n추가를 해주실 필요가 있습니다.\n우선 META-INF폴더를 추가를 해주시기 바랍니다.\n\n폴더 생성을 선택을 해주시기 바랍니다.\n\nMETA-INF를 입력후 Finish를 눌러주시기 바랍니다.\n\nMETA-INF폴더가 생성된것을 확인 하실수 있습니다.\n이번에는 META-INF폴더에 MANIFEST.MF파일을 추가를 하겠습니다.\n\nFile을 선택을 하시기 바랍니다.\n\nMANIFEST.MF를 입력후 Finish를 눌러주시기 바랍니다.\n\nMANIFEST.MF파일이 생성된것을 확인이 되었습니다.\nlib폴더에 외부 mariadb-java-client-2.6.0.jar를 MANIFEST.MF파일에 추가를 해주도록 하겠습니다.\n아래와 같이 입력을 해주시기 바랍니다.\n123Manifest-Version: 0.1Class-Path: lib/mariadb-java-client-2.5.1.jarMain-Class: test\n\n이제 이상태로 JAR파일을 만들어 주시기 바랍니다.\n\n\n\n\n위의 화면에 오시면 Use existing manifest from workspace를 선택후\n추가하신 MANIFEST.MF를 선택후 Finish를 눌러주시기 바랍니다.\n\nJAR파일이 만들어진것을 확인후 파일을 라즈베리파이의 적당한 폴더에 올려주시기 바랍니다.\n\nJAR파일이 올라간것을 확인되셨으면 권한을 실행권한인 755로 설정을 해주시기 바랍니다.\n\n12# 실행 권한을 755로 설정합니다.$ chmod 755 AkibaTV.jar\n\n권한이 바뀐것을 확인 하실수 있습니다.\n실행을 위해 아래와 같이 명령어를 입력해 주시기 바랍니다.\n123# 실행 메모리는 프로그램 크기를 생각하셔서 해주시기 바랍니다.# 경로는 절대경로를 해주시기 바랍니다.$ java -jar -XX:MaxPermSize=32m -Xms128m -Xmx128m &quot;/home/www/batch/AkibaTV.jar&quot;\n\nJAR파일을 실행을 합니다.\n\nJAR파일이 실행되고 Hello, AkibaTV!가 출력이 되신것을 확인 하실수 있습니다.","dateCreated":"2020-07-20T01:00:00+09:00","dateModified":"2020-12-26T19:52:26+09:00","datePublished":"2020-07-20T01:00:00+09:00","description":"\n라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기이번에 소개할 내용은 라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 입니다.","headline":"라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, root, zero, Java, OpenJDK, 자바, chmod, chmod 755, Export, jar, JAR file, java -jar, jdk, library, MANIFEST.MF, META-INF, 라이브러리, 배치프로그램, 소스파일, 이클립스, 콘솔, 클래스, 파일, 프로젝트","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기이번에 소개할 내용은 라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기이번에 소개할 내용은 라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/001-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/002-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/003-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/004-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/005-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/006-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/007-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/008-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/009-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/010-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/011-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/012-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/013-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/014-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/015-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/016-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/017-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/018.png">
+<meta property="article:published_time" content="2020-07-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:52:26.373Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="OpenJDK">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="chmod">
+<meta property="article:tag" content="chmod 755">
+<meta property="article:tag" content="Export">
+<meta property="article:tag" content="jar">
+<meta property="article:tag" content="JAR file">
+<meta property="article:tag" content="java -jar">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="library">
+<meta property="article:tag" content="MANIFEST.MF">
+<meta property="article:tag" content="META-INF">
+<meta property="article:tag" content="라이브러리">
+<meta property="article:tag" content="배치프로그램">
+<meta property="article:tag" content="소스파일">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="콘솔">
+<meta property="article:tag" content="클래스">
+<meta property="article:tag" content="파일">
+<meta property="article:tag" content="프로젝트">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/001-10.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-20T01:00:00+09:00">
+	
+		    2020/07/20 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/">Linux</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-JAVA에서-만든-JAR파일-실행하기"><a href="#라즈베리파이에서-JAVA에서-만든-JAR파일-실행하기" class="headerlink" title="라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기"></a>라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 JAVA에서 만든 JAR파일 실행하기 입니다.</p>
+<p>자바를 이용해서 배치프로그램을 개발을 하신후 라즈베리파이 또는 리눅스에서</p>
+<p>실행을 위해선 JAR파일을 만드시거나 클래스파일을 그대로 올리고 실행을 해주셔야만 합니다.</p>
+<p>제가 소개할 내용은 JAR파일을 만든후 실행하기를 해보도록 하겠습니다.</p>
+<p>JAVA에서 개발한 프로젝트 JAR파일로 만들기를 아직 안보신분은 참고를 해주시기 바랍니다.</p>
+<p>우선 이클립스를 실행후 JAVA에서 개발한 프로젝트 JAR파일로 만들기에 덧붙여서 하겠습니다.</p>
+<p><img src="001-10.png" alt="image"></p>
+<p>이클립스를 실행을 하시고 기존에 만들어둔 AkibaTV프로젝트를 이용을 하겠습니다.</p>
+<p>이상태로 JAR파일을 만드셔서 실행을 하셔도 실행은 되시겠지만</p>
+<p>추가 라이브러리가 있을경우에는 추가 라이브러리도 JAR파일에서 인식이 되게끔</p>
+<p>추가를 해주실 필요가 있습니다.</p>
+<p>우선 META-INF폴더를 추가를 해주시기 바랍니다.</p>
+<p><img src="002-10.png" alt="image"></p>
+<p>폴더 생성을 선택을 해주시기 바랍니다.</p>
+<p><img src="003-9.png" alt="image"></p>
+<p>META-INF를 입력후 Finish를 눌러주시기 바랍니다.</p>
+<p><img src="004-9.png" alt="image"></p>
+<p>META-INF폴더가 생성된것을 확인 하실수 있습니다.</p>
+<p>이번에는 META-INF폴더에 MANIFEST.MF파일을 추가를 하겠습니다.</p>
+<p><img src="005-8.png" alt="image"></p>
+<p>File을 선택을 하시기 바랍니다.</p>
+<p><img src="006-5.png" alt="image"></p>
+<p>MANIFEST.MF를 입력후 Finish를 눌러주시기 바랍니다.</p>
+<p><img src="007-4.png" alt="image"></p>
+<p>MANIFEST.MF파일이 생성된것을 확인이 되었습니다.</p>
+<p>lib폴더에 외부 mariadb-java-client-2.6.0.jar를 MANIFEST.MF파일에 추가를 해주도록 하겠습니다.</p>
+<p>아래와 같이 입력을 해주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 0.1</span><br><span class="line">Class-Path: lib/mariadb-java-client-2.5.1.jar</span><br><span class="line">Main-Class: test</span><br></pre></td></tr></table></figure>
+<p><img src="008-4.png" alt="image"></p>
+<p>이제 이상태로 JAR파일을 만들어 주시기 바랍니다.</p>
+<p><img src="009-3.png" alt="image"></p>
+<p><img src="010-2.png" alt="image"></p>
+<p><img src="011-2.png" alt="image"></p>
+<p><img src="012-2.png" alt="image"></p>
+<p>위의 화면에 오시면 Use existing manifest from workspace를 선택후</p>
+<p>추가하신 MANIFEST.MF를 선택후 Finish를 눌러주시기 바랍니다.</p>
+<p><img src="013-2.png" alt="image"></p>
+<p>JAR파일이 만들어진것을 확인후 파일을 라즈베리파이의 적당한 폴더에 올려주시기 바랍니다.</p>
+<p><img src="014-2.png" alt="image"></p>
+<p>JAR파일이 올라간것을 확인되셨으면 권한을 실행권한인 755로 설정을 해주시기 바랍니다.</p>
+<p><img src="015-2.png" alt="image"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 실행 권한을 755로 설정합니다.</span></span><br><span class="line">$ chmod 755 AkibaTV.jar</span><br></pre></td></tr></table></figure>
+<p><img src="016-2.png" alt="image"></p>
+<p>권한이 바뀐것을 확인 하실수 있습니다.</p>
+<p>실행을 위해 아래와 같이 명령어를 입력해 주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 실행 메모리는 프로그램 크기를 생각하셔서 해주시기 바랍니다.</span></span><br><span class="line"><span class="comment"># 경로는 절대경로를 해주시기 바랍니다.</span></span><br><span class="line">$ java -jar -XX:MaxPermSize=32m -Xms128m -Xmx128m <span class="string">&quot;/home/www/batch/AkibaTV.jar&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="017-2.png" alt="image"></p>
+<p>JAR파일을 실행을 합니다.</p>
+<p><img src="018.png" alt="image"></p>
+<p>JAR파일이 실행되고 Hello, AkibaTV!가 출력이 되신것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Export/" rel="tag">Export</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/JAR-file/" rel="tag">JAR file</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MANIFEST-MF/" rel="tag">MANIFEST.MF</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/META-INF/" rel="tag">META-INF</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK/" rel="tag">OpenJDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chmod/" rel="tag">chmod</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chmod-755/" rel="tag">chmod 755</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jar/" rel="tag">jar</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/java-jar/" rel="tag">java -jar</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/library/" rel="tag">library</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/" rel="tag">라이브러리</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B0%B0%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8/" rel="tag">배치프로그램</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%8A%A4%ED%8C%8C%EC%9D%BC/" rel="tag">소스파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%98%EC%86%94/" rel="tag">콘솔</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%B4%EB%9E%98%EC%8A%A4/" rel="tag">클래스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%BC/" rel="tag">파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/" rel="tag">프로젝트</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/20/rasberry-pi/rasberry-pi-042/';
+              
+            this.page.identifier = '2020/07/20/rasberry-pi/rasberry-pi-042/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

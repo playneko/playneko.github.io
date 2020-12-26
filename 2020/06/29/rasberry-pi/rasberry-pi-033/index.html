@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 실행중인 프로세스 강제종료 시키기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="background,grep,kill,LED,LED점등,pid,process,ps -ef,Rasberry Pi,root,SSH,sudo,VNC,zero,ラズベリーパイ,검색,라즈베리파이,로그아웃,백그라운드,터미널,프로세스">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 실행중인 프로세스 강제종료 시키기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만\n라즈베리파이 뿐만 아니라 리눅스도 포함되는 내용 입니다.\n배치프로그램을 개발하거나 자바프로그램을 라즈베리파이 또는 리눅스에서\n백그라운드 상태로 실행중인 경우 급하게 프로세스를 종료를 시켜야 하는 경우가 발생할수가 있습니다.\n그럴경우에 어떻게 프로세스를 찾고 강제로 종료를 시키는것인지 알아보도록 하겠습니다.\n우선 프로그램을 무한루프로 실행할 샘플 코드를 작성을 하도록 하겠습니다.\n샘플코드는 이전에 소개해 드린 라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자 입니다.\n간단하게 만들어서 무한으로 LED가 켜지고 꺼지게 실행중에\n프로세스를 강제종료를 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)를 실행해 주시고 파일명은 gpio_led_loop.py로 합니다.\n\n아래와같이 코딩을 해주시기 바랍니다.\n1234567891011121314151617181920import timeimport RPi.GPIO as GPIOpinNum = 20GPIO.setmode(GPIO.BCM)GPIO.setup(pinNum, GPIO.OUT)try:    while True:        GPIO.output(pinNum, GPIO.HIGH)        time.sleep(1)        GPIO.output(pinNum, GPIO.LOW)        time.sleep(1)except KeyboardInterrupt:    GPIO.output(pinNum, GPIO.LOW)finally:    GPIO.cleanup()\n\n작성을 하셨으면 라즈베리파이에 파일을 올려주시기 바랍니다.\n그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.\n\n이제 작성한 LED점등 소스를 실행을 해보도록 하겠습니다.\n아래의 명령어를 입력해 주세요.\n이번에 실행 명령어는 마지막에 “&amp;”를 추가를 해줍니다. “&amp;” 하고 실행을 하시면\n프로그램을 그냥 실행하는게 아닌 백그라운드로 실행을 하게 되며 라즈베리파이에서 로그아웃을 하셔도\n프로그램을 라즈베리파이가 켜져있는한 계속 돌아가게 됩니다.\n12# 파이썬 2.x버전대를 이용하실경우$ sudo python ./gpio_led_loop.py &amp;\n12# 파이썬 3.x버전대를 이용하실경우$ sudo python3 ./gpio_led_loop.py &amp;\n\n위와같이 아무키나 눌렀음에도 LED는 계속 켜지고 꺼지는것을 보실수가 있습니다.\n그럼 프로세스가 정상적으로 실행중인지 알아보겠습니다.\n아래의 명령어를 입력해 주세요.\n12# gpio_led_loop.py 파일명으로 실행중인 프로세스 검색$ ps -ef | grep gpio_led_loop.py\n\n123root 1113 1003 0 22:33 pts/0  00:00:00 sudo python3 ./gpio_led_loop.pyroot 1118 1113 0 22:33 pts/0  00:00:00 python3 ./gpio_led_loop.pypi   1121 1003 0 22:36 pts/0  00:00:00 grep --color=auto gpio_led_loop.py\n위와같이 실행중인 항목이 나오는것을 확인 하실수 있습니다.\n이제 프로세스를 종료하는 방법은 root다음에 오는 첫번째 숫자가 실행중인 프로세스의 pid값 입니다.\n아니면 프로그램을 실행하실때 출력한 [1] 1113도 똑같은 pid값이 됩니다.\npid값을 확인을 하셨으면 아래의 명령어를 이용해서 프로세스를 강제로 종료 하실수가 있습니다.\n12# 1113은 실행할때마다 나오는 pid값을 입력$ sudo kill 1113(pid값)\n\n프로세스를 강제 종료하시면 위와같이 나오면서 프로세스가 종료되고 LED점등도 멈춘것을 확인하실수 있습니다.\n그럼 다시 프로세스 검색을 해서 프로세스가 종료되었는지 확인해 보도록 하겠습니다.\n12# gpio_led_loop.py 파일명으로 실행중인 프로세스 검색$ ps -ef | grep gpio_led_loop.py\n\n위와같이 프로세스가 종료되어 있는것을 확인 하실수 있습니다.","dateCreated":"2020-06-29T01:00:00+09:00","dateModified":"2020-12-26T19:49:29+09:00","datePublished":"2020-06-29T01:00:00+09:00","description":"\n라즈베리파이에서 실행중인 프로세스 강제종료 시키기이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만","headline":"라즈베리파이에서 실행중인 프로세스 강제종료 시키기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, LED, sudo, root, zero, background, grep, kill, LED점등, pid, process, ps -ef, 검색, 로그아웃, 백그라운드, 터미널, 프로세스","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 실행중인 프로세스 강제종료 시키기이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 실행중인 프로세스 강제종료 시키기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 실행중인 프로세스 강제종료 시키기이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/001-22.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/002-20.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/003-23.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/004-22.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/005-17.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/006-17.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/007-14.png">
+<meta property="article:published_time" content="2020-06-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:49:29.871Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="LED">
+<meta property="article:tag" content="sudo">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="background">
+<meta property="article:tag" content="grep">
+<meta property="article:tag" content="kill">
+<meta property="article:tag" content="LED점등">
+<meta property="article:tag" content="pid">
+<meta property="article:tag" content="process">
+<meta property="article:tag" content="ps -ef">
+<meta property="article:tag" content="검색">
+<meta property="article:tag" content="로그아웃">
+<meta property="article:tag" content="백그라운드">
+<meta property="article:tag" content="터미널">
+<meta property="article:tag" content="프로세스">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/001-22.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 실행중인 프로세스 강제종료 시키기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-29T01:00:00+09:00">
+	
+		    2020/06/29 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Linux/">Linux</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-실행중인-프로세스-강제종료-시키기"><a href="#라즈베리파이에서-실행중인-프로세스-강제종료-시키기" class="headerlink" title="라즈베리파이에서 실행중인 프로세스 강제종료 시키기"></a>라즈베리파이에서 실행중인 프로세스 강제종료 시키기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만</p>
+<p>라즈베리파이 뿐만 아니라 리눅스도 포함되는 내용 입니다.</p>
+<p>배치프로그램을 개발하거나 자바프로그램을 라즈베리파이 또는 리눅스에서</p>
+<p>백그라운드 상태로 실행중인 경우 급하게 프로세스를 종료를 시켜야 하는 경우가 발생할수가 있습니다.</p>
+<p>그럴경우에 어떻게 프로세스를 찾고 강제로 종료를 시키는것인지 알아보도록 하겠습니다.</p>
+<p>우선 프로그램을 무한루프로 실행할 샘플 코드를 작성을 하도록 하겠습니다.</p>
+<p>샘플코드는 이전에 소개해 드린 라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자 입니다.</p>
+<p>간단하게 만들어서 무한으로 LED가 켜지고 꺼지게 실행중에</p>
+<p>프로세스를 강제종료를 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시고 파일명은 gpio_led_loop.py로 합니다.</p>
+<p><img src="001-22.png" alt="image"></p>
+<p>아래와같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">20</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"></span><br><span class="line">        GPIO.output(pinNum, GPIO.HIGH)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        GPIO.output(pinNum, GPIO.LOW)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    GPIO.output(pinNum, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    GPIO.cleanup()</span><br></pre></td></tr></table></figure>
+<p><img src="002-20.png" alt="image"></p>
+<p>작성을 하셨으면 라즈베리파이에 파일을 올려주시기 바랍니다.</p>
+<p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p>
+<p><img src="003-23.png" alt="image"></p>
+<p>이제 작성한 LED점등 소스를 실행을 해보도록 하겠습니다.</p>
+<p>아래의 명령어를 입력해 주세요.</p>
+<p>이번에 실행 명령어는 마지막에 “&amp;”를 추가를 해줍니다. “&amp;” 하고 실행을 하시면</p>
+<p>프로그램을 그냥 실행하는게 아닌 백그라운드로 실행을 하게 되며 라즈베리파이에서 로그아웃을 하셔도</p>
+<p>프로그램을 라즈베리파이가 켜져있는한 계속 돌아가게 됩니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_led_loop.py &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_led_loop.py &amp;</span><br></pre></td></tr></table></figure>
+<p><img src="004-22.png" alt="image"></p>
+<p>위와같이 아무키나 눌렀음에도 LED는 계속 켜지고 꺼지는것을 보실수가 있습니다.</p>
+<p>그럼 프로세스가 정상적으로 실행중인지 알아보겠습니다.</p>
+<p>아래의 명령어를 입력해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gpio_led_loop.py 파일명으로 실행중인 프로세스 검색</span></span><br><span class="line">$ ps -ef | grep gpio_led_loop.py</span><br></pre></td></tr></table></figure>
+<p><img src="005-17.png" alt="image"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root 1113 1003 0 22:33 pts/0  00:00:00 sudo python3 ./gpio_led_loop.py</span><br><span class="line">root 1118 1113 0 22:33 pts/0  00:00:00 python3 ./gpio_led_loop.py</span><br><span class="line">pi   1121 1003 0 22:36 pts/0  00:00:00 grep --color=auto gpio_led_loop.py</span><br></pre></td></tr></table></figure>
+<p>위와같이 실행중인 항목이 나오는것을 확인 하실수 있습니다.</p>
+<p>이제 프로세스를 종료하는 방법은 root다음에 오는 첫번째 숫자가 실행중인 프로세스의 pid값 입니다.</p>
+<p>아니면 프로그램을 실행하실때 출력한 [1] 1113도 똑같은 pid값이 됩니다.</p>
+<p>pid값을 확인을 하셨으면 아래의 명령어를 이용해서 프로세스를 강제로 종료 하실수가 있습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1113은 실행할때마다 나오는 pid값을 입력</span></span><br><span class="line">$ sudo <span class="built_in">kill</span> 1113(pid값)</span><br></pre></td></tr></table></figure>
+<p><img src="006-17.png" alt="image"></p>
+<p>프로세스를 강제 종료하시면 위와같이 나오면서 프로세스가 종료되고 LED점등도 멈춘것을 확인하실수 있습니다.</p>
+<p>그럼 다시 프로세스 검색을 해서 프로세스가 종료되었는지 확인해 보도록 하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gpio_led_loop.py 파일명으로 실행중인 프로세스 검색</span></span><br><span class="line">$ ps -ef | grep gpio_led_loop.py</span><br></pre></td></tr></table></figure>
+<p><img src="007-14.png" alt="image"></p>
+<p>위와같이 프로세스가 종료되어 있는것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/LED/" rel="tag">LED</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/LED%EC%A0%90%EB%93%B1/" rel="tag">LED점등</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/background/" rel="tag">background</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/grep/" rel="tag">grep</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/kill/" rel="tag">kill</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/pid/" rel="tag">pid</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/process/" rel="tag">process</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/ps-ef/" rel="tag">ps -ef</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/sudo/" rel="tag">sudo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B2%80%EC%83%89/" rel="tag">검색</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83/" rel="tag">로그아웃</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B0%B1%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C/" rel="tag">백그라운드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%84%B0%EB%AF%B8%EB%84%90/" rel="tag">터미널</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/" rel="tag">프로세스</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/29/rasberry-pi/rasberry-pi-033/';
+              
+            this.page.identifier = '2020/06/29/rasberry-pi/rasberry-pi-033/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

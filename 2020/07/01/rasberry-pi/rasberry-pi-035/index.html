@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="delete,insert,select,update,localhost,connection,MariaDB,Python,root,SSH,VNC,zero,Rasberry Pi,ラズベリーパイ,라즈베리파이,마리아DB,파이썬">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.\nMariaDB에 Connection, Select, Insert, Update, Delete 사용법을 알아보도록 하겠습니다.\n우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.\n아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.\n우선 간단한 테이블을 만들어 보도록 하겠습니다.\nphpMyAdmin에 로그인을 해주시기 바랍니다.\n\nakibatv 데이터베이스를 펼치시면 New를 클릭해 주시기 바랍니다.\n\n123456789101112# 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.----------+---------+-------- Name     | Type    | Size----------+---------+-------- name     | VARCHAR | 10----------+---------+-------- age      | INT     | 3----------+---------+-------- birthday | VARCHAR | 10----------+---------+-------- site_url | VARCHAR | 100----------+---------+--------\n위와같이 하셨으면 저장을해서 테이블을 추가를 해주시기 바랍니다.\n\n그러면 위와같이 test2이란 테이블이 추가가 되었습니다.\n그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.\n실행을 하셨으면 아래의 파일들을 추가를 해주시기 바랍니다.\n12345python_mariadb.pypython_mariadb_select.pypython_mariadb_insert.pypython_mariadb_update.pypython_mariadb_delete.py\n\n파일들을 추가를 하셨으면 python_mariadb.py에 아래와 같이 코딩을 해주시기 바랍니다.\n123456789101112131415161718192021import pymysqltry:    conn = pymysql.connect(        host=&#x27;localhost&#x27;,        user=&#x27;akibatv&#x27;,        password=&#x27;akibatv&#x27;,        db=&#x27;akibatv&#x27;,        charset=&#x27;utf8mb4&#x27;    )except pymysql as e:    print(&quot;Database Access Error&quot;)    sys.exit(1)cur = conn.cursor()print(&quot;DataBase Connection Success&quot;)cur.close()conn.close()\n\n위와같이 작성을 하셨으면 이제 데이터베이스에 정상적으로 연결이 되는지 확인을 해보도록 하겠습니다.\n라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.\n라즈베리파이에 VNC로 접속후 터미널을 실행해 주세요.\n\n파이썬에서 MariaDB를 사용하기 위해선 모듈을 설치를 하셔야만 합니다.\n터미널에 아래의 명령어를 실행을 해주시기 바랍니다.\n1$ sudo python3 -m pip install pymysql\n\n모듈 설치가 완료 되셨으면 아래의 명령어로 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 ./python_mariadb.py\n\n위와같이 [DataBase Connection Success]가 출력이 되면서 정상적으로 실행된것을 확인 되었습니다.\n이제 Insert를 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_insert.py파일을 여시고 아래와 같이 코딩해 주세요.\n1234567891011121314151617181920212223242526272829import pymysqltry:    conn = pymysql.connect(        host=&#x27;localhost&#x27;,        user=&#x27;akibatv&#x27;,        password=&#x27;akibatv&#x27;,        db=&#x27;akibatv&#x27;,        charset=&#x27;utf8mb4&#x27;    )except pymysql as e:    print(&quot;Database Access Error&quot;)    sys.exit(1)cur = conn.cursor()print(&quot;DataBase Connection Success&quot;)sql = &quot;&quot;&quot; INSERT INTO test2 (name, age, birthday, site_url)         VALUES (%s, %s, %s, %s) &quot;&quot;&quot;cur.execute(sql, (&#x27;AkibaTV&#x27;, &#x27;99&#x27;, &#x27;2020/01/01&#x27;, &#x27;https://playneko.com/&#x27;))conn.commit()print(&quot;Data Insert Success&quot;)cur.close()conn.close()\n\n라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.\n\n아래의 명령어로 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 ./python_mariadb_insert.py\n\n데이터 추가 성공이라고 출력이 되었으면 실제로 데이터베이스\n정상적으로 입력이 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 등록이 된것을 확인이 되었습니다.\n이제 Select를 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_select.py파일을 여시고 아래와 같이 코딩해 주세요.\n123456789101112131415161718192021222324252627import pymysqltry:    conn = pymysql.connect(        host=&#x27;localhost&#x27;,        user=&#x27;akibatv&#x27;,        password=&#x27;akibatv&#x27;,        db=&#x27;akibatv&#x27;,        charset=&#x27;utf8mb4&#x27;    )except pymysql as e:    print(&quot;Database Access Error&quot;)    sys.exit(1)cur = conn.cursor()print(&quot;DataBase Connection Success&quot;)sql = &quot; SELECT * FROM test2 &quot;cur.execute(sql)for row in cur:    print(row)cur.close()conn.close()\n\n라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.\n\n아래의 명령어로 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 ./python_mariadb_select.py\n\n데이터베이스에 등록된 데이터가 정상 출력된것을 확인 하실수 있습니다.\n이제 Update를 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_update.py파일을 여시고 아래와 같이 코딩해 주세요.\n1234567891011121314151617181920212223242526272829303132import pymysqltry:    conn = pymysql.connect(        host=&#x27;localhost&#x27;,        user=&#x27;akibatv&#x27;,        password=&#x27;akibatv&#x27;,        db=&#x27;akibatv&#x27;,        charset=&#x27;utf8mb4&#x27;    )except pymysql as e:    print(&quot;Database Access Error&quot;)    sys.exit(1)cur = conn.cursor()print(&quot;DataBase Connection Success&quot;)sql = &quot;&quot;&quot; UPDATE test2 SET         age = %s,         birthday = %s,        site_url = %s        WHERE name = %s &quot;&quot;&quot;cur.execute(sql, (&#x27;22&#x27;, &#x27;1900/07/31&#x27;, &#x27;https://akibatv.net/&#x27;,&#x27;AkibaTV&#x27;))conn.commit()print(&quot;Data Update Success&quot;)cur.close()conn.close()\n\n라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.\n\n아래의 명령어로 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 ./python_mariadb_update.py\n\n데이터 갱신 성공 이라고 출력이 되셨으면 문제없이 갱신이 되었습니다.\n실제로 데이터베이스 정상적으로 갱신이 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 갱신이 된것을 확인이 되었습니다.\n이제 Delete를 해보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_delete.py파일을 여시고 아래와 같이 코딩해 주세요.\n12345678910111213141516171819202122232425262728import pymysqltry:    conn = pymysql.connect(        host=&#x27;localhost&#x27;,        user=&#x27;akibatv&#x27;,        password=&#x27;akibatv&#x27;,        db=&#x27;akibatv&#x27;,        charset=&#x27;utf8mb4&#x27;    )except pymysql as e:    print(&quot;Database Access Error&quot;)    sys.exit(1)cur = conn.cursor()print(&quot;DataBase Connection Success&quot;)sql = &quot;&quot;&quot; DELETE FROM test2 WHERE name = %s &quot;&quot;&quot;cur.execute(sql, (&#x27;AkibaTV&#x27;))conn.commit()print(&quot;Data Delete Success&quot;)cur.close()conn.close()\n\n라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.\n\n아래의 명령어로 실행을 해주시기 바랍니다.\n12# 파이썬 3.x버전대$ sudo python3 ./python_mariadb_delete.py\n\n데이터 삭제 성공 이라고 출력이 되셨으면 문제없이 삭제가 된것입니다.\n실제로 데이터베이스 정상적으로 삭제가 되었는지 확인을 해보도록 하겠습니다.\n\n데이터베이스에도 정상적으로 삭제가 된것을 확인이 되었습니다.\n이렇게해서 파이썬에서 MariaDB의 Select, Insert, Update, Delete를 해보았습니다.","dateCreated":"2020-07-01T01:00:00+09:00","dateModified":"2020-12-26T19:49:35+09:00","datePublished":"2020-07-01T01:00:00+09:00","description":"\n라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.","headline":"라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, Python, 파이썬, MariaDB, root, zero, localhost, connection, delete, insert, select, update, 마리아DB","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/002-18.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/003-26.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/004-25.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/001-25.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/002-23-e1593267290678.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/005-20.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/008-15.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/009-12.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/010-1-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/011-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/012-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/013-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/014-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/015-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/016-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/017-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/018-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/019-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/020-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/021-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/022-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/023-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/024-4.png">
+<meta property="article:published_time" content="2020-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T10:49:35.037Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="파이썬">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="connection">
+<meta property="article:tag" content="delete">
+<meta property="article:tag" content="insert">
+<meta property="article:tag" content="select">
+<meta property="article:tag" content="update">
+<meta property="article:tag" content="마리아DB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/002-18.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-01T01:00:00+09:00">
+	
+		    2020/07/01 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>, <a class="category-link" href="/categories/Rasberry-Pi/Python/">Python</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에서-파이썬을-이용한-MariaDB-사용하기"><a href="#라즈베리파이에서-파이썬을-이용한-MariaDB-사용하기" class="headerlink" title="라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기"></a>라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.</p>
+<p>MariaDB에 Connection, Select, Insert, Update, Delete 사용법을 알아보도록 하겠습니다.</p>
+<p>우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.</p>
+<p>아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.</p>
+<p>우선 간단한 테이블을 만들어 보도록 하겠습니다.</p>
+<p>phpMyAdmin에 로그인을 해주시기 바랍니다.</p>
+<p><img src="002-18.png" alt="image"></p>
+<p>akibatv 데이터베이스를 펼치시면 New를 클릭해 주시기 바랍니다.</p>
+<p><img src="003-26.png" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.</span><br><span class="line">----------+---------+--------</span><br><span class="line"> Name     | Type    | Size</span><br><span class="line">----------+---------+--------</span><br><span class="line"> name     | VARCHAR | 10</span><br><span class="line">----------+---------+--------</span><br><span class="line"> age      | INT     | 3</span><br><span class="line">----------+---------+--------</span><br><span class="line"> birthday | VARCHAR | 10</span><br><span class="line">----------+---------+--------</span><br><span class="line"> site_url | VARCHAR | 100</span><br><span class="line">----------+---------+--------</span><br></pre></td></tr></table></figure>
+<p>위와같이 하셨으면 저장을해서 테이블을 추가를 해주시기 바랍니다.</p>
+<p><img src="004-25.png" alt="image"></p>
+<p>그러면 위와같이 test2이란 테이블이 추가가 되었습니다.</p>
+<p>그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p>
+<p>실행을 하셨으면 아래의 파일들을 추가를 해주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python_mariadb.py</span><br><span class="line">python_mariadb_select.py</span><br><span class="line">python_mariadb_insert.py</span><br><span class="line">python_mariadb_update.py</span><br><span class="line">python_mariadb_delete.py</span><br></pre></td></tr></table></figure>
+<p><img src="001-25.png" alt="image"></p>
+<p>파일들을 추가를 하셨으면 python_mariadb.py에 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p><img src="002-23-e1593267290678.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 이제 데이터베이스에 정상적으로 연결이 되는지 확인을 해보도록 하겠습니다.</p>
+<p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p>
+<p>라즈베리파이에 VNC로 접속후 터미널을 실행해 주세요.</p>
+<p><img src="005-20.png" alt="image"></p>
+<p>파이썬에서 MariaDB를 사용하기 위해선 모듈을 설치를 하셔야만 합니다.</p>
+<p>터미널에 아래의 명령어를 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python3 -m pip install pymysql</span><br></pre></td></tr></table></figure>
+<p><img src="008-15.png" alt="image"></p>
+<p>모듈 설치가 완료 되셨으면 아래의 명령어로 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb.py</span><br></pre></td></tr></table></figure>
+<p><img src="009-12.png" alt="image"></p>
+<p>위와같이 [DataBase Connection Success]가 출력이 되면서 정상적으로 실행된것을 확인 되었습니다.</p>
+<p>이제 Insert를 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_insert.py파일을 여시고 아래와 같이 코딩해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; INSERT INTO test2 (name, age, birthday, site_url) </span></span><br><span class="line"><span class="string">        VALUES (%s, %s, %s, %s) &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;AkibaTV&#x27;</span>, <span class="string">&#x27;99&#x27;</span>, <span class="string">&#x27;2020/01/01&#x27;</span>, <span class="string">&#x27;https://playneko.com/&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Insert Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p><img src="010-1-2.png" alt="image"></p>
+<p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p>
+<p><img src="011-11.png" alt="image"></p>
+<p>아래의 명령어로 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_insert.py</span><br></pre></td></tr></table></figure>
+<p><img src="012-10.png" alt="image"></p>
+<p>데이터 추가 성공이라고 출력이 되었으면 실제로 데이터베이스</p>
+<p>정상적으로 입력이 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="013-11.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 등록이 된것을 확인이 되었습니다.</p>
+<p>이제 Select를 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_select.py파일을 여시고 아래와 같이 코딩해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot; SELECT * FROM test2 &quot;</span></span><br><span class="line">cur.execute(sql)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> cur:</span><br><span class="line">    print(row)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p><img src="014-7.png" alt="image"></p>
+<p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p>
+<p><img src="015-6.png" alt="image"></p>
+<p>아래의 명령어로 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_select.py</span><br></pre></td></tr></table></figure>
+<p><img src="016-8.png" alt="image"></p>
+<p>데이터베이스에 등록된 데이터가 정상 출력된것을 확인 하실수 있습니다.</p>
+<p>이제 Update를 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_update.py파일을 여시고 아래와 같이 코딩해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; UPDATE test2 SET </span></span><br><span class="line"><span class="string">        age = %s, </span></span><br><span class="line"><span class="string">        birthday = %s,</span></span><br><span class="line"><span class="string">        site_url = %s</span></span><br><span class="line"><span class="string">        WHERE name = %s &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;22&#x27;</span>, <span class="string">&#x27;1900/07/31&#x27;</span>, <span class="string">&#x27;https://akibatv.net/&#x27;</span>,<span class="string">&#x27;AkibaTV&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Update Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p><img src="017-1-1.png" alt="image"></p>
+<p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p>
+<p><img src="018-8.png" alt="image"></p>
+<p>아래의 명령어로 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_update.py</span><br></pre></td></tr></table></figure>
+<p><img src="019-8.png" alt="image"></p>
+<p>데이터 갱신 성공 이라고 출력이 되셨으면 문제없이 갱신이 되었습니다.</p>
+<p>실제로 데이터베이스 정상적으로 갱신이 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="020-8.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 갱신이 된것을 확인이 되었습니다.</p>
+<p>이제 Delete를 해보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_delete.py파일을 여시고 아래와 같이 코딩해 주세요.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; DELETE FROM test2 WHERE name = %s &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;AkibaTV&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Delete Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p><img src="021-6.png" alt="image"></p>
+<p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p>
+<p><img src="022-6.png" alt="image"></p>
+<p>아래의 명령어로 실행을 해주시기 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_delete.py</span><br></pre></td></tr></table></figure>
+<p><img src="023-4.png" alt="image"></p>
+<p>데이터 삭제 성공 이라고 출력이 되셨으면 문제없이 삭제가 된것입니다.</p>
+<p>실제로 데이터베이스 정상적으로 삭제가 되었는지 확인을 해보도록 하겠습니다.</p>
+<p><img src="024-4.png" alt="image"></p>
+<p>데이터베이스에도 정상적으로 삭제가 된것을 확인이 되었습니다.</p>
+<p>이렇게해서 파이썬에서 MariaDB의 Select, Insert, Update, Delete를 해보았습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/MariaDB/" rel="tag">MariaDB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Python/" rel="tag">Python</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/connection/" rel="tag">connection</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/delete/" rel="tag">delete</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/insert/" rel="tag">insert</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/select/" rel="tag">select</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/update/" rel="tag">update</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A7%88%EB%A6%AC%EC%95%84DB/" rel="tag">마리아DB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/" rel="tag">파이썬</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/01/rasberry-pi/rasberry-pi-035/';
+              
+            this.page.identifier = '2020/07/01/rasberry-pi/rasberry-pi-035/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
