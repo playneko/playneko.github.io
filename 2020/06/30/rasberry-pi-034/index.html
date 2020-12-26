@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="admin,DNS,Google,http,OS,Pi-Hole,Rasberry Pi,root,SSH,sudo,VNC,zero,ラズベリーパイ,공유기,광고,광고서버,광고차단,구축,라즈베리파이,비밀번호,인터넷,차단,컴퓨터,파이홀">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.\nPi-Hole은 인터넷으로 들어오는 광고를 차단시켜주는 서버프로그램 입니다.\n크롬브라우저를 사용하시면 플러그인등을 설치해서 광고 차단을 하실수 있습니다만\n그건 크롬브라우저를 쓰고 있을때에만 가능 합니다만\nPi-Hole 서버를 구축하시면 DNS를 통해 들어오는 광고서버를 전부 차단을 시켜줍니다.\n그래서 컴퓨터 핸드폰 태블릿등에서도 똑같이 광고차단 효과를 보실수가 있습니다.\n그럼 Pi-Hole 서버를 구축하기전에 준비물이 필요 합니다.\n\n준비물\n공유기\n라즈베리파이\n인터넷\n컴퓨터\n\n\n준비물이 갖춰졌으면 라즈베리파이를 일단 OS설치와 VNC접속 가능하게 세팅을 해주세요.\n설치 방법에 대해서는 아래의 링크를 통해 하실수가 있습니다.\n모니터없이 라즈베리파이3 B 설치하기\n라즈베리파이 VNC설정\n라즈베리파이 고정 IP Address 설정\n모든 설치와 설정이 되셨으면 라즈베리파이를 VNC로 접속후 터미널을 실행해 주세요.\n\nPi-Hole 서버는 깃허브를 이용해서 다운로드후 설치를 하도록 하겠습니다.\nhttps://github.com/pi-hole/pi-hole#one-step-automated-install\n터미널에 아래의 명령어를 입력해서 다운로드와 설치를 하도록 하겠습니다.\n123$ git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole$ cd Pi-hole/automated\\ install/$ sudo bash basic-install.sh\n\n깃허브에서 다운로드가 완료가 되었습니다.\n\n\n위의 화면이 나오면 설치준비를 위해 준비를 하게 됩니다.\n\n한참 기다리시면 위와같이 나오게 되며 계속 확인을 선택하고 넘겨주시기 바랍니다.\n\n\n\n위와같이 나오면 어떤 DNS를 이용할것인지 선택을 하실수 있습니다.\n저의 경우 Google을 기본으로 선택 했습니다.\n\n위와같이 나오면 전부 기본세팅으로 확인해주셔서 다음으로 넘어가 주시기 바랍니다.\n\n\n\n\n\n\n\n\n모든 설정이 끝나고 반영하는 단계 입니다.\n\n모든 설치가 끝났습니다.\n그럼 Pi-Hole 서버의 대시보드를 접속해 보겠습니다.\n브라우저를 실행후 아래의 주소를 입력해 주세요.\nhttp://라즈베리파이 IP/admin/\n저의 경우에는 [라즈베리파이 또는 리눅스에서 Nginx가상호스트 추가하기]를 이용해\n접속 주소를 변경하였습니다. 여러분들도 여러 개발중인 사이트가 있을경우\n가상호스트를 이용해 접속 페이지를 변경 하실수 있습니다.\n\n파이홀에 로그인을 위해선 초기 비밀번호를 변경을 하셔야만 합니다.\n아래의 명령어를 이용해서 새로 비밀번호를 세팅해 주세요.\n1$ sudo pihole -a -p\n\n\n\n로그인을 하시면 더많은 설정을 하실수 있는 메뉴가 나오게 됩니다.\n이렇게해서 Pi-Hole 서버 구축이 끝났습니다.\n다음에는 어떻게 활용을 하는지에 대해서 설명을 해드리도록 하겠습니다.","dateCreated":"2020-06-30T01:00:00+09:00","dateModified":"2020-12-26T11:12:28+09:00","datePublished":"2020-06-30T01:00:00+09:00","description":"\n라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.","headline":"라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/30/rasberry-pi-034/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/30/rasberry-pi-034/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, sudo, root, zero, http, OS, admin, DNS, Google, Pi-Hole, 공유기, 광고, 광고서버, 광고차단, 구축, 비밀번호, 인터넷, 차단, 컴퓨터, 파이홀","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/001-24.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/002-22.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/003-25.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/004-24.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/005-19.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/006-19.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/007-16.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/008-14.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/009-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/010-11.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/011-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/012-9.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/013-10.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/014-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/015-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/016-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/017-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/018-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/019-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/020-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/021-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/022-5.png">
+<meta property="article:published_time" content="2020-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T02:12:28.043Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="sudo">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="http">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="admin">
+<meta property="article:tag" content="DNS">
+<meta property="article:tag" content="Google">
+<meta property="article:tag" content="Pi-Hole">
+<meta property="article:tag" content="공유기">
+<meta property="article:tag" content="광고">
+<meta property="article:tag" content="광고서버">
+<meta property="article:tag" content="광고차단">
+<meta property="article:tag" content="구축">
+<meta property="article:tag" content="비밀번호">
+<meta property="article:tag" content="인터넷">
+<meta property="article:tag" content="차단">
+<meta property="article:tag" content="컴퓨터">
+<meta property="article:tag" content="파이홀">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/001-24.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/30/rasberry-pi-034/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-30T01:00:00+09:00">
+	
+		    2020/06/30 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라즈베리파이에-Pi-Hole-서버-구축해서-광고-차단하기"><a href="#라즈베리파이에-Pi-Hole-서버-구축해서-광고-차단하기" class="headerlink" title="라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기"></a>라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.</p>
+<p>Pi-Hole은 인터넷으로 들어오는 광고를 차단시켜주는 서버프로그램 입니다.</p>
+<p>크롬브라우저를 사용하시면 플러그인등을 설치해서 광고 차단을 하실수 있습니다만</p>
+<p>그건 크롬브라우저를 쓰고 있을때에만 가능 합니다만</p>
+<p>Pi-Hole 서버를 구축하시면 DNS를 통해 들어오는 광고서버를 전부 차단을 시켜줍니다.</p>
+<p>그래서 컴퓨터 핸드폰 태블릿등에서도 똑같이 광고차단 효과를 보실수가 있습니다.</p>
+<p>그럼 Pi-Hole 서버를 구축하기전에 준비물이 필요 합니다.</p>
+<blockquote>
+<h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul>
+<li>공유기</li>
+<li>라즈베리파이</li>
+<li>인터넷</li>
+<li>컴퓨터</li>
+</ul>
+</blockquote>
+<p>준비물이 갖춰졌으면 라즈베리파이를 일단 OS설치와 VNC접속 가능하게 세팅을 해주세요.</p>
+<p>설치 방법에 대해서는 아래의 링크를 통해 하실수가 있습니다.</p>
+<p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-001/">모니터없이 라즈베리파이3 B 설치하기</a></p>
+<p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-002/">라즈베리파이 VNC설정</a></p>
+<p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-005/">라즈베리파이 고정 IP Address 설정</a></p>
+<p>모든 설치와 설정이 되셨으면 라즈베리파이를 VNC로 접속후 터미널을 실행해 주세요.</p>
+<p><img src="001-24.png" alt="image"></p>
+<p>Pi-Hole 서버는 깃허브를 이용해서 다운로드후 설치를 하도록 하겠습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/pi-hole/pi-hole#one-step-automated-install">https://github.com/pi-hole/pi-hole#one-step-automated-install</a></p>
+<p>터미널에 아래의 명령어를 입력해서 다운로드와 설치를 하도록 하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole</span><br><span class="line">$ <span class="built_in">cd</span> Pi-hole/automated\ install/</span><br><span class="line">$ sudo bash basic-install.sh</span><br></pre></td></tr></table></figure>
+<p><img src="002-22.png" alt="image"></p>
+<p>깃허브에서 다운로드가 완료가 되었습니다.</p>
+<p><img src="003-25.png" alt="image"></p>
+<p><img src="004-24.png" alt="image"></p>
+<p>위의 화면이 나오면 설치준비를 위해 준비를 하게 됩니다.</p>
+<p><img src="005-19.png" alt="image"></p>
+<p>한참 기다리시면 위와같이 나오게 되며 계속 확인을 선택하고 넘겨주시기 바랍니다.</p>
+<p><img src="006-19.png" alt="image"></p>
+<p><img src="007-16.png" alt="image"></p>
+<p><img src="008-14.png" alt="image"></p>
+<p>위와같이 나오면 어떤 DNS를 이용할것인지 선택을 하실수 있습니다.</p>
+<p>저의 경우 Google을 기본으로 선택 했습니다.</p>
+<p><img src="009-11.png" alt="image"></p>
+<p>위와같이 나오면 전부 기본세팅으로 확인해주셔서 다음으로 넘어가 주시기 바랍니다.</p>
+<p><img src="010-11.png" alt="image"></p>
+<p><img src="011-10.png" alt="image"></p>
+<p><img src="012-9.png" alt="image"></p>
+<p><img src="013-10.png" alt="image"></p>
+<p><img src="014-6.png" alt="image"></p>
+<p><img src="015-5.png" alt="image"></p>
+<p><img src="016-7.png" alt="image"></p>
+<p><img src="017-7.png" alt="image"></p>
+<p>모든 설정이 끝나고 반영하는 단계 입니다.</p>
+<p><img src="018-7.png" alt="image"></p>
+<p>모든 설치가 끝났습니다.</p>
+<p>그럼 Pi-Hole 서버의 대시보드를 접속해 보겠습니다.</p>
+<p>브라우저를 실행후 아래의 주소를 입력해 주세요.</p>
+<p>http://라즈베리파이 IP/admin/</p>
+<p>저의 경우에는 [<a href="https://playneko.github.io/2020/06/25/rasberry-pi-030/">라즈베리파이 또는 리눅스에서 Nginx가상호스트 추가하기</a>]를 이용해</p>
+<p>접속 주소를 변경하였습니다. 여러분들도 여러 개발중인 사이트가 있을경우</p>
+<p>가상호스트를 이용해 접속 페이지를 변경 하실수 있습니다.</p>
+<p><img src="019-7.png" alt="image"></p>
+<p>파이홀에 로그인을 위해선 초기 비밀번호를 변경을 하셔야만 합니다.</p>
+<p>아래의 명령어를 이용해서 새로 비밀번호를 세팅해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pihole -a -p</span><br></pre></td></tr></table></figure>
+<p><img src="020-7.png" alt="image"></p>
+<p><img src="021-5.png" alt="image"></p>
+<p><img src="022-5.png" alt="image"></p>
+<p>로그인을 하시면 더많은 설정을 하실수 있는 메뉴가 나오게 됩니다.</p>
+<p>이렇게해서 Pi-Hole 서버 구축이 끝났습니다.</p>
+<p>다음에는 어떻게 활용을 하는지에 대해서 설명을 해드리도록 하겠습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DNS/" rel="tag">DNS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Google/" rel="tag">Google</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OS/" rel="tag">OS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Pi-Hole/" rel="tag">Pi-Hole</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/admin/" rel="tag">admin</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/http/" rel="tag">http</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/sudo/" rel="tag">sudo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B3%B5%EC%9C%A0%EA%B8%B0/" rel="tag">공유기</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B4%91%EA%B3%A0/" rel="tag">광고</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B4%91%EA%B3%A0%EC%84%9C%EB%B2%84/" rel="tag">광고서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B4%91%EA%B3%A0%EC%B0%A8%EB%8B%A8/" rel="tag">광고차단</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B5%AC%EC%B6%95/" rel="tag">구축</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8/" rel="tag">비밀번호</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B8%ED%84%B0%EB%84%B7/" rel="tag">인터넷</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%B0%A8%EB%8B%A8/" rel="tag">차단</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BB%B4%ED%93%A8%ED%84%B0/" rel="tag">컴퓨터</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%B4%ED%99%80/" rel="tag">파이홀</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/30/rasberry-pi-034/';
+              
+            this.page.identifier = '2020/06/30/rasberry-pi-034/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

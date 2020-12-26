@@ -9,8 +9,616 @@
     <atom:link href="https://playneko.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Fri, 25 Dec 2020 04:42:26 GMT</pubDate>
+    <pubDate>Sat, 26 Dec 2020 02:13:49 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>라즈베리파이 웹서버에서 jQuery Resizable 사용해 보기</title>
+      <link>https://playneko.github.io/2020/07/16/rasberry-pi-040/</link>
+      <guid>https://playneko.github.io/2020/07/16/rasberry-pi-040/</guid>
+      <pubDate>Wed, 15 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 웹서버에서 jQuery Resizable 사용해 보기&lt;br&gt;이번에 소개할 내용은 jQuery Resizable 사용해 보기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-웹서버에서-jQuery-Resizable-사용해-보기"><a href="#라즈베리파이-웹서버에서-jQuery-Resizable-사용해-보기" class="headerlink" title="라즈베리파이 웹서버에서 jQuery Resizable 사용해 보기"></a>라즈베리파이 웹서버에서 jQuery Resizable 사용해 보기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 jQuery Resizable 사용해 보기 입니다.</p><p>사이트를 개발을 하시다 보시면 div또는 iframe의 화면크기를 늘리거나 줄이는 방법을</p><p>필요로 할때가 있습니다.</p><p>그런 경우를 위해서 간단하게 리사이징을 하는 방법을 알아보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)로 실행하신후 jquery_Resizable.html로 파일을 추가해 주시기 바랍니다.</p><p>추가를 하셨으면 아래와 같이 코딩을 해주시기 바랍니다.</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>AkibaTV<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/resources/demos/style.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-id">#resizable</span> &#123;</span></span><br><span class="line">width: 150px;</span><br><span class="line">height: 150px;</span><br><span class="line">padding: 0.5em;</span><br><span class="line">border: 1px solid;</span><br><span class="line">&#125;</span><br><span class="line"><span class="css"><span class="selector-id">#resizable</span> <span class="selector-tag">h3</span> &#123;</span></span><br><span class="line">text-align: center;</span><br><span class="line">margin: 0;</span><br><span class="line">&#125; </span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/jquery-1.12.4.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://code.jquery.com/ui/1.12.1/jquery-ui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">$( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">$( <span class="string">&quot;#resizable&quot;</span> ).resizable();</span></span><br><span class="line">&#125; );</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;resizable&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ui-widget-content&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;ui-widget-header&quot;</span>&gt;</span>리사이징<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><p><img src="001-1-1.png" alt="image"></p><p>실제로 제대로 동작을 하는지 확인을 해보도록 하겠습니다.</p><p>작성을 하신 소스파일을 라즈베리파이 웹서버 또는 개인서버, 호스팅서버에 업로드를 해주시기 바랍니다.</p><p>저는 라즈베리파이에 웹서버를 구축을 해두었기때문에 라즈베리파이 웹서버를 이용하도록 하겠습니다.</p><p><img src="002-7.png" alt="image"></p><p>서버에 파일이 올라간것을 확인이 되셨으면 웹브라우저를 실행해 주세요.</p><p>웹브라우저의 URL에 http://각웹서버URL/jquery_Resizable.html 를 실행해 주세요.</p><p><img src="003-1-1.png" alt="image"></p><p>초기에는 가로세로 150픽셀 사이즈의 박스형태가 나오게 됩니다.</p><p><img src="004-1-1.png" alt="image"></p><p>마우스를 끝을 잡고 움직이시면 리상징이 되는것을 확인 하실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/JavaScript/">JavaScript</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/server/">server</category>
+      
+      <category domain="https://playneko.github.io/tags/nginx/">nginx</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/">웹서버</category>
+      
+      <category domain="https://playneko.github.io/tags/Visual-Studio-Code/">Visual Studio Code</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/">비주얼 스튜디오 코드</category>
+      
+      <category domain="https://playneko.github.io/tags/apache/">apache</category>
+      
+      <category domain="https://playneko.github.io/tags/NPM/">NPM</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/html/">html</category>
+      
+      <category domain="https://playneko.github.io/tags/jQuery/">jQuery</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/div/">div</category>
+      
+      <category domain="https://playneko.github.io/tags/iframe/">iframe</category>
+      
+      <category domain="https://playneko.github.io/tags/URL/">URL</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B0%9C%EC%9D%B8%EC%84%9C%EB%B2%84/">개인서버</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A6%AC%EC%82%AC%EC%9D%B4%EC%A7%95/">리사이징</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%98%B8%EC%8A%A4%ED%8C%85%EC%84%9C%EB%B2%84/">호스팅서버</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%99%94%EB%A9%B4%ED%81%AC%EA%B8%B0/">화면크기</category>
+      
+      <category domain="https://playneko.github.io/tags/Resizable/">Resizable</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/16/rasberry-pi-040/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 NPM에서 크롤링한 NAVER 웹툰 웹에 출력하기</title>
+      <link>https://playneko.github.io/2020/07/14/rasberry-pi-039/</link>
+      <guid>https://playneko.github.io/2020/07/14/rasberry-pi-039/</guid>
+      <pubDate>Mon, 13 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 NPM에서 크롤링한 NAVER 웹툰 웹에 출력하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이 NPM에서 크롤링한 NAVER 웹툰을 웹에 출력하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-NPM에서-크롤링한-NAVER-웹툰-웹에-출력하기"><a href="#라즈베리파이-NPM에서-크롤링한-NAVER-웹툰-웹에-출력하기" class="headerlink" title="라즈베리파이 NPM에서 크롤링한 NAVER 웹툰 웹에 출력하기"></a>라즈베리파이 NPM에서 크롤링한 NAVER 웹툰 웹에 출력하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이 NPM에서 크롤링한 NAVER 웹툰을 웹에 출력하기 입니다.</p><p>저번시간에 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기를 아직 못보신 분들은</p><p>우선 크롤링을 하는 방법을 먼저 보고 오시기 바랍니다.</p><p>크롤링한 데이터를 웹에 출력하기 위해서 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p><p>실행을 하셨으면 파일명을 php_naver_webtoon.php로 추가를 해주시기 바랍니다.</p><p><img src="001-6.png" alt="image"></p><p>아래와 같이 코딩을 해주시기 비랍니다.</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot; SELECT count(day) cnt &quot;</span>;</span><br><span class="line"><span class="variable">$sql</span> .= <span class="string">&quot; FROM webtoon &quot;</span>;</span><br><span class="line"><span class="variable">$sql</span> .= <span class="string">&quot; GROUP BY day &quot;</span>;</span><br><span class="line"><span class="variable">$sql</span> .= <span class="string">&quot; LIMIT 0, 1 &quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"><span class="variable">$line</span> = <span class="variable">$result</span>-&gt;fetch_assoc()[<span class="string">&#x27;cnt&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot; SELECT no, day, title, url, thumb &quot;</span>;</span><br><span class="line"><span class="variable">$sql</span> .= <span class="string">&quot; FROM webtoon &quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"><span class="variable">$arrayMon</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arrayTue</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arrayWed</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arrayThu</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arrayFri</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arraySat</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$arraySun</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>) &#123;</span><br><span class="line"><span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="variable">$arrayMon</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">1</span>) &#123;</span><br><span class="line"><span class="variable">$arrayTue</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">2</span>) &#123;</span><br><span class="line"><span class="variable">$arrayWed</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">3</span>) &#123;</span><br><span class="line"><span class="variable">$arrayThu</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">4</span>) &#123;</span><br><span class="line"><span class="variable">$arrayFri</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">5</span>) &#123;</span><br><span class="line"><span class="variable">$arraySat</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$row</span>[<span class="string">&#x27;day&#x27;</span>] == <span class="number">6</span>) &#123;</span><br><span class="line"><span class="variable">$arraySun</span>[] = <span class="variable">$row</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;AkibaTV&lt;/title&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">th &#123; background-color: <span class="comment">#eeeeee; &#125;</span></span><br><span class="line">td &#123; width: <span class="number">83</span>px; word-<span class="keyword">break</span>: <span class="keyword">break</span>-word; vertical-align: baseline; border: <span class="number">1</span>px solid <span class="comment">#bdbdbd; &#125;</span></span><br><span class="line">td &gt; div:last-child &#123; font-size: <span class="number">9</span>pt; &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;table&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;th&gt;월요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;화요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;수요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;목요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;금요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;토요일&lt;/th&gt;</span><br><span class="line">&lt;th&gt;일요일&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$line</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$line</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;tr&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arrayMon</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arrayMon</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arrayMon</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arrayTue</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arrayTue</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arrayTue</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arrayWed</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arrayWed</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arrayWed</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arrayThu</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arrayThu</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arrayThu</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arrayFri</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arrayFri</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arrayFri</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arraySat</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arraySat</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arraySat</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$arraySun</span>[<span class="variable">$i</span>])) &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;td&gt;</span><br><span class="line">&lt;div&gt;&lt;img src=<span class="string">&quot;&lt;?=<span class="subst">$arraySun</span>[<span class="subst">$i</span>][&#x27;thumb&#x27;]?&gt;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;<span class="meta">&lt;?=</span><span class="variable">$arraySun</span>[<span class="variable">$i</span>][<span class="string">&#x27;title&#x27;</span>]<span class="meta">?&gt;</span>&lt;/div&gt;</span><br><span class="line">&lt;/td&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"><span class="meta">&lt;?php</span> <span class="variable">$conn</span>-&gt;close(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p><img src="20200711_184317.png" alt="image"></p><p>작성을 하셨으면 작성하신 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p><p><img src="003-5.png" alt="image"></p><p>웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_naver_webtoon.php</p><p>위의 주소를 실행해 주시기 바랍니다.</p><p><img src="004-6.png" alt="image"></p><p>실행을 하시면 위와같이 기존 JAVA에서 크롤링한후 데이터베이스에 저장해둔</p><p>네이버 웹툰 데이터를 웹으로 출력한것을 보실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/PHP/">PHP</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/nginx/">nginx</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/">웹서버</category>
+      
+      <category domain="https://playneko.github.io/tags/Visual-Studio-Code/">Visual Studio Code</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/">비주얼 스튜디오 코드</category>
+      
+      <category domain="https://playneko.github.io/tags/apache/">apache</category>
+      
+      <category domain="https://playneko.github.io/tags/chown/">chown</category>
+      
+      <category domain="https://playneko.github.io/tags/NPM/">NPM</category>
+      
+      <category domain="https://playneko.github.io/tags/PHP/">PHP</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%81%AC%EB%A1%A4%EB%A7%81/">크롤링</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%BD%94%EB%94%A9/">코딩</category>
+      
+      <category domain="https://playneko.github.io/tags/localhost/">localhost</category>
+      
+      <category domain="https://playneko.github.io/tags/www/">www</category>
+      
+      <category domain="https://playneko.github.io/tags/NAVER/">NAVER</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%ED%88%B0/">웹툰</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B6%9C%EB%A0%A5/">출력</category>
+      
+      <category domain="https://playneko.github.io/tags/crawling/">crawling</category>
+      
+      <category domain="https://playneko.github.io/tags/webtoon/">webtoon</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/">데이터베이스</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/14/rasberry-pi-039/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 웹서버에서 jQuery ScrollToTop 사용하기</title>
+      <link>https://playneko.github.io/2020/07/08/rasberry-pi-038/</link>
+      <guid>https://playneko.github.io/2020/07/08/rasberry-pi-038/</guid>
+      <pubDate>Tue, 07 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 웹서버에서 jQuery ScrollToTop 사용하기&lt;br&gt;이번에 소개할 내용은 jQuery를 이용해서 만들어진 사이트를 보시다 보시면&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-웹서버에서-jQuery-ScrollToTop-사용하기"><a href="#라즈베리파이-웹서버에서-jQuery-ScrollToTop-사용하기" class="headerlink" title="라즈베리파이 웹서버에서 jQuery ScrollToTop 사용하기"></a>라즈베리파이 웹서버에서 jQuery ScrollToTop 사용하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 jQuery를 이용해서 만들어진 사이트를 보시다 보시면</p><p>스크롤을 한참 내리고서 왼쪽 또는 오른쪽에 Top으로 바로 올라갈수있는 버튼을 보신적이</p><p>있으실 겁니다. 어떻게 버튼을 눌러서 Top으로 한번에 다시 돌아가는 지에 대해서</p><p>jQuery의 API함수를 이용해 간단하게 구현을 해보도록 하겠습니다.</p><h5 id="scrollTop-이란"><a href="#scrollTop-이란" class="headerlink" title=".scrollTop()이란"></a>.scrollTop()이란</h5><p>일치하는 요소 집합에서 첫 번째 요소에 대한 스크롤 막대의 현재 세로 위치를 가져 오거나</p><p>일치하는 모든 요소에 대한 스크롤 막대의 세로 위치를 설정하십시오.</p><p>그럼 어떻게 하는지 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p><p>실행을 하셨으면 파일명을 jquery_scrollTop.html로 추가를 해주시기 바랍니다.</p><p><img src="001-3.png" alt="image"></p><p>아래의 코드를 작성해 주시기 바랍니다.</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>AkibaTV<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    $(<span class="built_in">document</span>).ready( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&#x27;#button&#x27;</span>).click( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            $(<span class="string">&#x27;html, body&#x27;</span>).animate(&#123;</span></span><br><span class="line">                scrollTop: 0</span><br><span class="line">            &#125;, 600);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    header &#123;</span><br><span class="line">        height: 1000px;</span><br><span class="line">    &#125;</span><br><span class="line">    article &#123;</span><br><span class="line">        height: 2000px;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span>Header<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">article</span>&gt;</span>Article<span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line">        Footer<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;버튼&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><p>헤더를 1000px만큼 간격을 주시고 본문을 2000px만큼 간격을 줍니다.</p><p>마지막에 하단에서 버튼을 누르면 헤더가 있는 부분까지 부드럽게 스크롤이</p><p>올라가는 코딩을 해보았습니다.</p><p>실제로 제대로 동작을 하는지 확인을 해보도록 하겠습니다.</p><p>작성을 하신 소스파일을 라즈베리파이 웹서버 또는 개인서버, 호스팅서버에 업로드를 해주시기 바랍니다.</p><p>저는 라즈베리파이에 웹서버를 구축을 해두었기때문에 라즈베리파이 웹서버를 이용하도록 하겠습니다.</p><p><img src="002-3.png" alt="image"></p><p>서버에 파일이 올라간것을 확인이 되셨으면 웹브라우저를 실행해 주세요.</p><p>웹브라우저의 URL에 http://각웹서버URL/jquery_scrollTop.html 를 실행해 주세요.</p><p><img src="003-2.png" alt="image"></p><h5 id="헤더부분"><a href="#헤더부분" class="headerlink" title="헤더부분"></a>헤더부분</h5><p><img src="004-3.png" alt="image"></p><h5 id="본문부분"><a href="#본문부분" class="headerlink" title="본문부분"></a>본문부분</h5><p><img src="005-3.png" alt="image"></p><h5 id="하단부분과-버튼"><a href="#하단부분과-버튼" class="headerlink" title="하단부분과 버튼"></a>하단부분과 버튼</h5><p>버튼을 클릭하시면 자연스럽게 상단으로 스크롤되며 올라가는걸 확인 하실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/JavaScript/">JavaScript</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/nginx/">nginx</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/">웹서버</category>
+      
+      <category domain="https://playneko.github.io/tags/Visual-Studio-Code/">Visual Studio Code</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/">비주얼 스튜디오 코드</category>
+      
+      <category domain="https://playneko.github.io/tags/apache/">apache</category>
+      
+      <category domain="https://playneko.github.io/tags/chown/">chown</category>
+      
+      <category domain="https://playneko.github.io/tags/NPM/">NPM</category>
+      
+      <category domain="https://playneko.github.io/tags/PHP/">PHP</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/jQuery/">jQuery</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%BD%94%EB%94%A9/">코딩</category>
+      
+      <category domain="https://playneko.github.io/tags/localhost/">localhost</category>
+      
+      <category domain="https://playneko.github.io/tags/www/">www</category>
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8A%A4%ED%81%AC%EB%A1%A4/">스크롤</category>
+      
+      <category domain="https://playneko.github.io/tags/scrollTop/">scrollTop</category>
+      
+      <category domain="https://playneko.github.io/tags/ScrollToTop/">ScrollToTop</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/08/rasberry-pi-038/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에서 mIRC 채팅서버 구축하기</title>
+      <link>https://playneko.github.io/2020/07/03/rasberry-pi-037/</link>
+      <guid>https://playneko.github.io/2020/07/03/rasberry-pi-037/</guid>
+      <pubDate>Thu, 02 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 mIRC 채팅서버 구축하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-mIRC-채팅서버-구축하기"><a href="#라즈베리파이에서-mIRC-채팅서버-구축하기" class="headerlink" title="라즈베리파이에서 mIRC 채팅서버 구축하기"></a>라즈베리파이에서 mIRC 채팅서버 구축하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이에서 mIRC 채팅서버 구축하기 입니다.</p><p>mIRC라면 생소한 분들도 많으실거라 생각 됩니다만 2010년대에 들어오기 전까지만해도</p><p>상당한 인기로 많은 사람들이 이용을 해온 채팅서버 입니다.</p><p>지금은 게임회사에서 게임내 채팅서버로 mIRC 채팅서버를 많이 활용하는걸로 알고 있습니다.</p><p>mIRC를 이용해서 불법 프로그램이나 여러가지 영상들을 공유하는 기능으로도 많이 사용했습니다.</p><p>그래서 라즈베리파이로 mIRC 채팅서버 구축하는 방법을 알아보도록 하겠습니다.</p><p>우선 라즈베리파이를 VNC로 접속후 터미널을 실행을 해주시기 바랍니다.</p><p><img src="001.png" alt="image"></p><p>irc프로그램을 설치를 위해서 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ircd-hybrid</span><br></pre></td></tr></table></figure><p><img src="002.png" alt="image"></p><p>위와같이 [Y/n]을 입력창이 나오게 되면 Y를 입력해 주세요.</p><p><img src="003.png" alt="image"></p><p>설치가 완료 되었으면 아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/ircd-hybrid/ircd.conf</span><br></pre></td></tr></table></figure><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ircd.<span class="keyword">conf</span>를 <span class="keyword">vi</span>에디터로 여시고 한참 내리시다 보시면</span><br><span class="line"># 아래의 부분을 라즈베리파이의 IP주소로 변경해 주시기 바랍니다.</span><br><span class="line">host = &quot;127.0.0.1&quot;; # change this!</span><br></pre></td></tr></table></figure><p><img src="004.png" alt="image"></p><p>IP주소를 변경을 하셨으면 :wq를 입력해서 vi에디터를 저장후 종료를 하시기 바랍니다.</p><p>그리고 irc서버를 재기동하여 설정 정보를 적용을 해주어야만 합니다.</p><p>아래의 명령어를 입력해서 irc서버를 재기동 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># irc서버 중지</span></span><br><span class="line">$ sudo /etc/init.d/ircd-hybrid stop</span><br><span class="line"><span class="comment"># irc서버 시작</span></span><br><span class="line">$ sudo /etc/init.d/ircd-hybrid start</span><br></pre></td></tr></table></figure><p><img src="005.png" alt="image"></p><p>irc서버 재기동까지 완료를 하셨으면 mIRC프로그램을 받아서 설치를 해주시기 바랍니다.</p><p>mIRC프로그램은 공식 사이트에서 다운로드 받으실수가 있습니다.</p><p><a href="https://www.mirc.com/">https://www.mirc.com/</a></p><p><img src="007.png" alt="image"></p><p><img src="006.png" alt="image"></p><p><img src="008.png" alt="image"></p><p>다운로드하신 mIRC프로그램을 실행하시면 설치화면이 나오게 되며</p><p>설치를 해주시기 바랍니다.</p><p><img src="009.png" alt="image"></p><p><img src="010.png" alt="image"></p><p><img src="011.png" alt="image"></p><p><img src="012.png" alt="image"></p><p><img src="013.png" alt="image"></p><p><img src="014.png" alt="image"></p><p>처음 실행하시면 서버에 접속후 사용할 닉네임과 기본 정보를 입력하시고 Servers메뉴로 이동을 해주세요.</p><p><img src="015.png" alt="image"></p><p>Add버튼을 눌러서 서버를 추가 합니다.</p><p><img src="016.png" alt="image"></p><p>위와같이 자신의 라즈베리파이 서버에 맞게 입력을 해주시고 OK버튼을 눌러주세요.</p><p><img src="017.png" alt="image"></p><p>Select버튼을 누르시면 Connect메뉴로 돌아오게 됩니다.</p><p><img src="018-1.png" alt="image"></p><p>Connect버튼을 눌러주시기 바랍니다.</p><p><img src="019-3.png" alt="image"></p><p>접속을 하시면 라즈베리파이로 구축한 irc서버로 연결이 된것을 확인하실수 있습니다.</p><p>위와같이 나오게 되면 하단의 입력창에 /join #채널명을 입력해서 채팅을 만드시거나 접속 하실수 있습니다.</p><p><img src="020.png" alt="image"></p><p>위와같이 채널에 접속이 되는것이 확인 되었습니다.</p><p>이렇게 해서 라즈베리파이에서 mIRC 채팅서버 구축하기를 해보았습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/IP%EC%A3%BC%EC%86%8C/">IP주소</category>
+      
+      <category domain="https://playneko.github.io/tags/irc%EC%84%9C%EB%B2%84/">irc서버</category>
+      
+      <category domain="https://playneko.github.io/tags/mIRC/">mIRC</category>
+      
+      <category domain="https://playneko.github.io/tags/vi%EC%97%90%EB%94%94%ED%84%B0/">vi에디터</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%84%ED%8C%85%EC%84%9C%EB%B2%84/">채팅서버</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/03/rasberry-pi-037/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기</title>
+      <link>https://playneko.github.io/2020/07/02/rasberry-pi-036/</link>
+      <guid>https://playneko.github.io/2020/07/02/rasberry-pi-036/</guid>
+      <pubDate>Wed, 01 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이-4B에-WINDOWS-10-ARM64-설치하기"><a href="#라즈베리파이-4B에-WINDOWS-10-ARM64-설치하기" class="headerlink" title="라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기"></a>라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이 4B에 WINDOWS 10 ARM64 설치하기 입니다.</p><p>아직 ARM계열에 정식으로 설치파일이 아니기에</p><p>여러가지 문제점이 많이 발생하고 있으며 설치과정도 어렵기때문에</p><p>여유가 있으신 분들만 도전하시길 추천 드립니다.</p><h5 id="주의-사항"><a href="#주의-사항" class="headerlink" title="주의 사항"></a>주의 사항</h5><blockquote><p>전면 (USB3) 포트는 여전히 지원되지 않으므로 이 안내서에서는 Type-C 플러그를 통해 사용 할수있는<br>“레거시” DWC2 USB 컨트롤러용 MCCI 드라이버를 사용합니다.<br>DWC2 드라이버의 한계로 인해 Windows 10은 1GB의 RAM 만 사용할 수 있습니다.</p></blockquote><h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><blockquote><ul><li>최근 Windows 10 빌드가 설치된 PC</li><li>마이크로 SD 카드 리더기</li><li>GPIO 핀을 통해 Pi에 전원을 공급할 수 있는 경우 Type-C 마이크로 USB 어댑터 또는<br>Type-C 마이크로 USB 어댑터를 사용하여 마이크로 USB 허브에 전원을 공급할수있는 경우<br>Powered type-c USB 허브 또는 Type-C OTG 케이블</li><li>USB 마우스 및 키보드</li><li>16GB 이상의 마이크로 SD 카드 – 클래스 A1 또는 A2</li><li>라즈베리파이 4B</li><li>마이크로 HDMI 케이블</li><li>전원 공급 장치 (5V 3A +)</li></ul></blockquote><h5 id="다운로드"><a href="#다운로드" class="headerlink" title="다운로드"></a>다운로드</h5><p><a href="https://uup.rg-adguard.net/">https://uup.rg-adguard.net/</a>에서 arm64 용 Windows 10 설치 파일을 다운로드 하십시오.</p><p><img src="001-23.png" alt="image"></p><p>OneClick으로 ISO 컴파일러를 다운로드하십시오</p><p>다운로드 한 CMD 파일을 실행하십시오 (ISO.cmd 파일 작성 실행)</p><p>또는 aria2를 사용하여 <a href="https://uupdump.ml/">https://uupdump.ml/</a>를 통해 다운로드 하고 aria2_download_windows.cmd를 추출한 후 변환하십시오.</p><p>이러한 서비스 중 하나를 사용하면 ISO 파일을 생성하는 데 도움이되지만 ISO의 소스 폴더에서 install.wim 파일만 필요합니다.</p><p>문제없이 OOBE를 통과하는 모든 빌드는 괜찮습니다.</p><p><img src="002-21.png" alt="image"></p><p><img src="003-24.png" alt="image"></p><p>CMD파일을 실행을 하시면 위와같이 나오게 되면 실행을 눌러주시기 바랍니다.</p><p><img src="004-23.png" alt="image"></p><p>CMD창이 열리며 다운로드 준비를 하게 됩니다.</p><p><img src="005-18.png" alt="image"></p><p>위와같이 같이 나오게 되시면 그냥 엔터를 치면 됩니다.</p><p><img src="006-18.png" alt="image"></p><p><img src="007-15.png" alt="image"></p><p>그러면 위와같잉 무언가 열심히 다운을 받게 됩니다.</p><p>다 받아질때까지 기다려주시면 되겠습니다.</p><p><img src="009-10.png" alt="image"></p><p>다운로드가 완료되면 아무키나 누르시면 종료가 됩니다.</p><p>위의 과정이 끝나시면 WOR (windows on raspberry)를다운로드 해주세요.</p><p>WOR 사이트 <a href="https://worproject.ml/downloads">https://worproject.ml/downloads</a> 에서 (2.0.0-alpha.3)을 다운로드 해주시기 바랍니다.</p><p><img src="008-13.png" alt="image"></p><p><img src="010-10.png" alt="image"></p><h5 id="설치하기"><a href="#설치하기" class="headerlink" title="설치하기"></a>설치하기</h5><p>위의 사항이 모두 완료 되셨으면 다음의 사항을 진행해 주시기 바랍니다.</p><p>다운받으신 WoR을 실행을 해주시기 바랍니다.</p><h5 id="언어선택"><a href="#언어선택" class="headerlink" title="언어선택"></a>언어선택</h5><p><img src="011-9.png" alt="image"></p><p>프로그램을 처음 실행하시면 언어를 설정하실수 있습니다. 언어를 선택후 다음버튼을 눌러주세요.</p><h5 id="장치-선택"><a href="#장치-선택" class="headerlink" title="장치 선택"></a>장치 선택</h5><p><img src="012-8.png" alt="image"></p><p>장치 선택 목록에서 SD 카드를 선택하고 사용할 장치로 Raspberry pi 4를 선택해 주시고 다음을 눌러주세요.</p><h5 id="이미지-선택"><a href="#이미지-선택" class="headerlink" title="이미지 선택"></a>이미지 선택</h5><p><img src="013-9.png" alt="image"></p><p>CMD를 이용해 생성한 Windows ISO 파일을 선택하시고 다음을 눌러주세요.</p><h5 id="드라이버-선택"><a href="#드라이버-선택" class="headerlink" title="드라이버 선택"></a>드라이버 선택</h5><p><img src="014-5.png" alt="image"></p><p>서버에서 사용가능한 드라이버 패키지 사용하기를 선택하신후 다음을 눌러주세요.</p><h5 id="UEFI-Firmware-선택"><a href="#UEFI-Firmware-선택" class="headerlink" title="UEFI Firmware 선택"></a>UEFI Firmware 선택</h5><p><img src="015-4.png" alt="image"></p><p>서버에 저장된 UEFI 펌웨어 파일 사용하기를 선택하시고 다음을 눌러주세요.</p><h5 id="환경-설정-변수"><a href="#환경-설정-변수" class="headerlink" title="환경 설정(변수)"></a>환경 설정(변수)</h5><p><img src="016-6.png" alt="image"></p><p>MBR이 파티션 구성표로 선택되어 있는지 확인하시고 기본설정 그대로 두고 다음을 눌러주세요.</p><h5 id="설치"><a href="#설치" class="headerlink" title="설치"></a>설치</h5><p><img src="017-6.png" alt="image"></p><p>설치정보를 확인하시고 문제가 없을경우 설치버튼을 눌러주시기 바랍니다.</p><p><img src="018-6.png" alt="image"></p><p><img src="019-6.png" alt="image"></p><p><img src="020-6.png" alt="image"></p><p><img src="021-4.png" alt="image"></p><p><img src="022-4.png" alt="image"></p><p><img src="023-3.png" alt="image"></p><p><img src="024-3.png" alt="image"></p><p>설치가 모두 완료 되었습니다. 마침버튼을 누르시고 마이크로 SD 카드를 안전하게 제거하고 Raspberry Pi에 삽입을 해주시기 바랍니다.</p><h5 id="Windows-10-구동"><a href="#Windows-10-구동" class="headerlink" title="Windows 10 구동"></a>Windows 10 구동</h5><p>라즈베리파이에 USB 키보드, 마우스를 연결하시고 전원을 넣고 구동을 합니다.</p><p>여기서 주의점은 USB는 C Type형으로만 전원과 키보드, 마우스를 사용하실수가 있습니다.</p><p>처음 부팅은 마이크로 SD 카드의 속도에 따라 12분에서 2시간 정도가 걸리게 됩니다.</p><p><img src="000.jpg" alt="image"></p><p>라즈베리파이 4B에서 윈도우를 구동시에 발열이 많이 발생을 하기에</p><p>쿨러는 쿨링효과가 좋은것으로 다는것을 추천 드립니다.</p><p><img src="001-8.jpg" alt="image"></p><p>구동을 하게 되면 라즈베리파이 로고가 나오며 구동이 됩니다.</p><p><img src="002-4.jpg" alt="image"></p><p>윈도우 로고가 나오며 서비스를 시작하는중이 뜨게 됩니다.</p><p><img src="003-2.jpg" alt="image"></p><p><img src="004-2.jpg" alt="image"></p><p>여기까지가 20~30분정도 걸리게 됩니다.</p><p>그리고 나서 재부팅이 됩니다.</p><p><img src="005.jpg" alt="image"></p><p>재부팅되며 다시 라즈베리파이 로고가 나오게 되며</p><p><img src="006-1.jpg" alt="image"></p><p>윈도우 로고가 나오며 드디어 초기 설정으로 진입을 하게 됩니다.</p><p><img src="007-1-1536x851.jpg" alt="image"></p><p><img src="008-1.jpg" alt="image"></p><p>지역(한국)을 선택을 하시고 예 버튼을 눌러주세요.</p><p><img src="009-1.jpg" alt="image"></p><p>자판배열을 선택하라고 나오게 됩니다만 기본으로 선택후 예 버튼을 눌러주세요.</p><p><img src="010.jpg" alt="image"></p><p>레이아웃을 추가할수 있습니다만 저는 건너뛰기를 했습니다.</p><p><img src="011.jpg" alt="image"></p><p>네트워크 연결입니다만 랜케이블을 연결을 해도 네트워크에 연결이 되지 않기때문에</p><p>인터넷이 없음을 눌러서 건너뛰시기 바랍니다.</p><p><img src="012.jpg" alt="image"></p><p>인터넷이 안되기에 제한된 설치로 계속을 눌러주세요.</p><p><img src="013.jpg" alt="image"></p><p>문제의 구간입니다만 여기서 다시시도를 눌러서 되시는 분들이 있거나 저처럼 몇번을 시도를 해도</p><p>안되는 경우가 발생을 하게 됩니다.</p><p>저는 더 안정된 버전이 나올때까지 보류를 하도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/HDMI/">HDMI</category>
+      
+      <category domain="https://playneko.github.io/tags/ARM/">ARM</category>
+      
+      <category domain="https://playneko.github.io/tags/ARM64/">ARM64</category>
+      
+      <category domain="https://playneko.github.io/tags/ISO/">ISO</category>
+      
+      <category domain="https://playneko.github.io/tags/MBR/">MBR</category>
+      
+      <category domain="https://playneko.github.io/tags/OOBE/">OOBE</category>
+      
+      <category domain="https://playneko.github.io/tags/Broot/">Broot</category>
+      
+      <category domain="https://playneko.github.io/tags/SD/">SD</category>
+      
+      <category domain="https://playneko.github.io/tags/SD-CARD/">SD CARD</category>
+      
+      <category domain="https://playneko.github.io/tags/SD-%EC%B9%B4%EB%93%9C/">SD 카드</category>
+      
+      <category domain="https://playneko.github.io/tags/Type-C/">Type-C</category>
+      
+      <category domain="https://playneko.github.io/tags/UEFI/">UEFI</category>
+      
+      <category domain="https://playneko.github.io/tags/USB/">USB</category>
+      
+      <category domain="https://playneko.github.io/tags/WOR/">WOR</category>
+      
+      <category domain="https://playneko.github.io/tags/win10/">win10</category>
+      
+      <category domain="https://playneko.github.io/tags/windows/">windows</category>
+      
+      <category domain="https://playneko.github.io/tags/WINDOWS-10/">WINDOWS 10</category>
+      
+      <category domain="https://playneko.github.io/tags/WINDOWS-10-ARM64/">WINDOWS 10 ARM64</category>
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi-4/">Rasberry Pi 4</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4-4B/">라즈베리파이 4B</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/02/rasberry-pi-036/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기</title>
+      <link>https://playneko.github.io/2020/07/01/rasberry-pi-035/</link>
+      <guid>https://playneko.github.io/2020/07/01/rasberry-pi-035/</guid>
+      <pubDate>Tue, 30 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-파이썬을-이용한-MariaDB-사용하기"><a href="#라즈베리파이에서-파이썬을-이용한-MariaDB-사용하기" class="headerlink" title="라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기"></a>라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이에서 파이썬을 이용한 MariaDB 사용하기 입니다.</p><p>MariaDB에 Connection, Select, Insert, Update, Delete 사용법을 알아보도록 하겠습니다.</p><p>우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.</p><p>아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.</p><p>우선 간단한 테이블을 만들어 보도록 하겠습니다.</p><p>phpMyAdmin에 로그인을 해주시기 바랍니다.</p><p><img src="002-18.png" alt="image"></p><p>akibatv 데이터베이스를 펼치시면 New를 클릭해 주시기 바랍니다.</p><p><img src="003-26.png" alt="image"></p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.</span><br><span class="line">----------+---------+--------</span><br><span class="line"> Name     | Type    | Size</span><br><span class="line">----------+---------+--------</span><br><span class="line"> name     | VARCHAR | 10</span><br><span class="line">----------+---------+--------</span><br><span class="line"> age      | INT     | 3</span><br><span class="line">----------+---------+--------</span><br><span class="line"> birthday | VARCHAR | 10</span><br><span class="line">----------+---------+--------</span><br><span class="line"> site_url | VARCHAR | 100</span><br><span class="line">----------+---------+--------</span><br></pre></td></tr></table></figure><p>위와같이 하셨으면 저장을해서 테이블을 추가를 해주시기 바랍니다.</p><p><img src="004-25.png" alt="image"></p><p>그러면 위와같이 test2이란 테이블이 추가가 되었습니다.</p><p>그럼 우선 Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시기 바랍니다.</p><p>실행을 하셨으면 아래의 파일들을 추가를 해주시기 바랍니다.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python_mariadb.py</span><br><span class="line">python_mariadb_select.py</span><br><span class="line">python_mariadb_insert.py</span><br><span class="line">python_mariadb_update.py</span><br><span class="line">python_mariadb_delete.py</span><br></pre></td></tr></table></figure><p><img src="001-25.png" alt="image"></p><p>파일들을 추가를 하셨으면 python_mariadb.py에 아래와 같이 코딩을 해주시기 바랍니다.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure><p><img src="002-23-e1593267290678.png" alt="image"></p><p>위와같이 작성을 하셨으면 이제 데이터베이스에 정상적으로 연결이 되는지 확인을 해보도록 하겠습니다.</p><p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p><p>라즈베리파이에 VNC로 접속후 터미널을 실행해 주세요.</p><p><img src="005-20.png" alt="image"></p><p>파이썬에서 MariaDB를 사용하기 위해선 모듈을 설치를 하셔야만 합니다.</p><p>터미널에 아래의 명령어를 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python3 -m pip install pymysql</span><br></pre></td></tr></table></figure><p><img src="008-15.png" alt="image"></p><p>모듈 설치가 완료 되셨으면 아래의 명령어로 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb.py</span><br></pre></td></tr></table></figure><p><img src="009-12.png" alt="image"></p><p>위와같이 [DataBase Connection Success]가 출력이 되면서 정상적으로 실행된것을 확인 되었습니다.</p><p>이제 Insert를 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_insert.py파일을 여시고 아래와 같이 코딩해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; INSERT INTO test2 (name, age, birthday, site_url) </span></span><br><span class="line"><span class="string">        VALUES (%s, %s, %s, %s) &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;AkibaTV&#x27;</span>, <span class="string">&#x27;99&#x27;</span>, <span class="string">&#x27;2020/01/01&#x27;</span>, <span class="string">&#x27;https://playneko.com/&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Insert Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure><p><img src="010-1-2.png" alt="image"></p><p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p><p><img src="011-11.png" alt="image"></p><p>아래의 명령어로 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_insert.py</span><br></pre></td></tr></table></figure><p><img src="012-10.png" alt="image"></p><p>데이터 추가 성공이라고 출력이 되었으면 실제로 데이터베이스</p><p>정상적으로 입력이 되었는지 확인을 해보도록 하겠습니다.</p><p><img src="013-11.png" alt="image"></p><p>데이터베이스에도 정상적으로 등록이 된것을 확인이 되었습니다.</p><p>이제 Select를 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_select.py파일을 여시고 아래와 같이 코딩해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot; SELECT * FROM test2 &quot;</span></span><br><span class="line">cur.execute(sql)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> cur:</span><br><span class="line">    print(row)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure><p><img src="014-7.png" alt="image"></p><p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p><p><img src="015-6.png" alt="image"></p><p>아래의 명령어로 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_select.py</span><br></pre></td></tr></table></figure><p><img src="016-8.png" alt="image"></p><p>데이터베이스에 등록된 데이터가 정상 출력된것을 확인 하실수 있습니다.</p><p>이제 Update를 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_update.py파일을 여시고 아래와 같이 코딩해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; UPDATE test2 SET </span></span><br><span class="line"><span class="string">        age = %s, </span></span><br><span class="line"><span class="string">        birthday = %s,</span></span><br><span class="line"><span class="string">        site_url = %s</span></span><br><span class="line"><span class="string">        WHERE name = %s &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;22&#x27;</span>, <span class="string">&#x27;1900/07/31&#x27;</span>, <span class="string">&#x27;https://akibatv.net/&#x27;</span>,<span class="string">&#x27;AkibaTV&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Update Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure><p><img src="017-1-1.png" alt="image"></p><p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p><p><img src="018-8.png" alt="image"></p><p>아래의 명령어로 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_update.py</span><br></pre></td></tr></table></figure><p><img src="019-8.png" alt="image"></p><p>데이터 갱신 성공 이라고 출력이 되셨으면 문제없이 갱신이 되었습니다.</p><p>실제로 데이터베이스 정상적으로 갱신이 되었는지 확인을 해보도록 하겠습니다.</p><p><img src="020-8.png" alt="image"></p><p>데이터베이스에도 정상적으로 갱신이 된것을 확인이 되었습니다.</p><p>이제 Delete를 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)에서 python_mariadb_delete.py파일을 여시고 아래와 같이 코딩해 주세요.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = pymysql.connect(</span><br><span class="line">        host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        user=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        password=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        db=<span class="string">&#x27;akibatv&#x27;</span>,</span><br><span class="line">        charset=<span class="string">&#x27;utf8mb4&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> pymysql <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;Database Access Error&quot;</span>)</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;DataBase Connection Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">sql = <span class="string">&quot;&quot;&quot; DELETE FROM test2 WHERE name = %s &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">cur.execute(sql, (<span class="string">&#x27;AkibaTV&#x27;</span>))</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Data Delete Success&quot;</span>)</span><br><span class="line"></span><br><span class="line">cur.close()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure><p><img src="021-6.png" alt="image"></p><p>라즈베리파이의 적당한곳에 작성하신 소스파일을 올려주시기 바랍니다.</p><p><img src="022-6.png" alt="image"></p><p>아래의 명령어로 실행을 해주시기 바랍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대</span></span><br><span class="line">$ sudo python3 ./python_mariadb_delete.py</span><br></pre></td></tr></table></figure><p><img src="023-4.png" alt="image"></p><p>데이터 삭제 성공 이라고 출력이 되셨으면 문제없이 삭제가 된것입니다.</p><p>실제로 데이터베이스 정상적으로 삭제가 되었는지 확인을 해보도록 하겠습니다.</p><p><img src="024-4.png" alt="image"></p><p>데이터베이스에도 정상적으로 삭제가 된것을 확인이 되었습니다.</p><p>이렇게해서 파이썬에서 MariaDB의 Select, Insert, Update, Delete를 해보았습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/Python/">Python</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC/">파이썬</category>
+      
+      <category domain="https://playneko.github.io/tags/MariaDB/">MariaDB</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/localhost/">localhost</category>
+      
+      <category domain="https://playneko.github.io/tags/connection/">connection</category>
+      
+      <category domain="https://playneko.github.io/tags/delete/">delete</category>
+      
+      <category domain="https://playneko.github.io/tags/insert/">insert</category>
+      
+      <category domain="https://playneko.github.io/tags/select/">select</category>
+      
+      <category domain="https://playneko.github.io/tags/update/">update</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%88%EB%A6%AC%EC%95%84DB/">마리아DB</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/01/rasberry-pi-035/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기</title>
+      <link>https://playneko.github.io/2020/06/30/rasberry-pi-034/</link>
+      <guid>https://playneko.github.io/2020/06/30/rasberry-pi-034/</guid>
+      <pubDate>Mon, 29 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에-Pi-Hole-서버-구축해서-광고-차단하기"><a href="#라즈베리파이에-Pi-Hole-서버-구축해서-광고-차단하기" class="headerlink" title="라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기"></a>라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이에 Pi-Hole 서버 구축해서 광고 차단하기 입니다.</p><p>Pi-Hole은 인터넷으로 들어오는 광고를 차단시켜주는 서버프로그램 입니다.</p><p>크롬브라우저를 사용하시면 플러그인등을 설치해서 광고 차단을 하실수 있습니다만</p><p>그건 크롬브라우저를 쓰고 있을때에만 가능 합니다만</p><p>Pi-Hole 서버를 구축하시면 DNS를 통해 들어오는 광고서버를 전부 차단을 시켜줍니다.</p><p>그래서 컴퓨터 핸드폰 태블릿등에서도 똑같이 광고차단 효과를 보실수가 있습니다.</p><p>그럼 Pi-Hole 서버를 구축하기전에 준비물이 필요 합니다.</p><blockquote><h5 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h5><ul><li>공유기</li><li>라즈베리파이</li><li>인터넷</li><li>컴퓨터</li></ul></blockquote><p>준비물이 갖춰졌으면 라즈베리파이를 일단 OS설치와 VNC접속 가능하게 세팅을 해주세요.</p><p>설치 방법에 대해서는 아래의 링크를 통해 하실수가 있습니다.</p><p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-001/">모니터없이 라즈베리파이3 B 설치하기</a></p><p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-002/">라즈베리파이 VNC설정</a></p><p><a href="https://playneko.github.io/2020/05/24/rasberry-pi-005/">라즈베리파이 고정 IP Address 설정</a></p><p>모든 설치와 설정이 되셨으면 라즈베리파이를 VNC로 접속후 터미널을 실행해 주세요.</p><p><img src="001-24.png" alt="image"></p><p>Pi-Hole 서버는 깃허브를 이용해서 다운로드후 설치를 하도록 하겠습니다.</p><p><a href="https://github.com/pi-hole/pi-hole#one-step-automated-install">https://github.com/pi-hole/pi-hole#one-step-automated-install</a></p><p>터미널에 아래의 명령어를 입력해서 다운로드와 설치를 하도록 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole</span><br><span class="line">$ <span class="built_in">cd</span> Pi-hole/automated\ install/</span><br><span class="line">$ sudo bash basic-install.sh</span><br></pre></td></tr></table></figure><p><img src="002-22.png" alt="image"></p><p>깃허브에서 다운로드가 완료가 되었습니다.</p><p><img src="003-25.png" alt="image"></p><p><img src="004-24.png" alt="image"></p><p>위의 화면이 나오면 설치준비를 위해 준비를 하게 됩니다.</p><p><img src="005-19.png" alt="image"></p><p>한참 기다리시면 위와같이 나오게 되며 계속 확인을 선택하고 넘겨주시기 바랍니다.</p><p><img src="006-19.png" alt="image"></p><p><img src="007-16.png" alt="image"></p><p><img src="008-14.png" alt="image"></p><p>위와같이 나오면 어떤 DNS를 이용할것인지 선택을 하실수 있습니다.</p><p>저의 경우 Google을 기본으로 선택 했습니다.</p><p><img src="009-11.png" alt="image"></p><p>위와같이 나오면 전부 기본세팅으로 확인해주셔서 다음으로 넘어가 주시기 바랍니다.</p><p><img src="010-11.png" alt="image"></p><p><img src="011-10.png" alt="image"></p><p><img src="012-9.png" alt="image"></p><p><img src="013-10.png" alt="image"></p><p><img src="014-6.png" alt="image"></p><p><img src="015-5.png" alt="image"></p><p><img src="016-7.png" alt="image"></p><p><img src="017-7.png" alt="image"></p><p>모든 설정이 끝나고 반영하는 단계 입니다.</p><p><img src="018-7.png" alt="image"></p><p>모든 설치가 끝났습니다.</p><p>그럼 Pi-Hole 서버의 대시보드를 접속해 보겠습니다.</p><p>브라우저를 실행후 아래의 주소를 입력해 주세요.</p><p>http://라즈베리파이 IP/admin/</p><p>저의 경우에는 [<a href="https://playneko.github.io/2020/06/25/rasberry-pi-030/">라즈베리파이 또는 리눅스에서 Nginx가상호스트 추가하기</a>]를 이용해</p><p>접속 주소를 변경하였습니다. 여러분들도 여러 개발중인 사이트가 있을경우</p><p>가상호스트를 이용해 접속 페이지를 변경 하실수 있습니다.</p><p><img src="019-7.png" alt="image"></p><p>파이홀에 로그인을 위해선 초기 비밀번호를 변경을 하셔야만 합니다.</p><p>아래의 명령어를 이용해서 새로 비밀번호를 세팅해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pihole -a -p</span><br></pre></td></tr></table></figure><p><img src="020-7.png" alt="image"></p><p><img src="021-5.png" alt="image"></p><p><img src="022-5.png" alt="image"></p><p>로그인을 하시면 더많은 설정을 하실수 있는 메뉴가 나오게 됩니다.</p><p>이렇게해서 Pi-Hole 서버 구축이 끝났습니다.</p><p>다음에는 어떻게 활용을 하는지에 대해서 설명을 해드리도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/http/">http</category>
+      
+      <category domain="https://playneko.github.io/tags/OS/">OS</category>
+      
+      <category domain="https://playneko.github.io/tags/admin/">admin</category>
+      
+      <category domain="https://playneko.github.io/tags/DNS/">DNS</category>
+      
+      <category domain="https://playneko.github.io/tags/Google/">Google</category>
+      
+      <category domain="https://playneko.github.io/tags/Pi-Hole/">Pi-Hole</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B3%B5%EC%9C%A0%EA%B8%B0/">공유기</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B4%91%EA%B3%A0/">광고</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B4%91%EA%B3%A0%EC%84%9C%EB%B2%84/">광고서버</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B4%91%EA%B3%A0%EC%B0%A8%EB%8B%A8/">광고차단</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B5%AC%EC%B6%95/">구축</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8/">비밀번호</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9D%B8%ED%84%B0%EB%84%B7/">인터넷</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B0%A8%EB%8B%A8/">차단</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%BB%B4%ED%93%A8%ED%84%B0/">컴퓨터</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%ED%99%80/">파이홀</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/30/rasberry-pi-034/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에서 실행중인 프로세스 강제종료 시키기</title>
+      <link>https://playneko.github.io/2020/06/29/rasberry-pi-033/</link>
+      <guid>https://playneko.github.io/2020/06/29/rasberry-pi-033/</guid>
+      <pubDate>Sun, 28 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에서 실행중인 프로세스 강제종료 시키기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-실행중인-프로세스-강제종료-시키기"><a href="#라즈베리파이에서-실행중인-프로세스-강제종료-시키기" class="headerlink" title="라즈베리파이에서 실행중인 프로세스 강제종료 시키기"></a>라즈베리파이에서 실행중인 프로세스 강제종료 시키기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이에서 실행중인 프로세스 강제종료 시키기 입니다만</p><p>라즈베리파이 뿐만 아니라 리눅스도 포함되는 내용 입니다.</p><p>배치프로그램을 개발하거나 자바프로그램을 라즈베리파이 또는 리눅스에서</p><p>백그라운드 상태로 실행중인 경우 급하게 프로세스를 종료를 시켜야 하는 경우가 발생할수가 있습니다.</p><p>그럴경우에 어떻게 프로세스를 찾고 강제로 종료를 시키는것인지 알아보도록 하겠습니다.</p><p>우선 프로그램을 무한루프로 실행할 샘플 코드를 작성을 하도록 하겠습니다.</p><p>샘플코드는 이전에 소개해 드린 라즈베리파이에 GPIO와 파이선을 이용해서 LED를 켜보자 입니다.</p><p>간단하게 만들어서 무한으로 LED가 켜지고 꺼지게 실행중에</p><p>프로세스를 강제종료를 해보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)를 실행해 주시고 파일명은 gpio_led_loop.py로 합니다.</p><p><img src="001-22.png" alt="image"></p><p>아래와같이 코딩을 해주시기 바랍니다.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> RPi.GPIO <span class="keyword">as</span> GPIO</span><br><span class="line"></span><br><span class="line">pinNum = <span class="number">20</span></span><br><span class="line">GPIO.setmode(GPIO.BCM)</span><br><span class="line">GPIO.setup(pinNum, GPIO.OUT)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line"></span><br><span class="line">        GPIO.output(pinNum, GPIO.HIGH)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        GPIO.output(pinNum, GPIO.LOW)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    GPIO.output(pinNum, GPIO.LOW)</span><br><span class="line"></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    GPIO.cleanup()</span><br></pre></td></tr></table></figure><p><img src="002-20.png" alt="image"></p><p>작성을 하셨으면 라즈베리파이에 파일을 올려주시기 바랍니다.</p><p>그리고 라즈베리파이를 VNC를 이용해 접속후 터미널을 실행해 주세요.</p><p><img src="003-23.png" alt="image"></p><p>이제 작성한 LED점등 소스를 실행을 해보도록 하겠습니다.</p><p>아래의 명령어를 입력해 주세요.</p><p>이번에 실행 명령어는 마지막에 “&amp;”를 추가를 해줍니다. “&amp;” 하고 실행을 하시면</p><p>프로그램을 그냥 실행하는게 아닌 백그라운드로 실행을 하게 되며 라즈베리파이에서 로그아웃을 하셔도</p><p>프로그램을 라즈베리파이가 켜져있는한 계속 돌아가게 됩니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 2.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python ./gpio_led_loop.py &amp;</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 파이썬 3.x버전대를 이용하실경우</span></span><br><span class="line">$ sudo python3 ./gpio_led_loop.py &amp;</span><br></pre></td></tr></table></figure><p><img src="004-22.png" alt="image"></p><p>위와같이 아무키나 눌렀음에도 LED는 계속 켜지고 꺼지는것을 보실수가 있습니다.</p><p>그럼 프로세스가 정상적으로 실행중인지 알아보겠습니다.</p><p>아래의 명령어를 입력해 주세요.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gpio_led_loop.py 파일명으로 실행중인 프로세스 검색</span></span><br><span class="line">$ ps -ef | grep gpio_led_loop.py</span><br></pre></td></tr></table></figure><p><img src="005-17.png" alt="image"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root 1113 1003 0 22:33 pts/0  00:00:00 sudo python3 ./gpio_led_loop.py</span><br><span class="line">root 1118 1113 0 22:33 pts/0  00:00:00 python3 ./gpio_led_loop.py</span><br><span class="line">pi   1121 1003 0 22:36 pts/0  00:00:00 grep --color=auto gpio_led_loop.py</span><br></pre></td></tr></table></figure><p>위와같이 실행중인 항목이 나오는것을 확인 하실수 있습니다.</p><p>이제 프로세스를 종료하는 방법은 root다음에 오는 첫번째 숫자가 실행중인 프로세스의 pid값 입니다.</p><p>아니면 프로그램을 실행하실때 출력한 [1] 1113도 똑같은 pid값이 됩니다.</p><p>pid값을 확인을 하셨으면 아래의 명령어를 이용해서 프로세스를 강제로 종료 하실수가 있습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1113은 실행할때마다 나오는 pid값을 입력</span></span><br><span class="line">$ sudo <span class="built_in">kill</span> 1113(pid값)</span><br></pre></td></tr></table></figure><p><img src="006-17.png" alt="image"></p><p>프로세스를 강제 종료하시면 위와같이 나오면서 프로세스가 종료되고 LED점등도 멈춘것을 확인하실수 있습니다.</p><p>그럼 다시 프로세스 검색을 해서 프로세스가 종료되었는지 확인해 보도록 하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gpio_led_loop.py 파일명으로 실행중인 프로세스 검색</span></span><br><span class="line">$ ps -ef | grep gpio_led_loop.py</span><br></pre></td></tr></table></figure><p><img src="007-14.png" alt="image"></p><p>위와같이 프로세스가 종료되어 있는것을 확인 하실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/LED/">LED</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/background/">background</category>
+      
+      <category domain="https://playneko.github.io/tags/grep/">grep</category>
+      
+      <category domain="https://playneko.github.io/tags/kill/">kill</category>
+      
+      <category domain="https://playneko.github.io/tags/LED%EC%A0%90%EB%93%B1/">LED점등</category>
+      
+      <category domain="https://playneko.github.io/tags/pid/">pid</category>
+      
+      <category domain="https://playneko.github.io/tags/process/">process</category>
+      
+      <category domain="https://playneko.github.io/tags/ps-ef/">ps -ef</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B2%80%EC%83%89/">검색</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83/">로그아웃</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B0%B1%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C/">백그라운드</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%84%B0%EB%AF%B8%EB%84%90/">터미널</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/">프로세스</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/29/rasberry-pi-033/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라즈베리파이에 openmediavault(OMV) 5 설치하기</title>
+      <link>https://playneko.github.io/2020/06/28/rasberry-pi-032/</link>
+      <guid>https://playneko.github.io/2020/06/28/rasberry-pi-032/</guid>
+      <pubDate>Sat, 27 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라즈베리파이에 openmediavault(OMV) 5 설치하기&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에-openmediavault-OMV-5-설치하기"><a href="#라즈베리파이에-openmediavault-OMV-5-설치하기" class="headerlink" title="라즈베리파이에 openmediavault(OMV) 5 설치하기"></a>라즈베리파이에 openmediavault(OMV) 5 설치하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라즈베리파이에 openmediavault 설치하기 입니다.</p><h4 id="openmediavault-란-무엇입니까"><a href="#openmediavault-란-무엇입니까" class="headerlink" title="openmediavault 란 무엇입니까?"></a>openmediavault 란 무엇입니까?</h4><p>openmediavault는 데비안 리눅스 기반의 차세대 NAS (Network Attached Storage) 솔루션입니다.</p><p>SSH, (S) FTP, SMB / CIFS, DAAP 미디어 서버, RSync, BitTorrent 클라이언트 등의 서비스가 포함되어 있습니다.</p><p>프레임 워크의 모듈식 설계 덕분에 플러그인을 통해 기능을 향상시킬 수 있습니다.</p><p>openmediavault는 주로 소규모 사무실이나 본사에서 사용하도록 설계되었지만 이러한 시나리오에만 국한되지는 않습니다.</p><p>모든 사용자가 심도있는 지식없이 Network Attached Storage를 설치 및 관리 할 수있는 간편하고 사용하기 쉬운 솔루션입니다.</p><p><a href="https://www.openmediavault.org/">https://www.openmediavault.org/</a></p><p><img src="001-21.png" alt="image"></p><p>openmediavault(OMV) 5를 설치하시기 위해선 우선 라즈베리파이에</p><p>라즈베리파이 OS를 설치를 해주시기 바랍니다.</p><p>설치 방법은 [모니터없이 라즈베리파이3 B 설치하기]를 참고해 주시기 바랍니다.</p><p><img src="005-16.png" alt="image"></p><p>라즈베리파이 OS가 설치 완료된 상태 입니다.</p><p><img src="006-16.png" alt="image"></p><p>라즈베리파이의 모든 설정과 업데이트가 끝났습니다.</p><p>재시작을 해주시기 바랍니다.</p><p>재시작을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.</p><p><img src="007-13.png" alt="image"></p><p>이제 본격적으로 openmediavault(OMV)를 설치하기에 앞서 아래의 명령어로 업데이트 및 업그레이드를 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 업데이트</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line"><span class="comment"># 업그레이드</span></span><br><span class="line">$ sudo apt-get upgrade</span><br><span class="line"><span class="comment"># 재부팅</span></span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure><p><img src="008-12.png" alt="image"></p><p><img src="009-9.png" alt="image"></p><p>재부팅을 하셨으면 라즈베리파이를 VNC로 여시고 터미널을 실행해 주세요.</p><p>아래의 명령어를 입력해서 openmediavault(OMV) 설치를 하도록 하겠습니다.</p><p>명령여는 omv-5.txt 링크를 여시면 나오는 내용을 복사해서 붙여넣어서 실행 하는것을 추천합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># openmediavault(OMV) 5 설치 명령어</span></span><br><span class="line">$ wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash</span><br></pre></td></tr></table></figure><p><img src="010-9.png" alt="image"></p><p>한참 설치후 VNC접속이 끊긴후 이와같은 화면이 나오게 되면 설치가 완료가 된것입니다.</p><p><img src="011-8.png" alt="image"></p><p>openmediavault(OMV)를 확인하기 위해선 브라우저를 실행하시기 바랍니다.</p><p>웹브라우저의 URL에 <a href="http://omv가/">http://OMV가</a> 설치된 라즈베리파이 IP 를 입력하시고 접속해 주세요.</p><p><img src="012-7.png" alt="image"></p><blockquote><p>초기 ID : admin<br>초기 Password :openmediavault</p></blockquote><p><img src="013-8.png" alt="image"></p><p>정상적으로 접속이 되었으면 이걸로 라즈베리파이에 openmediavault(OMV) 5 설치하기가 완료 되었습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Linux/">Linux</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
+      
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/linux/">linux</category>
+      
+      <category domain="https://playneko.github.io/tags/PHP/">PHP</category>
+      
+      <category domain="https://playneko.github.io/tags/root/">root</category>
+      
+      <category domain="https://playneko.github.io/tags/zero/">zero</category>
+      
+      <category domain="https://playneko.github.io/tags/OS/">OS</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/BitTorrent/">BitTorrent</category>
+      
+      <category domain="https://playneko.github.io/tags/DAAP/">DAAP</category>
+      
+      <category domain="https://playneko.github.io/tags/FTP/">FTP</category>
+      
+      <category domain="https://playneko.github.io/tags/NAS/">NAS</category>
+      
+      <category domain="https://playneko.github.io/tags/OMV/">OMV</category>
+      
+      <category domain="https://playneko.github.io/tags/openmediavault/">openmediavault</category>
+      
+      <category domain="https://playneko.github.io/tags/RSync/">RSync</category>
+      
+      <category domain="https://playneko.github.io/tags/SMB-CIFS/">SMB/CIFS</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%8D%B0%EB%B9%84%EC%95%88-%EB%A6%AC%EB%88%85%EC%8A%A4/">데비안 리눅스</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%94%84%EB%A0%88%EC%9E%84-%EC%9B%8C%ED%81%AC/">프레임 워크</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/28/rasberry-pi-032/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기</title>
