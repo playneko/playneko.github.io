@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="apache,chown,DB,linux,localhost,MariaDB,nginx,NPM,PHP,PHPExcel,Rasberry Pi,root,SSH,UNLNK,Visual Studio Code,VNC,www,zero,ラズベリーパイ,깃허브,다운로드,라즈베리파이,비주얼 스튜디오 코드,압축,엑셀파일,웹브라우저,웹서버,코딩">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nPHP에서 PHPExcel를 이용한 엑셀 다운로드 하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 PHP에서 디비의 데이터등을 가공후\n엑셀파일로 다운로드 하는 방법을 소개해 드리도록 하겠습니다.\n데이터를 엑셀파일로 만들기 위해서 오픈소스인 PHPExcel를 이용합니다.\nPHPExcel를 이용하여 PHPExcel에서 제공해주는 함수를 이용 하시면\n간단하고 쉽게 엑셀파일로 가공후 다운로드를 하실수가 있습니다.\n그럼 코딩을 하기에 앞서 깃허브에서 PHPExcel를 다운로드 하겠습니다.\nhttps://github.com/PHPOffice/PHPExcel\n\n다운로드 받으신 PHPExcel를 적당한곳에 압축을 푸시고\nVisual Studio Code(비주얼 스튜디오 코드)로 실행하신후 php_excel.php로 파일을 추가해 주시기 바랍니다.\n(php_excel.php파일은 PHPExcel를 압축을 푸신곳에 같이 놔두시기 바랍니다.)\n\nDB에 등록한 데이터를 엑셀로 출력을 위해서 디비에 기본 데이터를 추가를 해주도록 하겠습니다.\nPHP에서 DB를 사용하는 방법에 대해서는 아래의 내용을 참고해 주시기 바랍니다.\n라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기\n\nDB에는 2건의 데이터를 추가를 해두었습니다.\n엑셀을 다운로드를 위해서 아래와 같이 코딩을 해주시기 바랍니다.\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354&lt;?php    include &quot;./PHPExcel-1.8/Classes/PHPExcel.php&quot;;    $servername = &quot;localhost&quot;;    $username = &quot;akibatv&quot;;    $password = &quot;akibatv&quot;;    $dbname = &quot;akibatv&quot;;    // 데이터베이스 생성    $conn = new mysqli($servername, $username, $password, $dbname);    // 데이터베이스 접속    if ($conn-&gt;connect_error) &#123;        die(&quot;데이터베이스 접속 실패 : &quot; . $conn-&gt;connect_error);    &#125;    $phpExcel = new PHPExcel();    $phpExcel-&gt;setActiveSheetIndex(0);    $phpExcel-&gt;getActiveSheet()    -&gt;setCellValue(&quot;A1&quot;, &quot;NO.&quot;)    -&gt;setCellValue(&quot;B1&quot;, &quot;이름&quot;)    -&gt;setCellValue(&quot;C1&quot;, &quot;나이&quot;)    -&gt;setCellValue(&quot;D1&quot;, &quot;생년월일&quot;)    -&gt;setCellValue(&quot;E1&quot;, &quot;사이트URL&quot;);    $sql = &quot; SELECT * FROM test2 &quot;;    $result = $conn-&gt;query($sql);    if ($result-&gt;num_rows &gt; 0) &#123;        $no = 1;        $line = 2;        while($row = $result-&gt;fetch_assoc()) &#123;            $phpExcel-&gt;setActiveSheetIndex(0)            -&gt;setCellValue(&quot;A&quot;.$line, $no)            -&gt;setCellValue(&quot;B&quot;.$line, $row[&#x27;name&#x27;])            -&gt;setCellValue(&quot;C&quot;.$line, $row[&#x27;age&#x27;])            -&gt;setCellValue(&quot;D&quot;.$line, $row[&#x27;birthday&#x27;])            -&gt;setCellValue(&quot;E&quot;.$line, $row[&#x27;site_url&#x27;]);            $no++;            $line++;        &#125;    &#125;    header(&#x27;Content-Type: application/vnd.ms-excel&#x27;);    header(&#x27;Content-Disposition: attachment;filename=&quot;AkibaTV.xls&quot;&#x27;);    header(&#x27;Cache-Control: max-age=0&#x27;);    $objWriter = PHPExcel_IOFactory::createWriter($phpExcel, &#x27;Excel5&#x27;);    $objWriter-&gt;save(&#x27;php://output&#x27;);    $conn-&gt;close();?&gt;Excel Download\n\n위와같이 작성을 하셨으면 확인을 해보도록 하겠습니다.\n소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n\n소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.\nhttp://라즈베리파이서버 IP/php_excel/php_excel.php\n\n위와같이 엑셀파일이 다운로드 된것을 보실수 있습니다.\n엑셀파일을 열어주셔서 확인을 해보도록 하겠습니다.\n\nDB에 등록한 데이터가 엑셀에 정상적으로 출력이 된것을 확인 하실수 있습니다.","dateCreated":"2020-07-07T01:00:00+09:00","dateModified":"2020-12-26T20:41:01+09:00","datePublished":"2020-07-07T01:00:00+09:00","description":"\nPHP에서 PHPExcel를 이용한 엑셀 다운로드 하기이번에 소개할 내용은 PHP에서 디비의 데이터등을 가공후…","headline":"PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/07/php/php-005/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/07/php/php-005/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, nginx, 웹서버, 깃허브, Visual Studio Code, 비주얼 스튜디오 코드, apache, chown, MariaDB, NPM, PHP, root, zero, 웹브라우저, 코딩, localhost, www, UNLNK, DB, PHPExcel, 다운로드, 압축, 엑셀파일","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기이번에 소개할 내용은 PHP에서 디비의 데이터등을 가공후…">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/07/php/php-005/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기이번에 소개할 내용은 PHP에서 디비의 데이터등을 가공후…">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/001-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/002-2.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/004-2.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/004-2-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/005-2.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/006-2.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/007-1-1.png">
+<meta property="article:published_time" content="2020-07-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T11:41:01.872Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="웹서버">
+<meta property="article:tag" content="깃허브">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="apache">
+<meta property="article:tag" content="chown">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="www">
+<meta property="article:tag" content="UNLNK">
+<meta property="article:tag" content="DB">
+<meta property="article:tag" content="PHPExcel">
+<meta property="article:tag" content="다운로드">
+<meta property="article:tag" content="압축">
+<meta property="article:tag" content="엑셀파일">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.com/wp-content/uploads/2020/07/001-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/07/php/php-005/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/07/php/php-005/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-07T01:00:00+09:00">
+	
+		    2020/07/07 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/PHP/">PHP</a>, <a class="category-link" href="/categories/PHP/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="PHP에서-PHPExcel를-이용한-엑셀-다운로드-하기"><a href="#PHP에서-PHPExcel를-이용한-엑셀-다운로드-하기" class="headerlink" title="PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기"></a>PHP에서 PHPExcel를 이용한 엑셀 다운로드 하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 PHP에서 디비의 데이터등을 가공후</p>
+<p>엑셀파일로 다운로드 하는 방법을 소개해 드리도록 하겠습니다.</p>
+<p>데이터를 엑셀파일로 만들기 위해서 오픈소스인 PHPExcel를 이용합니다.</p>
+<p>PHPExcel를 이용하여 PHPExcel에서 제공해주는 함수를 이용 하시면</p>
+<p>간단하고 쉽게 엑셀파일로 가공후 다운로드를 하실수가 있습니다.</p>
+<p>그럼 코딩을 하기에 앞서 깃허브에서 PHPExcel를 다운로드 하겠습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/PHPOffice/PHPExcel">https://github.com/PHPOffice/PHPExcel</a></p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/001-1.png" alt="image"></p>
+<p>다운로드 받으신 PHPExcel를 적당한곳에 압축을 푸시고</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)로 실행하신후 php_excel.php로 파일을 추가해 주시기 바랍니다.</p>
+<p><strong>(php_excel.php파일은 PHPExcel를 압축을 푸신곳에 같이 놔두시기 바랍니다.)</strong></p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/002-2.png" alt="image"></p>
+<p>DB에 등록한 데이터를 엑셀로 출력을 위해서 디비에 기본 데이터를 추가를 해주도록 하겠습니다.</p>
+<p>PHP에서 DB를 사용하는 방법에 대해서는 아래의 내용을 참고해 주시기 바랍니다.</p>
+<p><a href="https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/">라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기</a></p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/004-2.png" alt="image"></p>
+<p>DB에는 2건의 데이터를 추가를 해두었습니다.</p>
+<p>엑셀을 다운로드를 위해서 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">include</span> <span class="string">&quot;./PHPExcel-1.8/Classes/PHPExcel.php&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$password</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line">    <span class="variable">$dbname</span> = <span class="string">&quot;akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 생성</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 데이터베이스 접속</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;데이터베이스 접속 실패 : &quot;</span> . <span class="variable">$conn</span>-&gt;connect_error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$phpExcel</span> = <span class="keyword">new</span> PHPExcel();</span><br><span class="line"></span><br><span class="line">    <span class="variable">$phpExcel</span>-&gt;setActiveSheetIndex(<span class="number">0</span>);</span><br><span class="line">    <span class="variable">$phpExcel</span>-&gt;getActiveSheet()</span><br><span class="line">    -&gt;setCellValue(<span class="string">&quot;A1&quot;</span>, <span class="string">&quot;NO.&quot;</span>)</span><br><span class="line">    -&gt;setCellValue(<span class="string">&quot;B1&quot;</span>, <span class="string">&quot;이름&quot;</span>)</span><br><span class="line">    -&gt;setCellValue(<span class="string">&quot;C1&quot;</span>, <span class="string">&quot;나이&quot;</span>)</span><br><span class="line">    -&gt;setCellValue(<span class="string">&quot;D1&quot;</span>, <span class="string">&quot;생년월일&quot;</span>)</span><br><span class="line">    -&gt;setCellValue(<span class="string">&quot;E1&quot;</span>, <span class="string">&quot;사이트URL&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot; SELECT * FROM test2 &quot;</span>;</span><br><span class="line">    <span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable">$no</span> = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">$line</span> = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line">            <span class="variable">$phpExcel</span>-&gt;setActiveSheetIndex(<span class="number">0</span>)</span><br><span class="line">            -&gt;setCellValue(<span class="string">&quot;A&quot;</span>.<span class="variable">$line</span>, <span class="variable">$no</span>)</span><br><span class="line">            -&gt;setCellValue(<span class="string">&quot;B&quot;</span>.<span class="variable">$line</span>, <span class="variable">$row</span>[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">            -&gt;setCellValue(<span class="string">&quot;C&quot;</span>.<span class="variable">$line</span>, <span class="variable">$row</span>[<span class="string">&#x27;age&#x27;</span>])</span><br><span class="line">            -&gt;setCellValue(<span class="string">&quot;D&quot;</span>.<span class="variable">$line</span>, <span class="variable">$row</span>[<span class="string">&#x27;birthday&#x27;</span>])</span><br><span class="line">            -&gt;setCellValue(<span class="string">&quot;E&quot;</span>.<span class="variable">$line</span>, <span class="variable">$row</span>[<span class="string">&#x27;site_url&#x27;</span>]);</span><br><span class="line">            <span class="variable">$no</span>++;</span><br><span class="line">            <span class="variable">$line</span>++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    header(<span class="string">&#x27;Content-Type: application/vnd.ms-excel&#x27;</span>);</span><br><span class="line">    header(<span class="string">&#x27;Content-Disposition: attachment;filename=&quot;AkibaTV.xls&quot;&#x27;</span>);</span><br><span class="line">    header(<span class="string">&#x27;Cache-Control: max-age=0&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$objWriter</span> = PHPExcel_IOFactory::createWriter(<span class="variable">$phpExcel</span>, <span class="string">&#x27;Excel5&#x27;</span>);</span><br><span class="line">    <span class="variable">$objWriter</span>-&gt;save(<span class="string">&#x27;php://output&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$conn</span>-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">Excel Download</span><br></pre></td></tr></table></figure>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/004-2-1.png" alt="image"></p>
+<p>위와같이 작성을 하셨으면 확인을 해보도록 하겠습니다.</p>
+<p>소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/005-2.png" alt="image"></p>
+<p>소스를 올려주셨으면 웹브라우저를 실행하시고 서버에 올린 PHP파일로 접속을 해주시기 바랍니다.</p>
+<p>http://라즈베리파이서버 IP/php_excel/php_excel.php</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/006-2.png" alt="image"></p>
+<p>위와같이 엑셀파일이 다운로드 된것을 보실수 있습니다.</p>
+<p>엑셀파일을 열어주셔서 확인을 해보도록 하겠습니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/007-1-1.png" alt="image"></p>
+<p>DB에 등록한 데이터가 엑셀에 정상적으로 출력이 된것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DB/" rel="tag">DB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MariaDB/" rel="tag">MariaDB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHPExcel/" rel="tag">PHPExcel</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/UNLNK/" rel="tag">UNLNK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apache/" rel="tag">apache</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chown/" rel="tag">chown</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/nginx/" rel="tag">nginx</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/www/" rel="tag">www</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B9%83%ED%97%88%EB%B8%8C/" rel="tag">깃허브</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C/" rel="tag">다운로드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%95%95%EC%B6%95/" rel="tag">압축</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%97%91%EC%85%80%ED%8C%8C%EC%9D%BC/" rel="tag">엑셀파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/" rel="tag">웹서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/07/php/php-005/';
+              
+            this.page.identifier = '2020/07/07/php/php-005/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

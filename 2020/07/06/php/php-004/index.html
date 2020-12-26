@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="apache,chown,linux,localhost,nginx,NPM,PHP,Rasberry Pi,root,SSH,UNLNK,Visual Studio Code,VNC,www,zero,ラズベリーパイ,라즈베리파이,로그파일,비주얼 스튜디오 코드,웹브라우저,웹서버,이미지파일,코딩">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nPHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 입니다.\n웹서버를 운영을 하시다 보시면 불필요한 로그파일이나 이미지파일등\n오래되고 불필요한 데이터가 많이 쌓이게 됩니다.\n불필요한 데이터가 많이 쌓일수록 서버의 성능도 저하될뿐 아니라 디스크의 용량 문제도\n발생하기때문에 유지 관리비도 점점 상승하는 문제가 발생하게 됩니다.\n그래서 PHP를 이용한 간단하게 해당하는 폴더안의 일정기간이 지난 데이터 파일을\n삭제하는 방법을 알아보도록 하겠습니다.\nVisual Studio Code(비주얼 스튜디오 코드)를 실행하시고 파일명은 php_old_file_delete.php로 만드시고\n아래와 같이 코딩을 해주시기 바랍니다.\n1234567891011&lt;?php    $fileName = &quot;./test.txt&quot;;    $mtime = filemtime($fileName);    // 최종 수정일이 30일 이상인 파일만 삭제    if (file_exists($fileName) &amp;&amp; (time() - $mtime &gt;= 24*60*60*30)) &#123;        // 삭제 처리        unlink($fileName);    &#125;?&gt;\n\n이제 정상적으로 삭제가 되는지 확인을 위해서\n작성하신 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.\n웹폴더에 테스트용 test.txt파일도 추가를 해주시기 바랍니다.\n\ntest.txt파일은 새로 추가한 파일로서 현재의 날짜와 시간이 되겠습니다.\n파일 삭제 PHP를 실행해도 삭제가 되지 않겠습니다.\n웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_old_file_delete.php\n위의 주소를 실행해 주시기 바랍니다.\n\n실행후 다시 test.txt파일을 확인해 보시면\n\n여전히 파일이 남아있는것을 확인 하실수 있습니다.\n그러면 test.txt파일의 날짜와 시간이 30일 이전으로 돌려보도록 하겠습니다.\n라즈베리파이에서 날짜와 시간을 변경을 하실때는 Touch명령어를 이용하게 됩니다.\n라즈베리파이 또는 리눅스에서 TOUCH를 이용해 날짜 변경하기를 참고해 주시기 바랍니다.\n아래의 명령어를 입력해서 날짜와 시간을 변경해 주세요.\n1$ touch -t 202005231530 ./test.txt\n\n\ntest.txt파일의 날짜와 시간이 변경된것을 확인하실수 있습니다.\n그러면 다시 웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_old_file_delete.php\n위의 주소를 실행해 주시기 바랍니다.\n\n\n위와같이 파일이 삭제가 된것을 확인하실수 있습니다.","dateCreated":"2020-07-06T01:00:00+09:00","dateModified":"2020-12-26T20:35:51+09:00","datePublished":"2020-07-06T01:00:00+09:00","description":"\nPHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기이번에 소개할 내용은 PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 입니다.","headline":"PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/06/php/php-004/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/06/php/php-004/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, nginx, 웹서버, Visual Studio Code, 비주얼 스튜디오 코드, apache, chown, NPM, PHP, root, zero, 웹브라우저, 코딩, localhost, www, 이미지파일, UNLNK, 로그파일","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기이번에 소개할 내용은 PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/06/php/php-004/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기이번에 소개할 내용은 PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/001-2.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/002-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/003-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/004-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/005-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/006-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/007-1.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/07/008-1.png">
+<meta property="article:published_time" content="2020-07-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T11:35:51.784Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="웹서버">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="apache">
+<meta property="article:tag" content="chown">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="www">
+<meta property="article:tag" content="이미지파일">
+<meta property="article:tag" content="UNLNK">
+<meta property="article:tag" content="로그파일">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.com/wp-content/uploads/2020/07/001-2.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/06/php/php-004/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/06/php/php-004/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-06T01:00:00+09:00">
+	
+		    2020/07/06 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/PHP/">PHP</a>, <a class="category-link" href="/categories/PHP/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="PHP에서-UNLNK-함수를-이용한-일정기간-지난-파일-삭제하기"><a href="#PHP에서-UNLNK-함수를-이용한-일정기간-지난-파일-삭제하기" class="headerlink" title="PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기"></a>PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 PHP에서 UNLNK 함수를 이용한 일정기간 지난 파일 삭제하기 입니다.</p>
+<p>웹서버를 운영을 하시다 보시면 불필요한 로그파일이나 이미지파일등</p>
+<p>오래되고 불필요한 데이터가 많이 쌓이게 됩니다.</p>
+<p>불필요한 데이터가 많이 쌓일수록 서버의 성능도 저하될뿐 아니라 디스크의 용량 문제도</p>
+<p>발생하기때문에 유지 관리비도 점점 상승하는 문제가 발생하게 됩니다.</p>
+<p>그래서 PHP를 이용한 간단하게 해당하는 폴더안의 일정기간이 지난 데이터 파일을</p>
+<p>삭제하는 방법을 알아보도록 하겠습니다.</p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)를 실행하시고 파일명은 php_old_file_delete.php로 만드시고</p>
+<p>아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$fileName</span> = <span class="string">&quot;./test.txt&quot;</span>;</span><br><span class="line">    <span class="variable">$mtime</span> = filemtime(<span class="variable">$fileName</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 최종 수정일이 30일 이상인 파일만 삭제</span></span><br><span class="line">    <span class="keyword">if</span> (file_exists(<span class="variable">$fileName</span>) &amp;&amp; (time() - <span class="variable">$mtime</span> &gt;= <span class="number">24</span>*<span class="number">60</span>*<span class="number">60</span>*<span class="number">30</span>)) &#123;</span><br><span class="line">        <span class="comment">// 삭제 처리</span></span><br><span class="line">        unlink(<span class="variable">$fileName</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/001-2.png" alt="image"></p>
+<p>이제 정상적으로 삭제가 되는지 확인을 위해서</p>
+<p>작성하신 소스파일을 라즈베리파이의 웹폴더에 올려주시기 바랍니다.</p>
+<p>웹폴더에 테스트용 test.txt파일도 추가를 해주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/002-1.png" alt="image"></p>
+<p>test.txt파일은 새로 추가한 파일로서 현재의 날짜와 시간이 되겠습니다.</p>
+<p>파일 삭제 PHP를 실행해도 삭제가 되지 않겠습니다.</p>
+<p>웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_old_file_delete.php</p>
+<p>위의 주소를 실행해 주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/003-1.png" alt="image"></p>
+<p>실행후 다시 test.txt파일을 확인해 보시면</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/004-1.png" alt="image"></p>
+<p>여전히 파일이 남아있는것을 확인 하실수 있습니다.</p>
+<p>그러면 test.txt파일의 날짜와 시간이 30일 이전으로 돌려보도록 하겠습니다.</p>
+<p>라즈베리파이에서 날짜와 시간을 변경을 하실때는 Touch명령어를 이용하게 됩니다.</p>
+<p>라즈베리파이 또는 리눅스에서 TOUCH를 이용해 날짜 변경하기를 참고해 주시기 바랍니다.</p>
+<p>아래의 명령어를 입력해서 날짜와 시간을 변경해 주세요.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch -t 202005231530 ./test.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/005-1.png" alt="image"></p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/006-1.png" alt="image"></p>
+<p>test.txt파일의 날짜와 시간이 변경된것을 확인하실수 있습니다.</p>
+<p>그러면 다시 웹브라우저를 실행하시고 http://라즈베리파이서버 IP/php_old_file_delete.php</p>
+<p>위의 주소를 실행해 주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/007-1.png" alt="image"></p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/07/008-1.png" alt="image"></p>
+<p>위와같이 파일이 삭제가 된것을 확인하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/UNLNK/" rel="tag">UNLNK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apache/" rel="tag">apache</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chown/" rel="tag">chown</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/nginx/" rel="tag">nginx</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/www/" rel="tag">www</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A1%9C%EA%B7%B8%ED%8C%8C%EC%9D%BC/" rel="tag">로그파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/" rel="tag">웹서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80%ED%8C%8C%EC%9D%BC/" rel="tag">이미지파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/06/php/php-004/';
+              
+            this.page.identifier = '2020/07/06/php/php-004/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

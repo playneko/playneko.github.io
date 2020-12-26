@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+    <title>PHP로 다른서버와 Socket(소켓) 통신하기 - 아키하바라와 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="apache,chown,JSON,linux,localhost,nginx,NPM,PHP,Rasberry Pi,root,Socket,SSH,Visual Studio Code,VNC,www,zero,ラズベリーパイ,라즈베리파이,리퀘스트,비주얼 스튜디오 코드,소켓,스레드,웹브라우저,웹서버,웹호스팅,자바서버,코딩,통신">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nPHP로 다른서버와 Socket(소켓) 통신하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 PHP를 이용해서 다른서버와 Socket(소켓) 통신하기 입니다.\n여기서 다른서버는 소켓으로 들어온 데이터를 처리하는 서버로 PHP로 개발되지 않고 JAVA(자바)로 만들어져 있습니다.\n이부분에 대해서는 다음시간에 소개를 해드리도록 하겠습니다.\n일단 간단하게 예제형식으로 진행을 해드리는것이기에 자체적으로 APM이 설치되어 있는 서버 또는 웹호스팅을 가지고 계시거나\n개인컴퓨터를 PHP가 동작이 되도록 설치를 해두신후 테스트를 해보셔도 되겠습니다만.\n이번에 소개는 PHP로 송신하는 기능만 소개를 하기에 수신하는 기능이 없습니다.\n그래서 이번에는 송신하는것에 대해서만 소개를 해드리도록 하겠습니다.\n일단 간략하게 왜 PHP로만 송신하냐 수신은 왜 안하는지 궁금해 하시는 분들도 계시지만\n일단 PHP로는 멀티 스레드 기능을 구현을 하실수가 없습니다.\n그렇기때문에 송신은 가능해도 다량의 접속자에 대한 수신처리를 PHP로는 힘들기에 송신 기능만 구현하고\n수신기능에 대해선 멀티 스레드가 지원되는 자바 또는 파이선을 이용해서 진행을 하도록 하겠습니다.\n서론이 길어졌습니다만 이제부터 샘플소스와 함께 설명을 제공해 드리겠습니다.\n서로다른 서버끼리 소켓통신을 공부중이신 분들에게는 유용하게 사용하실수 있겠습니다.\n우선은  Visual Studio Code(비주얼 스튜디오 코드)를 실행을 해주시기 바랍니다.\n\n파일을 추가를 해주시기 바랍니다.\n파일명은 socket_send.php 이며 확장자는 php를 꼭 붙여주시기 바랍니다.\n\n아래의 소스코드를 작성 합니다.\n123456789101112131415161718192021222324252627282930313233343536373839404142434445&lt;?php    error_reporting(E_ALL);    $address = &quot;0.0.0.0&quot;; // 접속할 IP    $port = 7778; // 접속할 PORT    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP); // TCP 통신용 소켓 생성    if ($socket === false) &#123;        echo &quot;socket_create() 실패! 이유: &quot; . socket_strerror(socket_last_error()) . &quot;\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125; else &#123;        echo &quot;socket 성공적으로 생성.\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125;    echo &quot;다음 IP &#x27;$address&#x27; 와 Port &#x27;$port&#x27; 으로 접속중...&quot;;    echo &quot;&lt;br&gt;&quot;;    // 소켓 연결 및 $result에 접속값 지정    $result = socket_connect($socket, $address, $port);    if ($result === false) &#123;        echo &quot;socket_connect() 실패.\\nReason: ($result) &quot; . socket_strerror(socket_last_error($socket)) . &quot;\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125; else &#123;        echo &quot;다음 주소로 연결 성공 : $address.\\n&quot;;        echo &quot;&lt;br&gt;&quot;;    &#125;    $sendData = array(&quot;message&quot; =&gt; &quot;Hello&quot;);    $json = json_encode($sendData);    echo &quot;서버로 보내는 전문 : $json\\n&quot;;    // 실제로 소켓으로 보내는 명령어    socket_write($socket, $i, strlen($i));    // 소켓으로 부터 받은 REQUEST 정보를 $input에 지정    $input = socket_read($socket, 1024) or die(&quot;Could not read from Socket\\n&quot;);    //REQUEST 정보 출력    echo $input;    // 소켓 클로즈    socket_close($socket);?&gt;\n이렇게해서 PHP에서 자바서버로 메세지를 송신하는 소스코드가 완성 되었습니다.\n저는 메세지를 JSON형태로 변환하여 서버로 전송을 하게끔 해두었습니다.\n이부분에 대해선 자신이 원하는 방법으로 바꾸셔서 사용하셔도 되겠습니다.\n저는 자바서버에서 JSON를 받아서 파싱후 처리를 하게끔 되게 만들어 두었기에 JSON으로 전송을 하겠습니다.\n소스코드를 웹서버에 올려주시고 URL로 접속을 하시게 되면 수신서버가 활성화가 되어 있는 상태이면 문제없이 접속이 되며\n메세지를 보낸후 수신서버에서 받은 메세지에 대해서 다시 리퀘스트 정보를 보내오게 됩니다.\n우선은 수신서버의 아이피주소를 0.0.0.0으로 설정후 접속이 안되는 부분을 먼저 보여드리도록 하겠습니다.\n\n알수없는 아이피를 설정후 실행을 하시면 아래와 같이\n소켓서버에 연결이 실패했다고 나오면서 에러가 나는것을 확인하실수 있습니다.\n\n이번에는 정상적인 서버 아이피로 변경후 Hello, AkibaTV!라고 나오시면 정상적으로 되신것 입니다.","dateCreated":"2020-05-28T01:00:00+09:00","dateModified":"2020-12-26T20:45:08+09:00","datePublished":"2020-05-28T01:00:00+09:00","description":"\nPHP로 다른서버와 Socket(소켓) 통신하기이번에 소개할 내용은 PHP를 이용해서 다른서버와 Socket(소켓) 통신하기 입니다.","headline":"PHP로 다른서버와 Socket(소켓) 통신하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/28/php/php-006/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/28/php/php-006/","keywords":"Rasberry Pi, SSH, VNC, ラズベリーパイ, 라즈베리파이, linux, nginx, 웹서버, Visual Studio Code, 비주얼 스튜디오 코드, apache, chown, NPM, PHP, root, zero, 웹브라우저, 코딩, localhost, www, Socket, 통신, JSON, 리퀘스트, 소켓, 스레드, 웹호스팅, 자바서버","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="PHP로 다른서버와 Socket(소켓) 통신하기이번에 소개할 내용은 PHP를 이용해서 다른서버와 Socket(소켓) 통신하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="PHP로 다른서버와 Socket(소켓) 통신하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/28/php/php-006/index.html">
+<meta property="og:site_name" content="아키하바라와 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="PHP로 다른서버와 Socket(소켓) 통신하기이번에 소개할 내용은 PHP를 이용해서 다른서버와 Socket(소켓) 통신하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/06/001.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/06/002.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/06/003.png">
+<meta property="og:image" content="https://playneko.com/wp-content/uploads/2020/06/004.png">
+<meta property="article:published_time" content="2020-05-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T11:45:08.589Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Rasberry Pi">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="VNC">
+<meta property="article:tag" content="ラズベリーパイ">
+<meta property="article:tag" content="라즈베리파이">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="웹서버">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="apache">
+<meta property="article:tag" content="chown">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="root">
+<meta property="article:tag" content="zero">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="localhost">
+<meta property="article:tag" content="www">
+<meta property="article:tag" content="Socket">
+<meta property="article:tag" content="통신">
+<meta property="article:tag" content="JSON">
+<meta property="article:tag" content="리퀘스트">
+<meta property="article:tag" content="소켓">
+<meta property="article:tag" content="스레드">
+<meta property="article:tag" content="웹호스팅">
+<meta property="article:tag" content="자바서버">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.com/wp-content/uploads/2020/06/001.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/28/php/php-006/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/28/php/php-006/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            아키하바라와 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            PHP로 다른서버와 Socket(소켓) 통신하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-28T01:00:00+09:00">
+	
+		    2020/05/28 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/PHP/">PHP</a>, <a class="category-link" href="/categories/PHP/Rasberry-Pi/">Rasberry Pi</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="PHP로-다른서버와-Socket-소켓-통신하기"><a href="#PHP로-다른서버와-Socket-소켓-통신하기" class="headerlink" title="PHP로 다른서버와 Socket(소켓) 통신하기"></a>PHP로 다른서버와 Socket(소켓) 통신하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 PHP를 이용해서 다른서버와 Socket(소켓) 통신하기 입니다.</p>
+<p>여기서 다른서버는 소켓으로 들어온 데이터를 처리하는 서버로 PHP로 개발되지 않고 JAVA(자바)로 만들어져 있습니다.</p>
+<p>이부분에 대해서는 다음시간에 소개를 해드리도록 하겠습니다.</p>
+<p>일단 간단하게 예제형식으로 진행을 해드리는것이기에 자체적으로 APM이 설치되어 있는 서버 또는 웹호스팅을 가지고 계시거나</p>
+<p>개인컴퓨터를 PHP가 동작이 되도록 설치를 해두신후 테스트를 해보셔도 되겠습니다만.</p>
+<p>이번에 소개는 PHP로 송신하는 기능만 소개를 하기에 수신하는 기능이 없습니다.</p>
+<p>그래서 이번에는 송신하는것에 대해서만 소개를 해드리도록 하겠습니다.</p>
+<p>일단 간략하게 왜 PHP로만 송신하냐 수신은 왜 안하는지 궁금해 하시는 분들도 계시지만</p>
+<p>일단 PHP로는 멀티 스레드 기능을 구현을 하실수가 없습니다.</p>
+<p>그렇기때문에 송신은 가능해도 다량의 접속자에 대한 수신처리를 PHP로는 힘들기에 송신 기능만 구현하고</p>
+<p>수신기능에 대해선 멀티 스레드가 지원되는 자바 또는 파이선을 이용해서 진행을 하도록 하겠습니다.</p>
+<p>서론이 길어졌습니다만 이제부터 샘플소스와 함께 설명을 제공해 드리겠습니다.</p>
+<p>서로다른 서버끼리 소켓통신을 공부중이신 분들에게는 유용하게 사용하실수 있겠습니다.</p>
+<p>우선은  Visual Studio Code(비주얼 스튜디오 코드)를 실행을 해주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/06/001.png" alt="image"></p>
+<p>파일을 추가를 해주시기 바랍니다.</p>
+<p>파일명은 socket_send.php 이며 확장자는 php를 꼭 붙여주시기 바랍니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/06/002.png" alt="image"></p>
+<p>아래의 소스코드를 작성 합니다.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    error_reporting(E_ALL);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$address</span> = <span class="string">&quot;0.0.0.0&quot;</span>; <span class="comment">// 접속할 IP</span></span><br><span class="line">    <span class="variable">$port</span> = <span class="number">7778</span>; <span class="comment">// 접속할 PORT</span></span><br><span class="line">    <span class="variable">$socket</span> = socket_create(AF_INET, SOCK_STREAM, SOL_TCP); <span class="comment">// TCP 통신용 소켓 생성</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$socket</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket_create() 실패! 이유: &quot;</span> . socket_strerror(socket_last_error()) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket 성공적으로 생성.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;다음 IP &#x27;<span class="subst">$address</span>&#x27; 와 Port &#x27;<span class="subst">$port</span>&#x27; 으로 접속중...&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓 연결 및 $result에 접속값 지정</span></span><br><span class="line">    <span class="variable">$result</span> = socket_connect(<span class="variable">$socket</span>, <span class="variable">$address</span>, <span class="variable">$port</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$result</span> === <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;socket_connect() 실패.\nReason: (<span class="subst">$result</span>) &quot;</span> . socket_strerror(socket_last_error(<span class="variable">$socket</span>)) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;다음 주소로 연결 성공 : <span class="subst">$address</span>.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sendData</span> = <span class="keyword">array</span>(<span class="string">&quot;message&quot;</span> =&gt; <span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">    <span class="variable">$json</span> = json_encode(<span class="variable">$sendData</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;서버로 보내는 전문 : <span class="subst">$json</span>\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 실제로 소켓으로 보내는 명령어</span></span><br><span class="line">    socket_write(<span class="variable">$socket</span>, <span class="variable">$i</span>, strlen(<span class="variable">$i</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓으로 부터 받은 REQUEST 정보를 $input에 지정</span></span><br><span class="line">    <span class="variable">$input</span> = socket_read(<span class="variable">$socket</span>, <span class="number">1024</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;Could not read from Socket\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//REQUEST 정보 출력</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$input</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 소켓 클로즈</span></span><br><span class="line">    socket_close(<span class="variable">$socket</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>이렇게해서 PHP에서 자바서버로 메세지를 송신하는 소스코드가 완성 되었습니다.</p>
+<p>저는 메세지를 JSON형태로 변환하여 서버로 전송을 하게끔 해두었습니다.</p>
+<p>이부분에 대해선 자신이 원하는 방법으로 바꾸셔서 사용하셔도 되겠습니다.</p>
+<p>저는 자바서버에서 JSON를 받아서 파싱후 처리를 하게끔 되게 만들어 두었기에 JSON으로 전송을 하겠습니다.</p>
+<p>소스코드를 웹서버에 올려주시고 URL로 접속을 하시게 되면 수신서버가 활성화가 되어 있는 상태이면 문제없이 접속이 되며</p>
+<p>메세지를 보낸후 수신서버에서 받은 메세지에 대해서 다시 리퀘스트 정보를 보내오게 됩니다.</p>
+<p>우선은 수신서버의 아이피주소를 0.0.0.0으로 설정후 접속이 안되는 부분을 먼저 보여드리도록 하겠습니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/06/003.png" alt="image"></p>
+<p>알수없는 아이피를 설정후 실행을 하시면 아래와 같이</p>
+<p>소켓서버에 연결이 실패했다고 나오면서 에러가 나는것을 확인하실수 있습니다.</p>
+<p><img src="https://playneko.com/wp-content/uploads/2020/06/004.png" alt="image"></p>
+<p>이번에는 정상적인 서버 아이피로 변경후 Hello, AkibaTV!라고 나오시면 정상적으로 되신것 입니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/JSON/" rel="tag">JSON</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/PHP/" rel="tag">PHP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Rasberry-Pi/" rel="tag">Rasberry Pi</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SSH/" rel="tag">SSH</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Socket/" rel="tag">Socket</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/VNC/" rel="tag">VNC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/apache/" rel="tag">apache</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/chown/" rel="tag">chown</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/linux/" rel="tag">linux</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/localhost/" rel="tag">localhost</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/nginx/" rel="tag">nginx</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/root/" rel="tag">root</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/www/" rel="tag">www</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/zero/" rel="tag">zero</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/" rel="tag">ラズベリーパイ</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/" rel="tag">라즈베리파이</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A6%AC%ED%80%98%EC%8A%A4%ED%8A%B8/" rel="tag">리퀘스트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%BC%93/" rel="tag">소켓</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8A%A4%EB%A0%88%EB%93%9C/" rel="tag">스레드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EC%84%9C%EB%B2%84/" rel="tag">웹서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%ED%98%B8%EC%8A%A4%ED%8C%85/" rel="tag">웹호스팅</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94%EC%84%9C%EB%B2%84/" rel="tag">자바서버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%86%B5%EC%8B%A0/" rel="tag">통신</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/28/php/php-006/';
+              
+            this.page.identifier = '2020/05/28/php/php-006/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
