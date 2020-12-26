@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA 프로그램 개발시 JDK 환경 변수 설정하기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="cmd,eclipse,Java,java -version,javac,jdk,jre,Open JDK,Oracle,Oracle JDK,Oracle JRE,이클립스,환경변수">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA 프로그램 개발시 JDK 환경 변수 설정하기안녕하세요.\n이번에 소개할 내용은 JAVA JDK 환경 변수 설정 입니다.\nJDK와 이클립스를 설치는 되었지만 환경변수 설정을 하셔야만\n제대로된 개발환경이 완성 되겠습니다.\n그래서 이번에 개발환경을 완성시켜줄수 있는 JDK를 시스템 환경설정에 등록하는 방법과\n이클립스에서 기본적으로 해주어야할 자바개발 환경 설정을 해보도록 하겠습니다.\n처음 개발시작을 하실때 이것만 제대로 해주셔도 문제없이 개발을 하실수 있습니다.\n이제 막 개발을 시작하거나 개발 초보분들은 이부분에서 많이 놓치시기 때문에\n기본적으로 환경설정부터 해주시기 바랍니다.\n그럼 이제 시스템 환경설정부터 차례대로 시작해 보겠습니다.\n\nPC에서 오른쪽 클릭후 프로퍼티를 선택해 주세요.\n\n왼쪽의 시스템 환경설정을 클릭해 주세요.\n\n가장 하단 마지막 버튼이 환경변수 버튼을 눌러주세요.\n\n그러면 위와같은 화면이 나온것을 확인하실수 있겠습니다.\n신규버튼을 눌러주세요.\n그런다음 아래와 같이 환경설정값을 세팅해 주시기 바랍니다.\n\n1234변수명 : JAVA_HOME# 각자 자신이 설치한 JDK 또는 JRE의 경로를 선택해 주세요.변수값 : C:\\Program Files\\Java\\jre1.8.0_251\n설정을 하셨으면 OK버튼을 눌러주세요.\n\n그다음은 추가한 JAVA_HOME을 Path경로에 등록을 해줘야만 합니다.\nPath를 선택후 편집을 눌러주시기 바랍니다.\n\n위와같은 화면이 나오시면 신규추가를 누르시고 아래의 경로를 입력해서 설정후 OK를 눌러주시기 바랍니다.\n1%JAVA_HOME%\\bin\n그다음 CLASSPATH를 추가를 해줘야만 하기에 아래와 같이 등록해 주시기 바랍니다.\n\n\n위와같이 입력후 OK버튼을 눌러주세요.\n12변수명 : CLASSPATH변수값 : %JAVA_HOME%\\lib\n환경변수창도 OK버튼을 눌러주세요.\n윈도우키 + R키를 누르시면 아래의 창이 열리게 되며 CMD를 입력후 OK버튼을 눌러주세요.\n\n\n12# 터미널이 열리면 아래의 명령어를 입력해 주세요.java -version\n자바 버전이 출력이 되시면 JAVA가 정상적으로 설치가 되어 있는것 입니다.\n\n12# 터미널이 열리면 아래의 명령어를 입력해 주세요.java\n위와같은 화면이 나오면 정상적으로 환경변수 설정이 끝났습니다.","dateCreated":"2020-06-08T01:00:00+09:00","dateModified":"2020-12-26T22:53:01+09:00","datePublished":"2020-06-08T01:00:00+09:00","description":"\nJAVA 프로그램 개발시 JDK 환경 변수 설정하기이번에 소개할 내용은 JAVA JDK 환경 변수 설정 입니다.","headline":"JAVA 프로그램 개발시 JDK 환경 변수 설정하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/08/java/java-006/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/08/java/java-006/","keywords":"Java, java -version, jdk, 이클립스, eclipse, jre, Open JDK, Oracle, Oracle JDK, Oracle JRE, cmd, javac, 환경변수","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA 프로그램 개발시 JDK 환경 변수 설정하기이번에 소개할 내용은 JAVA JDK 환경 변수 설정 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA 프로그램 개발시 JDK 환경 변수 설정하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/08/java/java-006/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA 프로그램 개발시 JDK 환경 변수 설정하기이번에 소개할 내용은 JAVA JDK 환경 변수 설정 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/001-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/002-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/003-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/004-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/005-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/006-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/007-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/008-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/009-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/010-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/011-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/012-3.png">
+<meta property="article:published_time" content="2020-06-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:53:01.105Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="java -version">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="eclipse">
+<meta property="article:tag" content="jre">
+<meta property="article:tag" content="Open JDK">
+<meta property="article:tag" content="Oracle">
+<meta property="article:tag" content="Oracle JDK">
+<meta property="article:tag" content="Oracle JRE">
+<meta property="article:tag" content="cmd">
+<meta property="article:tag" content="javac">
+<meta property="article:tag" content="환경변수">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/08/java/java-006/001-6.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/08/java/java-006/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/08/java/java-006/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA 프로그램 개발시 JDK 환경 변수 설정하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-08T01:00:00+09:00">
+	
+		    2020/06/08 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA-프로그램-개발시-JDK-환경-변수-설정하기"><a href="#JAVA-프로그램-개발시-JDK-환경-변수-설정하기" class="headerlink" title="JAVA 프로그램 개발시 JDK 환경 변수 설정하기"></a>JAVA 프로그램 개발시 JDK 환경 변수 설정하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 JAVA JDK 환경 변수 설정 입니다.</p>
+<p>JDK와 이클립스를 설치는 되었지만 환경변수 설정을 하셔야만</p>
+<p>제대로된 개발환경이 완성 되겠습니다.</p>
+<p>그래서 이번에 개발환경을 완성시켜줄수 있는 JDK를 시스템 환경설정에 등록하는 방법과</p>
+<p>이클립스에서 기본적으로 해주어야할 자바개발 환경 설정을 해보도록 하겠습니다.</p>
+<p>처음 개발시작을 하실때 이것만 제대로 해주셔도 문제없이 개발을 하실수 있습니다.</p>
+<p>이제 막 개발을 시작하거나 개발 초보분들은 이부분에서 많이 놓치시기 때문에</p>
+<p>기본적으로 환경설정부터 해주시기 바랍니다.</p>
+<p>그럼 이제 시스템 환경설정부터 차례대로 시작해 보겠습니다.</p>
+<p><img src="001-6.png" alt="image"></p>
+<p>PC에서 오른쪽 클릭후 프로퍼티를 선택해 주세요.</p>
+<p><img src="002-5.png" alt="image"></p>
+<p>왼쪽의 시스템 환경설정을 클릭해 주세요.</p>
+<p><img src="003-5.png" alt="image"></p>
+<p>가장 하단 마지막 버튼이 환경변수 버튼을 눌러주세요.</p>
+<p><img src="004-1-1.png" alt="image"></p>
+<p>그러면 위와같은 화면이 나온것을 확인하실수 있겠습니다.</p>
+<p>신규버튼을 눌러주세요.</p>
+<p>그런다음 아래와 같이 환경설정값을 세팅해 주시기 바랍니다.</p>
+<p><img src="005-3.png" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">변수명 : JAVA_HOME</span><br><span class="line"></span><br><span class="line"># 각자 자신이 설치한 JDK 또는 JRE의 경로를 선택해 주세요.</span><br><span class="line">변수값 : C:\Program Files\Java\jre1.8.0_251</span><br></pre></td></tr></table></figure>
+<p>설정을 하셨으면 OK버튼을 눌러주세요.</p>
+<p><img src="006-1-1.png" alt="image"></p>
+<p>그다음은 추가한 JAVA_HOME을 Path경로에 등록을 해줘야만 합니다.</p>
+<p>Path를 선택후 편집을 눌러주시기 바랍니다.</p>
+<p><img src="007-4.png" alt="image"></p>
+<p>위와같은 화면이 나오시면 신규추가를 누르시고 아래의 경로를 입력해서 설정후 OK를 눌러주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure>
+<p>그다음 CLASSPATH를 추가를 해줘야만 하기에 아래와 같이 등록해 주시기 바랍니다.</p>
+<p><img src="008-4.png" alt="image"></p>
+<p><img src="009-3.png" alt="image"></p>
+<p>위와같이 입력후 OK버튼을 눌러주세요.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">변수명 : CLASSPATH</span><br><span class="line">변수값 : %JAVA_HOME%\lib</span><br></pre></td></tr></table></figure>
+<p>환경변수창도 OK버튼을 눌러주세요.</p>
+<p>윈도우키 + R키를 누르시면 아래의 창이 열리게 되며 CMD를 입력후 OK버튼을 눌러주세요.</p>
+<p><img src="010-3.png" alt="image"></p>
+<p><img src="011-3.png" alt="image"></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 터미널이 열리면 아래의 명령어를 입력해 주세요.</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p>자바 버전이 출력이 되시면 JAVA가 정상적으로 설치가 되어 있는것 입니다.</p>
+<p><img src="012-3.png" alt="image"></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 터미널이 열리면 아래의 명령어를 입력해 주세요.</span><br><span class="line">java</span><br></pre></td></tr></table></figure>
+<p>위와같은 화면이 나오면 정상적으로 환경변수 설정이 끝났습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Open-JDK/" rel="tag">Open JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle/" rel="tag">Oracle</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JDK/" rel="tag">Oracle JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JRE/" rel="tag">Oracle JRE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/cmd/" rel="tag">cmd</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/eclipse/" rel="tag">eclipse</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/java-version/" rel="tag">java -version</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/javac/" rel="tag">javac</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jre/" rel="tag">jre</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98/" rel="tag">환경변수</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/08/java/java-006/';
+              
+            this.page.identifier = '2020/06/08/java/java-006/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

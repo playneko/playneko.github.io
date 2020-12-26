@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA프로그램에서 하드디스크 정보 보기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="getFreeSpace,getTotalSpace,getUsableSpace,HDD,Java,listRoots,System,시스템,자바,콘솔,하드디스크">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA프로그램에서 하드디스크 정보 보기안녕하세요.\n이번에 소개할 내용은 JAVA에서 하드디스크 용량을 확인하는 방법을 소개해 드리겠습니다.\n웹페이지나 콘솔프로그램을 개발하고 원격으로 하드디스크의 잔량을 확인이 필요한 경우가 있을것 입니다.\n그럴경우 간단하게 자바코딩으로 하드디스크 정보를 읽어오는것이 가능한 프로그램을 만들수 있습니다.\nJAVA에서 하드디스크 정보를 보는 방법 입니다.\n개발을 하다보시면 콘솔로 먼가 시스템 정보를 출력이 필요한 경우가 생길수가 있습니다.\n그때 하드디스크 용량이 얼마나 남았는지 체크하는 방법을 소개해 드리도록 하겠습니다.\n1234listRoots() : 파일 시스템 루트의 리스트를 반환한다. (C:\\, D:\\ ......)getTotalSpace() : 하드디스크 총 용량getUsableSpace() : 하드디스크 사용 공간getFreeSpace() : 남은 용량\n123456789101112131415String drive;double totalSize, freeSize, useSize;File[] roots = File.listRoots();for (File root : roots) &#123;\tdrive = root.getAbsolutePath();\ttotalSize = root.getTotalSpace() / Math.pow(1024, 3);\tuseSize = root.getUsableSpace() / Math.pow(1024, 3);\tfreeSize = totalSize - useSize;\tSystem.out.println(&quot;드라이브 정보 : &quot; + drive + &quot;\\n&quot;);\tSystem.out.println(&quot;전체 용량 : &quot; + totalSize + &quot; GB \\n&quot;);\tSystem.out.println(&quot;사용 용량 : &quot; + freeSize + &quot; GB \\n&quot;);\tSystem.out.println(&quot;남은 용량 : &quot; + useSize + &quot; GB \\n&quot;);&#125;\nJAVA DOC","dateCreated":"2020-05-29T01:00:00+09:00","dateModified":"2020-12-26T21:11:43+09:00","datePublished":"2020-05-29T01:00:00+09:00","description":"\nJAVA프로그램에서 하드디스크 정보 보기이번에 소개할 내용은 JAVA에서 하드디스크 용량을 확인하는 방법을 소개해 드리겠습니다.","headline":"JAVA프로그램에서 하드디스크 정보 보기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/29/java/java-002/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/29/java/java-002/","keywords":"Java, 자바, 콘솔, System, 시스템, getFreeSpace, getTotalSpace, getUsableSpace, HDD, listRoots, 하드디스크","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA프로그램에서 하드디스크 정보 보기이번에 소개할 내용은 JAVA에서 하드디스크 용량을 확인하는 방법을 소개해 드리겠습니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA프로그램에서 하드디스크 정보 보기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/29/java/java-002/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA프로그램에서 하드디스크 정보 보기이번에 소개할 내용은 JAVA에서 하드디스크 용량을 확인하는 방법을 소개해 드리겠습니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2020-05-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T12:11:43.332Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="콘솔">
+<meta property="article:tag" content="System">
+<meta property="article:tag" content="시스템">
+<meta property="article:tag" content="getFreeSpace">
+<meta property="article:tag" content="getTotalSpace">
+<meta property="article:tag" content="getUsableSpace">
+<meta property="article:tag" content="HDD">
+<meta property="article:tag" content="listRoots">
+<meta property="article:tag" content="하드디스크">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/29/java/java-002/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/29/java/java-002/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA프로그램에서 하드디스크 정보 보기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-29T01:00:00+09:00">
+	
+		    2020/05/29 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA프로그램에서-하드디스크-정보-보기"><a href="#JAVA프로그램에서-하드디스크-정보-보기" class="headerlink" title="JAVA프로그램에서 하드디스크 정보 보기"></a>JAVA프로그램에서 하드디스크 정보 보기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 JAVA에서 하드디스크 용량을 확인하는 방법을 소개해 드리겠습니다.</p>
+<p>웹페이지나 콘솔프로그램을 개발하고 원격으로 하드디스크의 잔량을 확인이 필요한 경우가 있을것 입니다.</p>
+<p>그럴경우 간단하게 자바코딩으로 하드디스크 정보를 읽어오는것이 가능한 프로그램을 만들수 있습니다.</p>
+<p>JAVA에서 하드디스크 정보를 보는 방법 입니다.</p>
+<p>개발을 하다보시면 콘솔로 먼가 시스템 정보를 출력이 필요한 경우가 생길수가 있습니다.</p>
+<p>그때 하드디스크 용량이 얼마나 남았는지 체크하는 방법을 소개해 드리도록 하겠습니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">listRoots() : 파일 시스템 루트의 리스트를 반환한다. (C:\, D:\ ......)</span><br><span class="line">getTotalSpace() : 하드디스크 총 용량</span><br><span class="line">getUsableSpace() : 하드디스크 사용 공간</span><br><span class="line">getFreeSpace() : 남은 용량</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">String drive;</span><br><span class="line"><span class="keyword">double</span> totalSize, freeSize, useSize;</span><br><span class="line">File[] roots = File.listRoots();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (File root : roots) &#123;</span><br><span class="line">	drive = root.getAbsolutePath();</span><br><span class="line">	totalSize = root.getTotalSpace() / Math.pow(<span class="number">1024</span>, <span class="number">3</span>);</span><br><span class="line">	useSize = root.getUsableSpace() / Math.pow(<span class="number">1024</span>, <span class="number">3</span>);</span><br><span class="line">	freeSize = totalSize - useSize;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">&quot;드라이브 정보 : &quot;</span> + drive + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	System.out.println(<span class="string">&quot;전체 용량 : &quot;</span> + totalSize + <span class="string">&quot; GB \n&quot;</span>);</span><br><span class="line">	System.out.println(<span class="string">&quot;사용 용량 : &quot;</span> + freeSize + <span class="string">&quot; GB \n&quot;</span>);</span><br><span class="line">	System.out.println(<span class="string">&quot;남은 용량 : &quot;</span> + useSize + <span class="string">&quot; GB \n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.oracle.com/javase/7/docs/api/">JAVA DOC</a></p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/HDD/" rel="tag">HDD</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System/" rel="tag">System</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/getFreeSpace/" rel="tag">getFreeSpace</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/getTotalSpace/" rel="tag">getTotalSpace</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/getUsableSpace/" rel="tag">getUsableSpace</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/listRoots/" rel="tag">listRoots</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%9C%EC%8A%A4%ED%85%9C/" rel="tag">시스템</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%98%EC%86%94/" rel="tag">콘솔</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%95%98%EB%93%9C%EB%94%94%EC%8A%A4%ED%81%AC/" rel="tag">하드디스크</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/29/java/java-002/';
+              
+            this.page.identifier = '2020/05/29/java/java-002/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

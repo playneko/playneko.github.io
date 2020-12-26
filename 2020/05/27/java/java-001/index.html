@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 시스템 정보(System info) 취득하기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="getPoperty,Java,System,서버환경,시스템,시스템정보,자바정보">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA에서 시스템 정보 취득하기Java프로그램을 개발을 하던중 서버환경의 시스템의 정보를 가져오고 싶을경우가 있습니다.\n그래서 준비했습니다. 자바에서 환경정보를 취득하는 방법\nSystem 클래스의 getPoperty(String key) 메소드를 이용하면 됩니다.\n1234567891011public class getSystemInfo &#123;    public static void main(String[] args) &#123;        String osName = &quot;os.name&quot;;        String osVersion = &quot;os.version&quot;;        String osArch = &quot;os.arch&quot;;        System.out.println(&quot;Server System Info&quot;);        System.out.println(&quot;OS Name : &quot; + System.getProperty(osName));        System.out.println(&quot;OS Version : &quot; + System.getProperty(osVersion));        System.out.println(&quot;OS Architecture : &quot; + System.getProperty(osArch));    &#125;&#125;\nJAVA DOC","dateCreated":"2020-05-27T01:00:00+09:00","dateModified":"2020-12-26T21:09:02+09:00","datePublished":"2020-05-27T01:00:00+09:00","description":"\nJAVA에서 시스템 정보 취득하기Java프로그램을 개발을 하던중 서버환경의 시스템의 정보를 가져오고 싶을경우가 있습니다.","headline":"JAVA에서 시스템 정보(System info) 취득하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/05/27/java/java-001/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/05/27/java/java-001/","keywords":"Java, getPoperty, System, 서버환경, 시스템, 시스템정보, 자바정보","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA에서 시스템 정보 취득하기Java프로그램을 개발을 하던중 서버환경의 시스템의 정보를 가져오고 싶을경우가 있습니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 시스템 정보(System info) 취득하기">
+<meta property="og:url" content="https://playneko.github.io/2020/05/27/java/java-001/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA에서 시스템 정보 취득하기Java프로그램을 개발을 하던중 서버환경의 시스템의 정보를 가져오고 싶을경우가 있습니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2020-05-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T12:09:02.033Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="getPoperty">
+<meta property="article:tag" content="System">
+<meta property="article:tag" content="서버환경">
+<meta property="article:tag" content="시스템">
+<meta property="article:tag" content="시스템정보">
+<meta property="article:tag" content="자바정보">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/05/27/java/java-001/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/05/27/java/java-001/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 시스템 정보(System info) 취득하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-05-27T01:00:00+09:00">
+	
+		    2020/05/27 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA에서-시스템-정보-취득하기"><a href="#JAVA에서-시스템-정보-취득하기" class="headerlink" title="JAVA에서 시스템 정보 취득하기"></a>JAVA에서 시스템 정보 취득하기</h2><p>Java프로그램을 개발을 하던중 서버환경의 시스템의 정보를 가져오고 싶을경우가 있습니다.</p>
+<p>그래서 준비했습니다. 자바에서 환경정보를 취득하는 방법</p>
+<p>System 클래스의 getPoperty(String key) 메소드를 이용하면 됩니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">getSystemInfo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String osName = <span class="string">&quot;os.name&quot;</span>;</span><br><span class="line">        String osVersion = <span class="string">&quot;os.version&quot;</span>;</span><br><span class="line">        String osArch = <span class="string">&quot;os.arch&quot;</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;Server System Info&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;OS Name : &quot;</span> + System.getProperty(osName));</span><br><span class="line">        System.out.println(<span class="string">&quot;OS Version : &quot;</span> + System.getProperty(osVersion));</span><br><span class="line">        System.out.println(<span class="string">&quot;OS Architecture : &quot;</span> + System.getProperty(osArch));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.oracle.com/javase/7/docs/api/">JAVA DOC</a></p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/System/" rel="tag">System</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/getPoperty/" rel="tag">getPoperty</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%84%9C%EB%B2%84%ED%99%98%EA%B2%BD/" rel="tag">서버환경</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%9C%EC%8A%A4%ED%85%9C/" rel="tag">시스템</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%A0%95%EB%B3%B4/" rel="tag">시스템정보</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94%EC%A0%95%EB%B3%B4/" rel="tag">자바정보</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/05/27/java/java-001/';
+              
+            this.page.identifier = '2020/05/27/java/java-001/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

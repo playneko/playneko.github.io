@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 JSOUP을 이용한 사이트 크롤링 처리 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="crawling,Java,jdk,JSOUP,library,OpenJDK,검색창,네이버,라이브러리,사이트,어플리케이션,웹브라우저,이미지,이클립스,자바,코딩,콘솔,크롤링,클래스,태그,프로젝트">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA에서 JSOUP을 이용한 사이트 크롤링 처리안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 JAVA에서 JSOUP을 이용한 사이트 크롤링을 해보도록 하겠습니다.\n크롤링이란 사이트에서 원하는 부부분을 추출해서 여러 형태로 데이터를 가공하는 방식 입니다.\n우선 어떻게 사용하는지 해보도록 하겠습니다.\n이클립스를 실행을 하시고 프로젝트를 하나 만들도록 하겠습니다.\n이클립스가 아직 설치가 되지 않으셨으면\nJAVA 프로그램 개발을 위한 이클립스 환경 구축을 참고해 주시기 바랍니다.\n\n이클립스를 실행 하신후 프로젝트를 추가를 하도록 하겠습니다.\n아직 JDK를 설치하지 않으셨으면 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 해주시기 바랍니다.\n\n신규로 프로젝트를 선택해 주세요.\n\n자바 프로젝트를 선택하시기 바랍니다.\n\n프로젝트명을 crawling로 하시고 Finish를 선택해 주세요.\n\n프로젝트가 생성되셨으면 JSOUP을 사용하기 위한 라이브러리를 추가를 하셔야만 합니다.\n아래의 사이트에서 JSOUP 라이브러리를 다운로드 해주시기 바랍니다.\nhttps://jsoup.org/download\n\njsoup-1.13.1.jar core library를 선택하시어 다운로드 해주시기 바랍니다.\n\n다운로드하신 라이브러리를 이클립스의 프로젝트에 추가를 해주시기 바랍니다.\n\n이클립스에 추가한 라이브러리를 빌드패스에 등록을 해주시기 바랍니다.\n\n위와같이 JSOUP를 빌드패스에 등록하시면 본격적으로 JAVA에서 JSOUP을 사용하실수 있게 됩니다.\n그럼 클래스 파일을 하나 추가를 하도록 하겠습니다.\n\n\n클래스명은 test를 적어주시고 public static void main(String[] args)에 체크를 해주시기 바랍니다.\n\n그럼 네이버의 검색창의 이미지를 가져오는것을 해보도록 하겠습니다.\n\n\n아래와 같이 코딩을 해주시기 바랍니다.\n1234567891011121314151617181920212223242526272829303132333435363738package crawling;import java.io.IOException;import org.jsoup.Connection;import org.jsoup.Jsoup;import org.jsoup.nodes.Document;import org.jsoup.select.Elements;public class test &#123;\tpublic static void main(String[] args) &#123;\t\t// TODO Auto-generated method stub\t\tDocument doc = null;\t\tElements elem = new Elements();\t\tString URL = &quot;https://www.naver.com/&quot;;\t\ttry &#123;\t\t\tConnection connection = Jsoup.connect(URL)\t\t\t\t\t.userAgent(&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;)\t\t\t\t\t.header(&quot;Accept&quot;, &quot;text/html&quot;)\t                .header(&quot;Accept-Encoding&quot;, &quot;gzip,deflate&quot;)\t                .header(&quot;Accept-Language&quot;, &quot;it-IT,en;q=0.8,en-US;q=0.6,de;q=0.4,it;q=0.2,es;q=0.2&quot;)\t                .header(&quot;Connection&quot;, &quot;keep-alive&quot;)\t                .ignoreContentType(true)\t                .timeout(30000);\t\t\tdoc = connection.get();      # .special_img_fold는 위의 개발툴에 나오는 클래스명을 입력해 주시기 바랍니다.\t\t\telem = doc.select(&quot;.special_img_fold&quot;);\t\t\tSystem.out.println(elem.attr(&quot;src&quot;));\t\t&#125; catch (IOException e) &#123;\t\t\te.printStackTrace();\t\t&#125;\t&#125;&#125;\n\n코딩을 하셨으면 실행을 해서 확인을 해보도록 하겠습니다.\n\n자바 어플리케이션으로 실행을 해주시기 바랍니다.\n\n실행을 하면 콘솔창에 지정한 태그의 이미지 주소가 추출 된것을 확인 하실수 있습니다.","dateCreated":"2020-07-10T01:00:00+09:00","dateModified":"2020-12-26T22:53:52+09:00","datePublished":"2020-07-10T01:00:00+09:00","description":"\nJAVA에서 JSOUP을 이용한 사이트 크롤링 처리이번에 소개할 내용은 JAVA에서 JSOUP을 이용한 사이트 크롤링을 해보도록 하겠습니다.","headline":"JAVA에서 JSOUP을 이용한 사이트 크롤링 처리","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/10/java/java-009/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/10/java/java-009/","keywords":"크롤링, Java, OpenJDK, 자바, 웹브라우저, 이미지, 코딩, 태그, crawling, jdk, library, 라이브러리, 이클립스, 콘솔, 클래스, 프로젝트, 어플리케이션, JSOUP, 검색창, 네이버, 사이트","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA에서 JSOUP을 이용한 사이트 크롤링 처리이번에 소개할 내용은 JAVA에서 JSOUP을 이용한 사이트 크롤링을 해보도록 하겠습니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 JSOUP을 이용한 사이트 크롤링 처리">
+<meta property="og:url" content="https://playneko.github.io/2020/07/10/java/java-009/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA에서 JSOUP을 이용한 사이트 크롤링 처리이번에 소개할 내용은 JAVA에서 JSOUP을 이용한 사이트 크롤링을 해보도록 하겠습니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/001-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/002-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/003-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/004-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/005-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/006-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/007-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/008-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/009-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/010-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/011-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/012-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/013-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/014-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/015-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/016-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/017-1.png">
+<meta property="article:published_time" content="2020-07-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:53:52.353Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="크롤링">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="OpenJDK">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="이미지">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="태그">
+<meta property="article:tag" content="crawling">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="library">
+<meta property="article:tag" content="라이브러리">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="콘솔">
+<meta property="article:tag" content="클래스">
+<meta property="article:tag" content="프로젝트">
+<meta property="article:tag" content="어플리케이션">
+<meta property="article:tag" content="JSOUP">
+<meta property="article:tag" content="검색창">
+<meta property="article:tag" content="네이버">
+<meta property="article:tag" content="사이트">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/10/java/java-009/001-4.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/10/java/java-009/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/10/java/java-009/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 JSOUP을 이용한 사이트 크롤링 처리
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-10T01:00:00+09:00">
+	
+		    2020/07/10 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA에서-JSOUP을-이용한-사이트-크롤링-처리"><a href="#JAVA에서-JSOUP을-이용한-사이트-크롤링-처리" class="headerlink" title="JAVA에서 JSOUP을 이용한 사이트 크롤링 처리"></a>JAVA에서 JSOUP을 이용한 사이트 크롤링 처리</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 JAVA에서 JSOUP을 이용한 사이트 크롤링을 해보도록 하겠습니다.</p>
+<p>크롤링이란 사이트에서 원하는 부부분을 추출해서 여러 형태로 데이터를 가공하는 방식 입니다.</p>
+<p>우선 어떻게 사용하는지 해보도록 하겠습니다.</p>
+<p>이클립스를 실행을 하시고 프로젝트를 하나 만들도록 하겠습니다.</p>
+<p>이클립스가 아직 설치가 되지 않으셨으면</p>
+<p>JAVA 프로그램 개발을 위한 이클립스 환경 구축을 참고해 주시기 바랍니다.</p>
+<p><img src="001-4.png" alt="image"></p>
+<p>이클립스를 실행 하신후 프로젝트를 추가를 하도록 하겠습니다.</p>
+<p>아직 JDK를 설치하지 않으셨으면 라즈베리파이 또는 리눅스에서 OpenJDK 설치하기를 해주시기 바랍니다.</p>
+<p><img src="002-4.png" alt="image"></p>
+<p>신규로 프로젝트를 선택해 주세요.</p>
+<p><img src="003-3.png" alt="image"></p>
+<p>자바 프로젝트를 선택하시기 바랍니다.</p>
+<p><img src="004-4.png" alt="image"></p>
+<p>프로젝트명을 crawling로 하시고 Finish를 선택해 주세요.</p>
+<p><img src="005-4.png" alt="image"></p>
+<p>프로젝트가 생성되셨으면 JSOUP을 사용하기 위한 라이브러리를 추가를 하셔야만 합니다.</p>
+<p>아래의 사이트에서 JSOUP 라이브러리를 다운로드 해주시기 바랍니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://jsoup.org/download">https://jsoup.org/download</a></p>
+<p><img src="006-3.png" alt="image"></p>
+<p>jsoup-1.13.1.jar core library를 선택하시어 다운로드 해주시기 바랍니다.</p>
+<p><img src="007-2.png" alt="image"></p>
+<p>다운로드하신 라이브러리를 이클립스의 프로젝트에 추가를 해주시기 바랍니다.</p>
+<p><img src="008-2.png" alt="image"></p>
+<p>이클립스에 추가한 라이브러리를 빌드패스에 등록을 해주시기 바랍니다.</p>
+<p><img src="009-1.png" alt="image"></p>
+<p>위와같이 JSOUP를 빌드패스에 등록하시면 본격적으로 JAVA에서 JSOUP을 사용하실수 있게 됩니다.</p>
+<p>그럼 클래스 파일을 하나 추가를 하도록 하겠습니다.</p>
+<p><img src="010-1.png" alt="image"></p>
+<p><img src="011-1.png" alt="image"></p>
+<p>클래스명은 test를 적어주시고 public static void main(String[] args)에 체크를 해주시기 바랍니다.</p>
+<p><img src="012-1.png" alt="image"></p>
+<p>그럼 네이버의 검색창의 이미지를 가져오는것을 해보도록 하겠습니다.</p>
+<p><img src="013-1.png" alt="image"></p>
+<p><img src="014-1.png" alt="image"></p>
+<p>아래와 같이 코딩을 해주시기 바랍니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> crawling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.jsoup.Connection;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.Jsoup;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.nodes.Document;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.select.Elements;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		Document doc = <span class="keyword">null</span>;</span><br><span class="line">		Elements elem = <span class="keyword">new</span> Elements();</span><br><span class="line">		String URL = <span class="string">&quot;https://www.naver.com/&quot;</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Connection connection = Jsoup.connect(URL)</span><br><span class="line">					.userAgent(<span class="string">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;</span>)</span><br><span class="line">					.header(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;text/html&quot;</span>)</span><br><span class="line">	                .header(<span class="string">&quot;Accept-Encoding&quot;</span>, <span class="string">&quot;gzip,deflate&quot;</span>)</span><br><span class="line">	                .header(<span class="string">&quot;Accept-Language&quot;</span>, <span class="string">&quot;it-IT,en;q=0.8,en-US;q=0.6,de;q=0.4,it;q=0.2,es;q=0.2&quot;</span>)</span><br><span class="line">	                .header(<span class="string">&quot;Connection&quot;</span>, <span class="string">&quot;keep-alive&quot;</span>)</span><br><span class="line">	                .ignoreContentType(<span class="keyword">true</span>)</span><br><span class="line">	                .timeout(<span class="number">30000</span>);</span><br><span class="line">			doc = connection.get();</span><br><span class="line">      # .special_img_fold는 위의 개발툴에 나오는 클래스명을 입력해 주시기 바랍니다.</span><br><span class="line">			elem = doc.select(<span class="string">&quot;.special_img_fold&quot;</span>);</span><br><span class="line"></span><br><span class="line">			System.out.println(elem.attr(<span class="string">&quot;src&quot;</span>));</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="015-1.png" alt="image"></p>
+<p>코딩을 하셨으면 실행을 해서 확인을 해보도록 하겠습니다.</p>
+<p><img src="016-1.png" alt="image"></p>
+<p>자바 어플리케이션으로 실행을 해주시기 바랍니다.</p>
+<p><img src="017-1.png" alt="image"></p>
+<p>실행을 하면 콘솔창에 지정한 태그의 이미지 주소가 추출 된것을 확인 하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/JSOUP/" rel="tag">JSOUP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK/" rel="tag">OpenJDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/crawling/" rel="tag">crawling</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/library/" rel="tag">library</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B2%80%EC%83%89%EC%B0%BD/" rel="tag">검색창</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%84%A4%EC%9D%B4%EB%B2%84/" rel="tag">네이버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/" rel="tag">라이브러리</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%82%AC%EC%9D%B4%ED%8A%B8/" rel="tag">사이트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/" rel="tag">어플리케이션</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80/" rel="tag">이미지</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%98%EC%86%94/" rel="tag">콘솔</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%AC%EB%A1%A4%EB%A7%81/" rel="tag">크롤링</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%B4%EB%9E%98%EC%8A%A4/" rel="tag">클래스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%83%9C%EA%B7%B8/" rel="tag">태그</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/" rel="tag">프로젝트</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/10/java/java-009/';
+              
+            this.page.identifier = '2020/07/10/java/java-009/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

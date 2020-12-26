@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Compiler,Directory,eclipse,Installed JREs,Java,Java Project,jdk,jre,jre1.8,Open JDK,Oracle,Oracle JDK,Oracle JRE,이클립스,컴파일러,프로젝트">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA 프로그램 개발을 위한 Eclipse 기본 환경구축안녕하세요.\n이번에 소개할 내용은 JAVA 개발을 위한 Eclipse 기본 환경구축 입니다.\n본격적으로 이클립스상에서 개발을 하기전에 사전에 미리 환경설정을 하시고 프로젝트를 진행을 하셔야만\n나중에 여러가지 다시 환경을 맞추고 하는 번거로움이 사라지게 됩니다.\n그러므로 이클립스를 처음 설치후 사용하실때는 기본적인 설정을 해두시면\n여러모로 편안한 개발을 하실수 있게 되겠습니다.\n일단 이클립스를 실행해 주시기 바랍니다.\n\n이클립스가 열리셨으면 설정을 해야하기때문에 Window메뉴 Preferences를 선택해 주시기 바랍니다.\n\n아래와같이 설정화면이 나오게 되면 이클립스에 대한 세부적인 설정을 모두 여기서 하실수가 있습니다.\n일단 최소 개발환경의 JAVA설정을 하기 위함이니 다른 설정은 다른 소개를 하면서 진행을 하도록 하겠습니다.\n화면에서 Java앞의 &gt; 를 선택해 주시기 바랍니다.\n\n아래와 같이 Java의 상세 설정 메뉴들이 나오게 됩니다. 여기서 인스톨된 JDK 또는 JRE추가와\n자바 컴파일러를 설정을 해보도록 하겠습니다.\n그럼 메뉴의 Installed JREs를 선택해 주세요.\n\nInstalled JREs메뉴에 가시면 기본적으로 설치가 되어있는 jre1.8버전이 선택이 되어 있는것을 보실수 있습니다.\n만일 개발중인 프로젝트에 따라 버전이 틀린경우 여기서 JDK 또는 JRE를 추가하시고 체크를 해주시면 되겠습니다.\n일단 추가방법을 보겠습니다. ADD 버튼을 눌러주세요.\n\n아래의 화면이 나오시면 Standard VM을 선택하시고  NEXT버튼을 눌러주세요.\n\n새로운 JDK 또는 JRE를 추가를 해주어야 하기때문에 Directory를 눌러주세요.\n\nJDK 또는 JRE가 설치된 폴더를 이동하신후 해당 폴더를 선택하시고 선택버튼을 눌러주세요.\n\n그러면 선택하신 JDK 또는 JRE가 아래와같이 나오게 됩니다.\n저는 이미 1.8버전이 추가가 되어 있는상태이므로 아래와같이 나오게 됩니다만\n다른 버전을 추가하면 Finish가 활성화가 되며 버튼을 눌러주시면 처음의 리스트 목록에 등록이 된것을 확인할수 있습니다.\n\n이렇게해서 설치된 JDK 또는 JRE의 다른 버전을 추가 등록하는 방법을 알아보았습니다.\n이번에는 이클립스에서 프로젝트를 추가 하거나 할경우 처음 기본 컴파일러 버전 설정을 보겠습니다.\n아래의 화면에서 왼쪽의 Compiler메뉴를 선택해 주세요.\n\nCompiler메뉴로 이동하시면 아래와 같이 설치된 JDK 또는 JRE의 기본 버전으로 선택되어 있는것을 보실수 있습니다.\n만일 개발한 프로젝트가 1.4 또는 1.6버전에 맞춰서 개발이 되어있으신 경우는 Compiler compliance level의 버전을\n변경하셔서 해당 프로젝트에 맞게 바꾸실수 있습니다.\n\n\n여기까지가 이클립스에서 JAVA개발에 필요한 기본 설정이 되겠습니다.\n이제 간단한 프로젝트를 생성후 실행을 해보는것까지 해보도록 하겠습니다.\n창을 닫아주시기 바랍니다.\n\n간단하게 콘솔에 출력할수 있는 프로젝트를 생성을 위해 Create a project를 선택해 주세요.\n\n위와 같이 나오시면 Java Project를 선택하시고 Next를 눌러주세요.\n\n프로젝트 생성 화면이 나오시면 프로젝트명을 넣어주시고 다른건 기본설정으로 Finish버튼을 눌러주세요.\n\n위와같이 프로젝트가 생성이 된것을 보시게 됩니다.\n\nsrc에서 오른쪽 마우스 클릭후 New -&gt; Class를 선택해 주세요.\n\n클래스 파일명을 입력하시고 public static void main에 체크를 넣어주세요.\npublic static void main를 체크함으로써 메인클래스로 지정을 하며 콘솔용으로\n바로 실행이 가능한 클래스로 선언을 하겠다는것 입니다.\n그리고 Finish버튼을 눌러주세요.\n\n위와같이 클래스파일과 기본적인 문법이 작성되어 있는것을 보실수 있습니다.\n이제 여기서 간단하게 Hello, AkibaTV!라는 문장을 입력후 콘솔에 출력이 되는것을 해보도록 하겠습니다.\n아래와 같이 코딩을 해주세요.\n1234567public class test &#123;\tpublic static void main(String[] args) &#123;\t\t// TODO Auto-generated method stub\t\tSystem.out.println(&quot;Hello, AkibaTV!&quot;);\t&#125;&#125;\n\n작성을 하셨으면 이제 실행을 해보도록 하겠습니다.\n\n상단의 &gt; 버튼옆의 작은 ▼을 누르시면 test프로젝트를 선택해서 실행하실수 있습니다.\n\n프로젝트를 실행하시면 위와같이 콘솔창에 Hello, AkibaTV!가 출력된것을 확인하실수 있습니다.","dateCreated":"2020-06-09T01:00:00+09:00","dateModified":"2020-12-26T22:53:12+09:00","datePublished":"2020-06-09T01:00:00+09:00","description":"\nJAVA 프로그램 개발을 위한 Eclipse 기본 환경구축이번에 소개할 내용은 JAVA 개발을 위한 Eclipse 기본 환경구축 입니다.","headline":"JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/09/java/java-007/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/09/java/java-007/","keywords":"Java, jdk, 이클립스, 프로젝트, eclipse, jre, Open JDK, Oracle, Oracle JDK, Oracle JRE, Compiler, Directory, Installed JREs, Java Project, jre1.8, 컴파일러","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축이번에 소개할 내용은 JAVA 개발을 위한 Eclipse 기본 환경구축 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축">
+<meta property="og:url" content="https://playneko.github.io/2020/06/09/java/java-007/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축이번에 소개할 내용은 JAVA 개발을 위한 Eclipse 기본 환경구축 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/001-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/002-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/003-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/004-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/005-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/006-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/007-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/008-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/009-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/005-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/010-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/011-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/012-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/013-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/014-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/015-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/016-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/017-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/018-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/019-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/020-3-e1591418948321.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/021-2.png">
+<meta property="article:published_time" content="2020-06-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:53:12.777Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="프로젝트">
+<meta property="article:tag" content="eclipse">
+<meta property="article:tag" content="jre">
+<meta property="article:tag" content="Open JDK">
+<meta property="article:tag" content="Oracle">
+<meta property="article:tag" content="Oracle JDK">
+<meta property="article:tag" content="Oracle JRE">
+<meta property="article:tag" content="Compiler">
+<meta property="article:tag" content="Directory">
+<meta property="article:tag" content="Installed JREs">
+<meta property="article:tag" content="Java Project">
+<meta property="article:tag" content="jre1.8">
+<meta property="article:tag" content="컴파일러">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/09/java/java-007/001-7.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/09/java/java-007/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/09/java/java-007/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-09T01:00:00+09:00">
+	
+		    2020/06/09 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA-프로그램-개발을-위한-Eclipse-기본-환경구축"><a href="#JAVA-프로그램-개발을-위한-Eclipse-기본-환경구축" class="headerlink" title="JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축"></a>JAVA 프로그램 개발을 위한 Eclipse 기본 환경구축</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 JAVA 개발을 위한 Eclipse 기본 환경구축 입니다.</p>
+<p>본격적으로 이클립스상에서 개발을 하기전에 사전에 미리 환경설정을 하시고 프로젝트를 진행을 하셔야만</p>
+<p>나중에 여러가지 다시 환경을 맞추고 하는 번거로움이 사라지게 됩니다.</p>
+<p>그러므로 이클립스를 처음 설치후 사용하실때는 기본적인 설정을 해두시면</p>
+<p>여러모로 편안한 개발을 하실수 있게 되겠습니다.</p>
+<p>일단 이클립스를 실행해 주시기 바랍니다.</p>
+<p><img src="001-7.png" alt="image"></p>
+<p>이클립스가 열리셨으면 설정을 해야하기때문에 Window메뉴 Preferences를 선택해 주시기 바랍니다.</p>
+<p><img src="002-6.png" alt="image"></p>
+<p>아래와같이 설정화면이 나오게 되면 이클립스에 대한 세부적인 설정을 모두 여기서 하실수가 있습니다.</p>
+<p>일단 최소 개발환경의 JAVA설정을 하기 위함이니 다른 설정은 다른 소개를 하면서 진행을 하도록 하겠습니다.</p>
+<p>화면에서 Java앞의 &gt; 를 선택해 주시기 바랍니다.</p>
+<p><img src="003-6.png" alt="image"></p>
+<p>아래와 같이 Java의 상세 설정 메뉴들이 나오게 됩니다. 여기서 인스톨된 JDK 또는 JRE추가와</p>
+<p>자바 컴파일러를 설정을 해보도록 하겠습니다.</p>
+<p>그럼 메뉴의 Installed JREs를 선택해 주세요.</p>
+<p><img src="004-5.png" alt="image"></p>
+<p>Installed JREs메뉴에 가시면 기본적으로 설치가 되어있는 jre1.8버전이 선택이 되어 있는것을 보실수 있습니다.</p>
+<p>만일 개발중인 프로젝트에 따라 버전이 틀린경우 여기서 JDK 또는 JRE를 추가하시고 체크를 해주시면 되겠습니다.</p>
+<p>일단 추가방법을 보겠습니다. ADD 버튼을 눌러주세요.</p>
+<p><img src="005-4.png" alt="image"></p>
+<p>아래의 화면이 나오시면 Standard VM을 선택하시고  NEXT버튼을 눌러주세요.</p>
+<p><img src="006-4.png" alt="image"></p>
+<p>새로운 JDK 또는 JRE를 추가를 해주어야 하기때문에 Directory를 눌러주세요.</p>
+<p><img src="007-5.png" alt="image"></p>
+<p>JDK 또는 JRE가 설치된 폴더를 이동하신후 해당 폴더를 선택하시고 선택버튼을 눌러주세요.</p>
+<p><img src="008-5.png" alt="image"></p>
+<p>그러면 선택하신 JDK 또는 JRE가 아래와같이 나오게 됩니다.</p>
+<p>저는 이미 1.8버전이 추가가 되어 있는상태이므로 아래와같이 나오게 됩니다만</p>
+<p>다른 버전을 추가하면 Finish가 활성화가 되며 버튼을 눌러주시면 처음의 리스트 목록에 등록이 된것을 확인할수 있습니다.</p>
+<p><img src="009-4.png" alt="image"></p>
+<p>이렇게해서 설치된 JDK 또는 JRE의 다른 버전을 추가 등록하는 방법을 알아보았습니다.</p>
+<p>이번에는 이클립스에서 프로젝트를 추가 하거나 할경우 처음 기본 컴파일러 버전 설정을 보겠습니다.</p>
+<p>아래의 화면에서 왼쪽의 Compiler메뉴를 선택해 주세요.</p>
+<p><img src="005-4.png" alt="image"></p>
+<p>Compiler메뉴로 이동하시면 아래와 같이 설치된 JDK 또는 JRE의 기본 버전으로 선택되어 있는것을 보실수 있습니다.</p>
+<p>만일 개발한 프로젝트가 1.4 또는 1.6버전에 맞춰서 개발이 되어있으신 경우는 Compiler compliance level의 버전을</p>
+<p>변경하셔서 해당 프로젝트에 맞게 바꾸실수 있습니다.</p>
+<p><img src="010-4.png" alt="image"></p>
+<p><img src="011-4.png" alt="image"></p>
+<p>여기까지가 이클립스에서 JAVA개발에 필요한 기본 설정이 되겠습니다.</p>
+<p>이제 간단한 프로젝트를 생성후 실행을 해보는것까지 해보도록 하겠습니다.</p>
+<p>창을 닫아주시기 바랍니다.</p>
+<p><img src="012-4.png" alt="image"></p>
+<p>간단하게 콘솔에 출력할수 있는 프로젝트를 생성을 위해 Create a project를 선택해 주세요.</p>
+<p><img src="013-5.png" alt="image"></p>
+<p>위와 같이 나오시면 Java Project를 선택하시고 Next를 눌러주세요.</p>
+<p><img src="014-1-1.png" alt="image"></p>
+<p>프로젝트 생성 화면이 나오시면 프로젝트명을 넣어주시고 다른건 기본설정으로 Finish버튼을 눌러주세요.</p>
+<p><img src="015-2.png" alt="image"></p>
+<p>위와같이 프로젝트가 생성이 된것을 보시게 됩니다.</p>
+<p><img src="016-3.png" alt="image"></p>
+<p>src에서 오른쪽 마우스 클릭후 New -&gt; Class를 선택해 주세요.</p>
+<p><img src="017-3.png" alt="image"></p>
+<p>클래스 파일명을 입력하시고 public static void main에 체크를 넣어주세요.</p>
+<p>public static void main를 체크함으로써 메인클래스로 지정을 하며 콘솔용으로</p>
+<p>바로 실행이 가능한 클래스로 선언을 하겠다는것 입니다.</p>
+<p>그리고 Finish버튼을 눌러주세요.</p>
+<p><img src="018-3.png" alt="image"></p>
+<p>위와같이 클래스파일과 기본적인 문법이 작성되어 있는것을 보실수 있습니다.</p>
+<p>이제 여기서 간단하게 Hello, AkibaTV!라는 문장을 입력후 콘솔에 출력이 되는것을 해보도록 하겠습니다.</p>
+<p>아래와 같이 코딩을 해주세요.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		System.out.println(<span class="string">&quot;Hello, AkibaTV!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="019-3.png" alt="image"></p>
+<p>작성을 하셨으면 이제 실행을 해보도록 하겠습니다.</p>
+<p><img src="020-3-e1591418948321.png" alt="image"></p>
+<p>상단의 &gt; 버튼옆의 작은 ▼을 누르시면 test프로젝트를 선택해서 실행하실수 있습니다.</p>
+<p><img src="021-2.png" alt="image"></p>
+<p>프로젝트를 실행하시면 위와같이 콘솔창에 Hello, AkibaTV!가 출력된것을 확인하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Compiler/" rel="tag">Compiler</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Directory/" rel="tag">Directory</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Installed-JREs/" rel="tag">Installed JREs</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java-Project/" rel="tag">Java Project</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Open-JDK/" rel="tag">Open JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle/" rel="tag">Oracle</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JDK/" rel="tag">Oracle JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JRE/" rel="tag">Oracle JRE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/eclipse/" rel="tag">eclipse</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jre/" rel="tag">jre</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jre1-8/" rel="tag">jre1.8</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BB%B4%ED%8C%8C%EC%9D%BC%EB%9F%AC/" rel="tag">컴파일러</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/" rel="tag">프로젝트</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/09/java/java-007/';
+              
+            this.page.identifier = '2020/06/09/java/java-007/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Code,Java,Visual Studio Code,데이터,비주얼 스튜디오 코드,소스코드,웹페이지,이클립스,자바,코드,크롤링">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA에서 웹페이지 이미지 URL 다운로드후 저장하기안녕하세요.\n이번에 소개할 내용은 JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 입니다.\n웹페이지 크롤링 프로그램을 개발하시거나\n특정 URL을 입력하면 해당 URL의 이미지를 자동으로 다운로드후\nPC 또는 서버에 저장이 되게끔 하는것으로 사람이 일일이 수작업으로 다운로드하지 않고\n자동으로 다운로드를 할수있는 기능을 개발하는게 가능합니다.\n소스코드를 참고를 하셔서 좀더 응용을 하시게 되면 자신만의 멋진 프로그램으로 개발하는게 가능하게 될것입니다.\n자바개발은 이클립스로 개발을 해야만 사람들이 많이 알면서 편하지만 이번에는 소스코드만 공개를 하는것이기에\n좀더 자세한 내용에 대해서는 이클립스 환경에 대한 소개후 진행하도록 하겠습니다.\n그럼 개발을 하기위해 Visual Studio Code(비주얼 스튜디오 코드)를 우선 실행을 해주시기 바랍니다.\n\nVisual Studio Code(비주얼 스튜디오 코드)를 실행을 하셨으면\n파일명을 url_image_download.java 으로 지정하시고 파일을 추가해 주시기 바랍니다.\n\n그럼 이제 아래의 소스코드를 작성해 주시기 바랍니다.\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465import java.io.FileOutputStream;import java.io.IOException;import java.io.InputStream;import java.io.OutputStream;import java.net.URL;public class GetUrlToImage &#123;    public static void main(String[] args) &#123;        // 불러올 이미지 URL        String imageUrl = &quot;https://playneko.com/wp-content/uploads/2020/04/cropped-avatarimg_user1.png&quot;;)        try &#123;            getImageUrl(imageUrl);        &#125; catch (IOException e) &#123;        \t  // 예외처리            e.printStackTrace();        &#125;    &#125;    private void getImageUrl(String imageUrl) throws IOException &#123;        URL url = null;        InputStream in = null;        OutputStream out = null;        try &#123;            url = new URL(imageUrl);            in = url.openStream();            // 컴퓨터 또는 서버의 저장할 경로(절대패스로 지정해 주세요.)            out = new FileOutputStream(&quot;C:/images/AkibaTV.png&quot;);            while (true) &#123;                // 루프를 돌면서 이미지데이터를 읽어들이게 됩니다.                int data = in.read();                // 데이터값이 -1이면 루프를 종료하고 나오게 됩니다.                if (data == -1) &#123;                    break;                &#125;                // 읽어들인 이미지 데이터값을 컴퓨터 또는 서버공간에 저장하게 됩니다.                out.write(data);            &#125;            // 저장이 끝난후 사용한 객체는 클로즈를 해줍니다.            in.close();            out.close();        &#125; catch (Exception e) &#123;        \t  // 예외처리            e.printStackTrace();        &#125; finally &#123;            // 만일 에러가 발생해서 클로즈가 안됐을 가능성이 있기에            // NULL값을 체크후 클로즈 처리를 합니다.            if (in != null) &#123;                in.close();            &#125;            if (out != null) &#123;                out.close();            &#125;        &#125;    &#125;&#125;\n","dateCreated":"2020-06-03T01:00:00+09:00","dateModified":"2020-12-26T22:52:28+09:00","datePublished":"2020-06-03T01:00:00+09:00","description":"\nJAVA에서 웹페이지 이미지 URL 다운로드후 저장하기이번에 소개할 내용은 JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 입니다.","headline":"JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/03/java/java-004/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/03/java/java-004/","keywords":"Visual Studio Code, 비주얼 스튜디오 코드, 소스코드, 웹페이지, 크롤링, Java, 자바, 이클립스, 데이터, Code, 코드","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기이번에 소개할 내용은 JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/03/java/java-004/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기이번에 소개할 내용은 JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/03/java/java-004/001-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/03/java/java-004/002-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/03/java/java-004/003-1.png">
+<meta property="article:published_time" content="2020-06-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:52:28.217Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="Visual Studio Code">
+<meta property="article:tag" content="비주얼 스튜디오 코드">
+<meta property="article:tag" content="소스코드">
+<meta property="article:tag" content="웹페이지">
+<meta property="article:tag" content="크롤링">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="데이터">
+<meta property="article:tag" content="Code">
+<meta property="article:tag" content="코드">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/03/java/java-004/001-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/03/java/java-004/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/03/java/java-004/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-03T01:00:00+09:00">
+	
+		    2020/06/03 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA에서-웹페이지-이미지-URL-다운로드후-저장하기"><a href="#JAVA에서-웹페이지-이미지-URL-다운로드후-저장하기" class="headerlink" title="JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기"></a>JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 JAVA에서 웹페이지 이미지 URL 다운로드후 저장하기 입니다.</p>
+<p>웹페이지 크롤링 프로그램을 개발하시거나</p>
+<p>특정 URL을 입력하면 해당 URL의 이미지를 자동으로 다운로드후</p>
+<p>PC 또는 서버에 저장이 되게끔 하는것으로 사람이 일일이 수작업으로 다운로드하지 않고</p>
+<p>자동으로 다운로드를 할수있는 기능을 개발하는게 가능합니다.</p>
+<p>소스코드를 참고를 하셔서 좀더 응용을 하시게 되면 자신만의 멋진 프로그램으로 개발하는게 가능하게 될것입니다.</p>
+<p>자바개발은 이클립스로 개발을 해야만 사람들이 많이 알면서 편하지만 이번에는 소스코드만 공개를 하는것이기에</p>
+<p>좀더 자세한 내용에 대해서는 이클립스 환경에 대한 소개후 진행하도록 하겠습니다.</p>
+<p>그럼 개발을 하기위해 Visual Studio Code(비주얼 스튜디오 코드)를 우선 실행을 해주시기 바랍니다.</p>
+<p><img src="001-1.png" alt="image"></p>
+<p>Visual Studio Code(비주얼 스튜디오 코드)를 실행을 하셨으면</p>
+<p>파일명을 url_image_download.java 으로 지정하시고 파일을 추가해 주시기 바랍니다.</p>
+<p><img src="002-1.png" alt="image"></p>
+<p>그럼 이제 아래의 소스코드를 작성해 주시기 바랍니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetUrlToImage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 불러올 이미지 URL</span></span><br><span class="line">        String imageUrl = <span class="string">&quot;https://playneko.com/wp-content/uploads/2020/04/cropped-avatarimg_user1.png&quot;</span>;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            getImageUrl(imageUrl);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        	  <span class="comment">// 예외처리</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getImageUrl</span><span class="params">(String imageUrl)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        URL url = <span class="keyword">null</span>;</span><br><span class="line">        InputStream in = <span class="keyword">null</span>;</span><br><span class="line">        OutputStream out = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            url = <span class="keyword">new</span> URL(imageUrl);</span><br><span class="line">            in = url.openStream();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 컴퓨터 또는 서버의 저장할 경로(절대패스로 지정해 주세요.)</span></span><br><span class="line">            out = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;C:/images/AkibaTV.png&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="comment">// 루프를 돌면서 이미지데이터를 읽어들이게 됩니다.</span></span><br><span class="line">                <span class="keyword">int</span> data = in.read();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 데이터값이 -1이면 루프를 종료하고 나오게 됩니다.</span></span><br><span class="line">                <span class="keyword">if</span> (data == -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 읽어들인 이미지 데이터값을 컴퓨터 또는 서버공간에 저장하게 됩니다.</span></span><br><span class="line">                out.write(data);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 저장이 끝난후 사용한 객체는 클로즈를 해줍니다.</span></span><br><span class="line">            in.close();</span><br><span class="line">            out.close();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        	  <span class="comment">// 예외처리</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 만일 에러가 발생해서 클로즈가 안됐을 가능성이 있기에</span></span><br><span class="line">            <span class="comment">// NULL값을 체크후 클로즈 처리를 합니다.</span></span><br><span class="line">            <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</span><br><span class="line">                in.close();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</span><br><span class="line">                out.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="003-1.png" alt="image"></p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Code/" rel="tag">Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Visual-Studio-Code/" rel="tag">Visual Studio Code</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%8D%B0%EC%9D%B4%ED%84%B0/" rel="tag">데이터</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B9%84%EC%A3%BC%EC%96%BC-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%BD%94%EB%93%9C/" rel="tag">비주얼 스튜디오 코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%8A%A4%EC%BD%94%EB%93%9C/" rel="tag">소스코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%ED%8E%98%EC%9D%B4%EC%A7%80/" rel="tag">웹페이지</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%93%9C/" rel="tag">코드</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%AC%EB%A1%A4%EB%A7%81/" rel="tag">크롤링</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/03/java/java-004/';
+              
+            this.page.identifier = '2020/06/03/java/java-004/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

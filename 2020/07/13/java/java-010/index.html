@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="connection,crawling,DB테이블,insert,select,Java,jdk,JSOUP,library,MariaDB,NAVER 웹툰,OpenJDK,개발자툴,검색창,관리툴,네이버,라이브러리,마리아DB,사이트,어플리케이션,웹브라우저,웹툰,이미지,이클립스,자바,코딩,콘솔,크롤링,크롬,클래스,태그,프로젝트">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 입니다.\n저번의 JAVA에서 JSOUP을 이용한 사이트 크롤링 처리에 이어서\n크롤링에 대해서 좀더 다양하게 하는 방법을 알아보도록 하겠습니다.\n이클립스를 실행을 하시고 기존에 만든 크롤링 처리 프로젝트에\n이어서 클래스와 DB테이블을 생성해서 Insert를 해보도록 하겠습니다.\n코딩에 들어가기에 앞서 어떤것을 크롤링 할것인지 설명해 드리도록 하겠습니다.\n\n네이버 웹툰의 요일별 웹툰의 리스트를 추출해서\n타이틀, 썸네일, 링크URL을 DB에 저장하도록 하겠습니다.\n크롬의 개발자 툴을 실행 하시고 어떤 부분을 크롤링 대상으로 할것인지 확인해 보도록 하겠습니다.\n\n개발자툴을 실행하시고 태그를 확인하시면 월요일의 웹툰 부분을 기준으로 설명 하겠습니다.\n123456789101112131415# 이부분을 기준으로 클래스명으로# 크롤링을 하면 요일별로 전부 추출이 가능 합니다.&lt;div class=&quot;col_inner&quot;&gt;# 추출한 리스트에서 요일부분만# 다시 추출해서 무슨 요일인지 체크후&lt;h4 class=&quot;mon&quot;&gt;# thumb클래스명을 가진 태그의# 썸네일 이미지와 URL을 추출 합니다.&lt;div class=&quot;thumb&quot;&gt;# 그다음 마지막으로# 태그안의 글자만 출력 부분을 추출합니다.&lt;li&gt;\n우선 이클립스를 실행해 주시고 아래와 같이 파일들을 추가를 해주시기 바랍니다.\n123456789# 추가 자바 클래스 파일connection.javainsert.javaselect.javawebtoon.java# 라이브러리# 빌드패스에 추가해 주시기 바랍니다.mariadb-java-client-2.6.0.jar\n\n클래스 파일과 라이브러리를 추가를 하셨으면 각 파일에 맞게 아래와 같이 코딩을 해주시기 바랍니다.\n##### connection.java\n123456789101112131415161718192021222324252627282930313233343536373839404142package crawling;import java.sql.Connection;import java.sql.DriverManager;import java.sql.PreparedStatement;import java.sql.SQLException;public class connection &#123;    Connection conn;\tpublic connection() &#123;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://데이터베이스URL/DB명&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;아이디&quot;, &quot;비밀번호&quot;);\t\t\tSystem.out.println(&quot;DB 연결 성공&quot;);\t\t&#125; catch (ClassNotFoundException e)&#123;\t\t\tSystem.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125;\t&#125;\tpublic PreparedStatement prepareStatement(String sql) throws SQLException &#123;\t\treturn conn.prepareStatement(sql);\t&#125;\tpublic boolean isClosed() throws SQLException &#123;\t\treturn conn.isClosed();\t&#125;\tpublic void close() throws SQLException &#123;\t\tconn.close();\t&#125;&#125;\n\n##### insert.java\n12345678910111213141516171819202122232425262728293031323334353637383940414243package crawling;import java.sql.PreparedStatement;import java.sql.SQLException;public class insert &#123;\tpublic void insertQuery(int day, String title, String url, String thumb) &#123;\t\tconnection conn = new connection();\t\tPreparedStatement pstmt = null;\t\ttry &#123;\t\t\t// Insert문 ?부분은 아래의 입력값이 자동으로 변환이 됩니다.\t\t\tString sql = &quot; INSERT INTO webtoon (no, day, title, url, thumb) VALUES (0, ?, ?, ?, ?) &quot;;\t\t\tpstmt = conn.prepareStatement(sql);\t\t\tint index = 1;\t\t\tpstmt.setInt(index++, day);\t\t\tpstmt.setString(index++, title);\t\t\tpstmt.setString(index++, url);\t\t\tpstmt.setString(index++, thumb);\t\t\t// SQL실행\t\t\tint count = pstmt.executeUpdate();\t\t\tif (count == 0) &#123;\t\t\t\tSystem.out.println(&quot;데이터값에 이상이 있습니다.&quot;);\t\t\t&#125; else &#123;\t\t\t\tSystem.out.println(&quot;데이터 Insert 성공!&quot;);\t\t\t&#125;\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null &amp;&amp; !conn.isClosed()) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\n##### select.java\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647package crawling;import java.sql.PreparedStatement;import java.sql.ResultSet;import java.sql.SQLException;public class select &#123;\tpublic int selectQuery(String title) &#123;    int result = 0;\t\tconnection conn = new connection();\t\tPreparedStatement pstmt = null;    ResultSet rs = null;\t\ttry &#123;\t\t\t// Select 쿼리문\t\t\tString sql = &quot; SELECT count(*) as cnt FROM webtoon where title = ? &quot;;\t\t\tpstmt = conn.prepareStatement(sql);\t\t\tint pstmtIndex = 1;\t\t\tpstmt.setString(pstmtIndex++, title);\t\t\t// SQL실행\t\t\trs = pstmt.executeQuery();\t\t\t// 결과값 출력\t\t\twhile (rs.next()) &#123;\t\t\t\tresult = rs.getInt(1);\t\t\t\tbreak;\t\t\t&#125;\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null &amp;&amp; !conn.isClosed()) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t\treturn result;\t&#125;&#125;\n\n##### webtoon.java\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879package crawling;import java.io.IOException;import org.jsoup.Connection;import org.jsoup.Jsoup;import org.jsoup.nodes.Document;import org.jsoup.select.Elements;public class webtoon &#123;\tpublic static void main(String[] args) &#123;\t\tselect selectSql = new select();\t\tinsert insertSql = new insert();\t\tDocument doc = null;\t\tElements elemList = new Elements();\t\tString URL = &quot;https://comic.naver.com/webtoon/weekday.nhn&quot;;\t\tString[] dateArr = &#123;&quot;h4.mon&quot;,&quot;h4.tue&quot;,&quot;h4.wed&quot;,&quot;h4.thu&quot;,&quot;h4.fri&quot;,&quot;h4.sat&quot;,&quot;h4.sun&quot;&#125;;\t\ttry &#123;\t\t\tConnection connection = Jsoup.connect(URL)\t\t\t\t\t.userAgent(&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;)\t\t\t\t\t.header(&quot;Accept&quot;, &quot;text/html&quot;)\t        .header(&quot;Accept-Encoding&quot;, &quot;gzip,deflate&quot;)\t        .header(&quot;Accept-Language&quot;, &quot;it-IT,en;q=0.8,en-US;q=0.6,de;q=0.4,it;q=0.2,es;q=0.2&quot;)\t        .header(&quot;Connection&quot;, &quot;keep-alive&quot;)\t        .ignoreContentType(true)\t        .timeout(30000);\t\t\tdoc = connection.get();\t\t\telemList = doc.select(&quot;.col_inner&quot;);\t\t\tif (elemList.size() &gt; 0) &#123;\t\t\t\tfor (int i = 0; i &lt; elemList.size(); i++) &#123;\t\t\t\t\tElements elems = elemList.get(i).children();\t\t\t\t\tif (elems.size() &gt; 0) &#123;\t\t\t\t\t\tfor (int j = 0; j &lt; dateArr.length; j++) &#123;\t\t\t\t\t\t\tElements elemTitle = new Elements();\t\t\t\t\t\t\tElements elemUl = new Elements();\t\t\t\t\t\t\telemTitle = elems.select(dateArr[j]);\t\t\t\t\t\t\tif (elemTitle != null &amp;&amp; !elemTitle.isEmpty()) &#123;\t\t\t\t\t\t\t\tSystem.out.println(&quot;------------------&quot;);\t\t\t\t\t\t\t\tSystem.out.println(elemTitle.text());\t\t\t\t\t\t\t\tSystem.out.println(&quot;------------------&quot;);\t\t\t\t\t\t\t\telemUl = elems.select(&quot;ul &gt; li&quot;);\t\t\t\t\t\t\t\tif (elemUl.size() &gt; 0) &#123;\t\t\t\t\t\t\t\t\tfor (int k = 0; k &lt; elemUl.size(); k++) &#123;\t\t\t\t\t\t\t\t\t\tElements elemLi = elemUl.get(k).children();\t\t\t\t\t\t\t\t\t\tif (selectSql.selectQuery(elemLi.text()) &lt; 1) &#123;\t\t\t\t\t\t\t\t\t\t\tElements elemHref = elemLi.select(&quot;.thumb &gt; a&quot;);\t\t\t\t\t\t\t\t\t\t\tElements elemImg = elemLi.select(&quot;.thumb &gt; a &gt; img&quot;);\t\t\t\t\t\t\t\t\t\t\tSystem.out.println(elemLi.text());\t\t\t\t\t\t\t\t\t\t\tSystem.out.println(elemImg.attr(&quot;src&quot;));\t\t\t\t\t\t\t\t\t\t\tSystem.out.println(&quot;------------------&quot;);\t\t\t\t\t\t\t\t\t\t\tinsertSql.insertQuery(j, elemLi.text(), elemHref.attr(&quot;href&quot;), elemImg.attr(&quot;src&quot;));\t\t\t\t\t\t\t\t\t\t&#125;\t\t\t\t\t\t\t\t\t&#125;\t\t\t\t\t\t\t\t&#125;\t\t\t\t\t\t\t&#125;\t\t\t\t\t\t&#125;\t\t\t\t\t&#125;\t\t\t\t&#125;\t\t\t&#125;\t\t&#125; catch (IOException e) &#123;\t\t\te.printStackTrace();\t\t&#125;\t&#125;&#125;\n\n위와같이 작성을 해서 코딩은 일단 끝났습니다.\n이제 데이터베이스에 테이블을 생성을 해야만 합니다.\n데이터베이스 관리툴을 실행하신후 아래와 같이 데이터베이스를 추가를 해주시기 바랍니다.\n1234567891011121314# 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.----------+---------+--------+--------+---------------- Name     | Type    | Size   | Default| Add----------+---------+--------+--------+---------------- no       | INT     | 10     |        | AUTO_INCREMENT----------+---------+--------+--------+---------------- day      | TINYINT | 1      | 0      |----------+---------+--------+--------+---------------- title    | VARCHAR | 30     |        |----------+---------+--------+--------+---------------- url      | VARCHAR | 255    |        |----------+---------+--------+--------+---------------- thumb    | VARCHAR | 2000   |        |----------+---------+--------+--------+----------------\n\n데이터베이스도 추가가 되셨으면 이클립스에서\nwebtoon.java를 실행해서 정상 등록 되는지 확인해 보도록 하겠습니다.\n\n\n자바 프로그램을 실행을 하시게 되시면 위와같이 콘솔창에\nDB 연결 성공, 데이터 Insert 성공!이 나오게 되시면 문제없이 되신것 입니다.\n이제 실제로 데이터베이스도 데이터가 Insert되었는지 확인해 보도록 하겠습니다.\n\n위와같이 데이터베이스에도 정상적으로 Insert가 된것을 확인이 되었습니다.\n다음에는 데이터베이스의 데이터를 이용한 출력에 대해 설명을 해보도록 하겠습니다.","dateCreated":"2020-07-13T01:00:00+09:00","dateModified":"2020-12-26T22:51:46+09:00","datePublished":"2020-07-13T01:00:00+09:00","description":"\nJAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기이번에 소개할 내용은 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 입니다.","headline":"JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/13/java/java-010/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/13/java/java-010/","keywords":"MariaDB, 크롤링, Java, OpenJDK, 자바, 웹브라우저, 이미지, 코딩, 태그, connection, insert, select, 마리아DB, 웹툰, crawling, 크롬, jdk, library, 라이브러리, 이클립스, 콘솔, 클래스, 프로젝트, 어플리케이션, JSOUP, 검색창, 네이버, 사이트, DB테이블, NAVER 웹툰, 개발자툴, 관리툴","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기이번에 소개할 내용은 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/13/java/java-010/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기이번에 소개할 내용은 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/001.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/000-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/001-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/002-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/003-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/004-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/005-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/006-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/007-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/008-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/009-2.png">
+<meta property="article:published_time" content="2020-07-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:51:46.746Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="크롤링">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="OpenJDK">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="이미지">
+<meta property="article:tag" content="코딩">
+<meta property="article:tag" content="태그">
+<meta property="article:tag" content="connection">
+<meta property="article:tag" content="insert">
+<meta property="article:tag" content="select">
+<meta property="article:tag" content="마리아DB">
+<meta property="article:tag" content="웹툰">
+<meta property="article:tag" content="crawling">
+<meta property="article:tag" content="크롬">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="library">
+<meta property="article:tag" content="라이브러리">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="콘솔">
+<meta property="article:tag" content="클래스">
+<meta property="article:tag" content="프로젝트">
+<meta property="article:tag" content="어플리케이션">
+<meta property="article:tag" content="JSOUP">
+<meta property="article:tag" content="검색창">
+<meta property="article:tag" content="네이버">
+<meta property="article:tag" content="사이트">
+<meta property="article:tag" content="DB테이블">
+<meta property="article:tag" content="NAVER 웹툰">
+<meta property="article:tag" content="개발자툴">
+<meta property="article:tag" content="관리툴">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/13/java/java-010/001.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/13/java/java-010/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/13/java/java-010/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-13T01:00:00+09:00">
+	
+		    2020/07/13 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA에서-NAVER-웹툰-크롤링후-DB에-저장하기"><a href="#JAVA에서-NAVER-웹툰-크롤링후-DB에-저장하기" class="headerlink" title="JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기"></a>JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 JAVA에서 NAVER 웹툰 크롤링후 DB에 저장하기 입니다.</p>
+<p>저번의 JAVA에서 JSOUP을 이용한 사이트 크롤링 처리에 이어서</p>
+<p>크롤링에 대해서 좀더 다양하게 하는 방법을 알아보도록 하겠습니다.</p>
+<p>이클립스를 실행을 하시고 기존에 만든 크롤링 처리 프로젝트에</p>
+<p>이어서 클래스와 DB테이블을 생성해서 Insert를 해보도록 하겠습니다.</p>
+<p>코딩에 들어가기에 앞서 어떤것을 크롤링 할것인지 설명해 드리도록 하겠습니다.</p>
+<p><img src="001.png" alt="image"></p>
+<p>네이버 웹툰의 요일별 웹툰의 리스트를 추출해서</p>
+<p>타이틀, 썸네일, 링크URL을 DB에 저장하도록 하겠습니다.</p>
+<p>크롬의 개발자 툴을 실행 하시고 어떤 부분을 크롤링 대상으로 할것인지 확인해 보도록 하겠습니다.</p>
+<p><img src="000-1.png" alt="image"></p>
+<p>개발자툴을 실행하시고 태그를 확인하시면 월요일의 웹툰 부분을 기준으로 설명 하겠습니다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 이부분을 기준으로 클래스명으로</span><br><span class="line"># 크롤링을 하면 요일별로 전부 추출이 가능 합니다.</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col_inner&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># 추출한 리스트에서 요일부분만</span><br><span class="line"># 다시 추출해서 무슨 요일인지 체크후</span><br><span class="line"><span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">&quot;mon&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># thumb클래스명을 가진 태그의</span><br><span class="line"># 썸네일 이미지와 URL을 추출 합니다.</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;thumb&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># 그다음 마지막으로</span><br><span class="line"># 태그안의 글자만 출력 부분을 추출합니다.</span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>우선 이클립스를 실행해 주시고 아래와 같이 파일들을 추가를 해주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 추가 자바 클래스 파일</span><br><span class="line">connection.java</span><br><span class="line">insert.java</span><br><span class="line">select.java</span><br><span class="line">webtoon.java</span><br><span class="line"></span><br><span class="line"># 라이브러리</span><br><span class="line"># 빌드패스에 추가해 주시기 바랍니다.</span><br><span class="line">mariadb-java-client-2.6.0.jar</span><br></pre></td></tr></table></figure>
+<p><img src="001-5.png" alt="image"></p>
+<p>클래스 파일과 라이브러리를 추가를 하셨으면 각 파일에 맞게 아래와 같이 코딩을 해주시기 바랍니다.</p>
+<p>##### connection.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> crawling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">connection</span> </span>&#123;</span><br><span class="line">    Connection conn;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">connection</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://데이터베이스URL/DB명&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;아이디&quot;</span>, <span class="string">&quot;비밀번호&quot;</span>);</span><br><span class="line">			System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">prepareStatement</span><span class="params">(String sql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> conn.prepareStatement(sql);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isClosed</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> conn.isClosed();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		conn.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="002-5.png" alt="image"></p>
+<p>##### insert.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> crawling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">insert</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertQuery</span><span class="params">(<span class="keyword">int</span> day, String title, String url, String thumb)</span> </span>&#123;</span><br><span class="line">		connection conn = <span class="keyword">new</span> connection();</span><br><span class="line">		PreparedStatement pstmt = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// Insert문 ?부분은 아래의 입력값이 자동으로 변환이 됩니다.</span></span><br><span class="line">			String sql = <span class="string">&quot; INSERT INTO webtoon (no, day, title, url, thumb) VALUES (0, ?, ?, ?, ?) &quot;</span>;</span><br><span class="line">			pstmt = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">			pstmt.setInt(index++, day);</span><br><span class="line">			pstmt.setString(index++, title);</span><br><span class="line">			pstmt.setString(index++, url);</span><br><span class="line">			pstmt.setString(index++, thumb);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			<span class="keyword">int</span> count = pstmt.executeUpdate();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터값에 이상이 있습니다.&quot;</span>);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터 Insert 성공!&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span> &amp;&amp; !conn.isClosed()) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="003-4.png" alt="image"></p>
+<p>##### select.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> crawling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">select</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">selectQuery</span><span class="params">(String title)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		connection conn = <span class="keyword">new</span> connection();</span><br><span class="line">		PreparedStatement pstmt = <span class="keyword">null</span>;</span><br><span class="line">    ResultSet rs = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// Select 쿼리문</span></span><br><span class="line">			String sql = <span class="string">&quot; SELECT count(*) as cnt FROM webtoon where title = ? &quot;</span>;</span><br><span class="line">			pstmt = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> pstmtIndex = <span class="number">1</span>;</span><br><span class="line">			pstmt.setString(pstmtIndex++, title);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			rs = pstmt.executeQuery();</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 결과값 출력</span></span><br><span class="line">			<span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">				result = rs.getInt(<span class="number">1</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span> &amp;&amp; !conn.isClosed()) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="004-5.png" alt="image"></p>
+<p>##### webtoon.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> crawling;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.jsoup.Connection;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.Jsoup;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.nodes.Document;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.select.Elements;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">webtoon</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		select selectSql = <span class="keyword">new</span> select();</span><br><span class="line">		insert insertSql = <span class="keyword">new</span> insert();</span><br><span class="line"></span><br><span class="line">		Document doc = <span class="keyword">null</span>;</span><br><span class="line">		Elements elemList = <span class="keyword">new</span> Elements();</span><br><span class="line">		String URL = <span class="string">&quot;https://comic.naver.com/webtoon/weekday.nhn&quot;</span>;</span><br><span class="line">		String[] dateArr = &#123;<span class="string">&quot;h4.mon&quot;</span>,<span class="string">&quot;h4.tue&quot;</span>,<span class="string">&quot;h4.wed&quot;</span>,<span class="string">&quot;h4.thu&quot;</span>,<span class="string">&quot;h4.fri&quot;</span>,<span class="string">&quot;h4.sat&quot;</span>,<span class="string">&quot;h4.sun&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Connection connection = Jsoup.connect(URL)</span><br><span class="line">					.userAgent(<span class="string">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;</span>)</span><br><span class="line">					.header(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;text/html&quot;</span>)</span><br><span class="line">	        .header(<span class="string">&quot;Accept-Encoding&quot;</span>, <span class="string">&quot;gzip,deflate&quot;</span>)</span><br><span class="line">	        .header(<span class="string">&quot;Accept-Language&quot;</span>, <span class="string">&quot;it-IT,en;q=0.8,en-US;q=0.6,de;q=0.4,it;q=0.2,es;q=0.2&quot;</span>)</span><br><span class="line">	        .header(<span class="string">&quot;Connection&quot;</span>, <span class="string">&quot;keep-alive&quot;</span>)</span><br><span class="line">	        .ignoreContentType(<span class="keyword">true</span>)</span><br><span class="line">	        .timeout(<span class="number">30000</span>);</span><br><span class="line">			doc = connection.get();</span><br><span class="line">			elemList = doc.select(<span class="string">&quot;.col_inner&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (elemList.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; elemList.size(); i++) &#123;</span><br><span class="line">					Elements elems = elemList.get(i).children();</span><br><span class="line"></span><br><span class="line">					<span class="keyword">if</span> (elems.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">						<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dateArr.length; j++) &#123;</span><br><span class="line">							Elements elemTitle = <span class="keyword">new</span> Elements();</span><br><span class="line">							Elements elemUl = <span class="keyword">new</span> Elements();</span><br><span class="line">							elemTitle = elems.select(dateArr[j]);</span><br><span class="line"></span><br><span class="line">							<span class="keyword">if</span> (elemTitle != <span class="keyword">null</span> &amp;&amp; !elemTitle.isEmpty()) &#123;</span><br><span class="line">								System.out.println(<span class="string">&quot;------------------&quot;</span>);</span><br><span class="line">								System.out.println(elemTitle.text());</span><br><span class="line">								System.out.println(<span class="string">&quot;------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">								elemUl = elems.select(<span class="string">&quot;ul &gt; li&quot;</span>);</span><br><span class="line">								<span class="keyword">if</span> (elemUl.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">									<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; elemUl.size(); k++) &#123;</span><br><span class="line">										Elements elemLi = elemUl.get(k).children();</span><br><span class="line"></span><br><span class="line">										<span class="keyword">if</span> (selectSql.selectQuery(elemLi.text()) &lt; <span class="number">1</span>) &#123;</span><br><span class="line">											Elements elemHref = elemLi.select(<span class="string">&quot;.thumb &gt; a&quot;</span>);</span><br><span class="line">											Elements elemImg = elemLi.select(<span class="string">&quot;.thumb &gt; a &gt; img&quot;</span>);</span><br><span class="line"></span><br><span class="line">											System.out.println(elemLi.text());</span><br><span class="line">											System.out.println(elemImg.attr(<span class="string">&quot;src&quot;</span>));</span><br><span class="line">											System.out.println(<span class="string">&quot;------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">											insertSql.insertQuery(j, elemLi.text(), elemHref.attr(<span class="string">&quot;href&quot;</span>), elemImg.attr(<span class="string">&quot;src&quot;</span>));</span><br><span class="line">										&#125;</span><br><span class="line">									&#125;</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="005-5.png" alt="image"></p>
+<p>위와같이 작성을 해서 코딩은 일단 끝났습니다.</p>
+<p>이제 데이터베이스에 테이블을 생성을 해야만 합니다.</p>
+<p>데이터베이스 관리툴을 실행하신후 아래와 같이 데이터베이스를 추가를 해주시기 바랍니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 테이블명, 칼럼, 종류, 사이즈등을 설정을 해주시기 바랍니다.</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> Name     | Type    | Size   | Default| Add</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> no       | INT     | 10     |        | AUTO_INCREMENT</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> day      | TINYINT | 1      | 0      |</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> title    | VARCHAR | 30     |        |</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> url      | VARCHAR | 255    |        |</span><br><span class="line">----------+---------+--------+--------+----------------</span><br><span class="line"> thumb    | VARCHAR | 2000   |        |</span><br><span class="line">----------+---------+--------+--------+----------------</span><br></pre></td></tr></table></figure>
+<p><img src="006-4.png" alt="image"></p>
+<p>데이터베이스도 추가가 되셨으면 이클립스에서</p>
+<p>webtoon.java를 실행해서 정상 등록 되는지 확인해 보도록 하겠습니다.</p>
+<p><img src="007-3.png" alt="image"></p>
+<p><img src="008-3.png" alt="image"></p>
+<p>자바 프로그램을 실행을 하시게 되시면 위와같이 콘솔창에</p>
+<p>DB 연결 성공, 데이터 Insert 성공!이 나오게 되시면 문제없이 되신것 입니다.</p>
+<p>이제 실제로 데이터베이스도 데이터가 Insert되었는지 확인해 보도록 하겠습니다.</p>
+<p><img src="009-2.png" alt="image"></p>
+<p>위와같이 데이터베이스에도 정상적으로 Insert가 된것을 확인이 되었습니다.</p>
+<p>다음에는 데이터베이스의 데이터를 이용한 출력에 대해 설명을 해보도록 하겠습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/DB%ED%85%8C%EC%9D%B4%EB%B8%94/" rel="tag">DB테이블</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/JSOUP/" rel="tag">JSOUP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MariaDB/" rel="tag">MariaDB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NAVER-%EC%9B%B9%ED%88%B0/" rel="tag">NAVER 웹툰</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK/" rel="tag">OpenJDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/connection/" rel="tag">connection</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/crawling/" rel="tag">crawling</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/insert/" rel="tag">insert</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/library/" rel="tag">library</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/select/" rel="tag">select</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B0%9C%EB%B0%9C%EC%9E%90%ED%88%B4/" rel="tag">개발자툴</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B2%80%EC%83%89%EC%B0%BD/" rel="tag">검색창</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B4%80%EB%A6%AC%ED%88%B4/" rel="tag">관리툴</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%84%A4%EC%9D%B4%EB%B2%84/" rel="tag">네이버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/" rel="tag">라이브러리</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A7%88%EB%A6%AC%EC%95%84DB/" rel="tag">마리아DB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%82%AC%EC%9D%B4%ED%8A%B8/" rel="tag">사이트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/" rel="tag">어플리케이션</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%ED%88%B0/" rel="tag">웹툰</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%EB%AF%B8%EC%A7%80/" rel="tag">이미지</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%94%EB%94%A9/" rel="tag">코딩</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%98%EC%86%94/" rel="tag">콘솔</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%AC%EB%A1%A4%EB%A7%81/" rel="tag">크롤링</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%AC%EB%A1%AC/" rel="tag">크롬</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%B4%EB%9E%98%EC%8A%A4/" rel="tag">클래스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%83%9C%EA%B7%B8/" rel="tag">태그</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/" rel="tag">프로젝트</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/13/java/java-010/';
+              
+            this.page.identifier = '2020/07/13/java/java-010/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

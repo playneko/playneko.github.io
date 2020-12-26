@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 개발한 프로젝트 JAR파일로 만들기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Export,jar,JAR file,Java,jdk,JSOUP,library,OpenJDK,라이브러리,사이트,소스파일,웹브라우저,이클립스,자바,콘솔,크롤링,클래스,파일,프로젝트">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA에서 개발한 프로젝트 JAR파일로 만들기안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 JAVA에서 개발한 프로젝트 JAR파일로 만들기 입니다.\n자바에서 자바 어플리케이션으로 프로젝트를 개발을 하시면\n이 프로그램을 서버에 올려놓고 콘솔로 구동을 해야만 합니다만\n소스파일을 일일이 올리고 돌리는 방법도 있겠습니다만\n이건 소스관리도 그렇고 매번 클래스 파일 하나하나 올리는것도 비효율적이기 때문에\nJAR파일로 하나의 파일로 만드는 방법을 알아보도록 하겠습니다.\n우선 이클립스를 실행을 해주시기 바랍니다.\n\n이클립스를 실행 하셨으면 기존에 만들어둔 AkibaTV를 JAR로 만들어 보도록 하겠습니다.\n\nAkibaTV를 선택후 Export를 선택해 주시기 바랍니다.\n\n위와같이 나오시면 JAVA의 JAR file을 선택하시고 Next를 눌러주세요.\n\n위와같이 나오시면 체크 부분을 위와 동일하게 체크를 하시고\nJAR파일을 저장하실 경로를 지정을 해주시고 Finish를 눌러주시면\nJAR파일이 만들기가 끝나게 됩니다.\n\n위와같이 JAR파일이 만들어진것을 확인 하실수 있습니다.\n다음에는 JAR파일을 이용해서 서버환경에서 실행하는 방법을 알아보도록 하겠습니다.","dateCreated":"2020-07-15T01:00:00+09:00","dateModified":"2020-12-26T22:51:25+09:00","datePublished":"2020-07-15T01:00:00+09:00","description":"\nJAVA에서 개발한 프로젝트 JAR파일로 만들기이번에 소개할 내용은 JAVA에서 개발한 프로젝트 JAR파일로 만들기 입니다.","headline":"JAVA에서 개발한 프로젝트 JAR파일로 만들기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/07/15/java/java-011/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/07/15/java/java-011/","keywords":"크롤링, Java, OpenJDK, 자바, 웹브라우저, Export, jar, JAR file, jdk, library, 라이브러리, 소스파일, 이클립스, 콘솔, 클래스, 파일, 프로젝트, JSOUP, 사이트","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA에서 개발한 프로젝트 JAR파일로 만들기이번에 소개할 내용은 JAVA에서 개발한 프로젝트 JAR파일로 만들기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 개발한 프로젝트 JAR파일로 만들기">
+<meta property="og:url" content="https://playneko.github.io/2020/07/15/java/java-011/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA에서 개발한 프로젝트 JAR파일로 만들기이번에 소개할 내용은 JAVA에서 개발한 프로젝트 JAR파일로 만들기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/001-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/002-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/003-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/005-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/005-6.png">
+<meta property="article:published_time" content="2020-07-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:51:25.588Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="크롤링">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="OpenJDK">
+<meta property="article:tag" content="자바">
+<meta property="article:tag" content="웹브라우저">
+<meta property="article:tag" content="Export">
+<meta property="article:tag" content="jar">
+<meta property="article:tag" content="JAR file">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="library">
+<meta property="article:tag" content="라이브러리">
+<meta property="article:tag" content="소스파일">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="콘솔">
+<meta property="article:tag" content="클래스">
+<meta property="article:tag" content="파일">
+<meta property="article:tag" content="프로젝트">
+<meta property="article:tag" content="JSOUP">
+<meta property="article:tag" content="사이트">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/07/15/java/java-011/001-7.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/07/15/java/java-011/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/07/15/java/java-011/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 개발한 프로젝트 JAR파일로 만들기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-15T01:00:00+09:00">
+	
+		    2020/07/15 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA에서-개발한-프로젝트-JAR파일로-만들기"><a href="#JAVA에서-개발한-프로젝트-JAR파일로-만들기" class="headerlink" title="JAVA에서 개발한 프로젝트 JAR파일로 만들기"></a>JAVA에서 개발한 프로젝트 JAR파일로 만들기</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 JAVA에서 개발한 프로젝트 JAR파일로 만들기 입니다.</p>
+<p>자바에서 자바 어플리케이션으로 프로젝트를 개발을 하시면</p>
+<p>이 프로그램을 서버에 올려놓고 콘솔로 구동을 해야만 합니다만</p>
+<p>소스파일을 일일이 올리고 돌리는 방법도 있겠습니다만</p>
+<p>이건 소스관리도 그렇고 매번 클래스 파일 하나하나 올리는것도 비효율적이기 때문에</p>
+<p>JAR파일로 하나의 파일로 만드는 방법을 알아보도록 하겠습니다.</p>
+<p>우선 이클립스를 실행을 해주시기 바랍니다.</p>
+<p><img src="001-7.png" alt="image"></p>
+<p>이클립스를 실행 하셨으면 기존에 만들어둔 AkibaTV를 JAR로 만들어 보도록 하겠습니다.</p>
+<p><img src="002-6.png" alt="image"></p>
+<p>AkibaTV를 선택후 Export를 선택해 주시기 바랍니다.</p>
+<p><img src="003-6.png" alt="image"></p>
+<p>위와같이 나오시면 JAVA의 JAR file을 선택하시고 Next를 눌러주세요.</p>
+<p><img src="005-6.png" alt="image"></p>
+<p>위와같이 나오시면 체크 부분을 위와 동일하게 체크를 하시고</p>
+<p>JAR파일을 저장하실 경로를 지정을 해주시고 Finish를 눌러주시면</p>
+<p>JAR파일이 만들기가 끝나게 됩니다.</p>
+<p><img src="005-6.png" alt="image"></p>
+<p>위와같이 JAR파일이 만들어진것을 확인 하실수 있습니다.</p>
+<p>다음에는 JAR파일을 이용해서 서버환경에서 실행하는 방법을 알아보도록 하겠습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Export/" rel="tag">Export</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/JAR-file/" rel="tag">JAR file</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/JSOUP/" rel="tag">JSOUP</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenJDK/" rel="tag">OpenJDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jar/" rel="tag">jar</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/library/" rel="tag">library</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/" rel="tag">라이브러리</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%82%AC%EC%9D%B4%ED%8A%B8/" rel="tag">사이트</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%86%8C%EC%8A%A4%ED%8C%8C%EC%9D%BC/" rel="tag">소스파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/" rel="tag">웹브라우저</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9E%90%EB%B0%94/" rel="tag">자바</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%BD%98%EC%86%94/" rel="tag">콘솔</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%AC%EB%A1%A4%EB%A7%81/" rel="tag">크롤링</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%81%B4%EB%9E%98%EC%8A%A4/" rel="tag">클래스</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%8C%8C%EC%9D%BC/" rel="tag">파일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/" rel="tag">프로젝트</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/07/15/java/java-011/';
+              
+            this.page.identifier = '2020/07/15/java/java-011/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="connection,eclipse,select,update,insert,delete,sql,jar,Java,JDBC,jdk,jre,lib,MariaDB,NPM,Open JDK,Oracle,Oracle JDK,Oracle JRE,phpMyAdmin,오라클,이클립스">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\nJAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기안녕하세요.\n이번에 소개할 내용은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 입니다.\nJDBC란 JAVA와 디비를 연결해 사용해줄수 있게 해주는 다리 역할로\nOracle, MySql, PostgreSql, MS-SQL, MariaDB….등등 수많은 DB가 있습니다.\n이런 수많은 디비들을 다 개발자가 관리하며 접속하는것이 힘들기 때문에\nJDBC가 중간 역할로 하나의 공통 메소드를 사용하여 어떤 DB를 사용해도\n똑같은 메소드로 공통 처리가 가능하게 해주는 역할을 합니다.\n그러면 이제 MariaDB를 어떻게하면 JAVA에서 사용가능한지 해보도록 하겠습니다.\n우선 MariaDB를 사용하기 위해선 드라이버를 다운로드 받으셔야만 합니다.\n아래의 링크에서 드라이버를 다운받아 주세요.\nhttps://downloads.mariadb.org/connector-java/\n다운로드 방법은 아래의 캡쳐를 보고 따라하시면 됩니다.\n\n다운로드 버튼을 누르시면 아래의 페이지로 이동을 하게 되며\njar 파일을 두종류로 나눠져서 다운로드가 가능 합니다.\n소스를 포함한 jar을 다운로드 할것인지 이경우는 소스를 전부 포함하고 있기에 용량이 큽니다.\n다음은 소스를 포함하지 않은 DB를 사용하기 위한 jar파일 입니다.\n어느것을 다운로드 받아도 사용하는데는 지장은 없기때문에 저는 소스가 포함되지 않은 jar을 다운받겠습니다.\n파일명을 클릭하시기 바랍니다.\n\n아래의 페이지로 이동을 하시면 mariadb-java-client-2.6.0.jar 을 클릭하시어 다운로드 받습니다.\n\n다운로드가 되셨으면 이클립스를 실행하시기 바랍니다.\n\n이클립스를 실행하시고 기존에 만들어둔 프로젝트에서 jar 파일을 넣어둘 폴더를 추가하도록 하겠습니다.\n\n\n폴더명은 lib로 입력후 finish버튼을 눌러주세요.\n\nlib폴더가 추가 된것을 확인할수 있습니다.\n다운로드 받으신 mariadb-java-client-2.6.0.jar 파일을 Ctrl + X키로 잘라내신후\n이클립스의 lib폴더에 붙여넣어주시기 바랍니다.\n\n\nlib폴더에 mariadb-java-client-2.6.0.jar 파일이 추가된것을 확인할수 있습니다.\n\n이젠 추가한 jar파일을 빌드패스에 등록해 줍니다.\n\nmariadb-java-client-2.6.0.jar를 빌드패스로 추가했습니다.\n이렇게해서 JAVA에서 MariaDB를 사용할수 있게 되었습니다.\n그러면 JDBC를 이용해서 MariaDB에 접속후 Select, Insert, Update, Delete를 해보도록 하겠습니다만\n우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.\n아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.\n\n우선 DB에 간단한 테이블을 만들어 보도록 하겠습니다.\nphpMyAdmin에 로그인을 해주시기 바랍니다.\n\n로그인을 하셨으면 New링크를 누르시고 데이터베이스를 추가를 하도록 하겠습니다.\n\n데이터베이스명과 utf8mb4_unicode_ci를 선택하시고 만들기 버튼을 눌러주세요.\n\n데이터베이스가 추가된것을 보실수 있습니다.\n이젠 간단한 테이블을 만들어 보도록 하겠습니다.\n\n테이블명은 test, 컬럼은 이름,나이,생년월일을 만들것이기에 3개로 지정후 실행을 눌러주세요.\n\n컬럼을 위와같이 설정후 저장을 눌러주세요.\n\n테이블이 추가가 되었습니다.\n그럼 다시 이클립스로 돌아오셔서 본격적으로 코딩을 시작하도록 하겠습니다.\n아래와같이 5개의 클래스파일을 만들도록 하겠습니다.\n12345TestConnection.javaTestInsert.javaTestSelect.javaTestUpdate.javaTestDelete.java\n\n5개의 클래스파일 전부 위와같이 세팅후 추가를 해주시기 바랍니다.\n\n클래스파일을 전부 추가한 상태 입니다.\n이제 TestConnection.java부터 코딩을 하며 추가한 데이터베이스에 연결이 되는지 확인하도록 하겠습니다.\n12345678910111213141516171819202122232425262728293031323334import java.sql.Connection;import java.sql.DriverManager;import java.sql.SQLException;public class TestConnection &#123;\tpublic static void main(String[] args) &#123;\t\tConnection conn = null;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://10.0.1.30/akibatv&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;akibatv&quot;, &quot;akibatv&quot;);      System.out.println(&quot;DB 연결 성공&quot;);\t\t&#125; catch (ClassNotFoundException e)&#123;      System.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);    &#125; catch (SQLException e) &#123;      System.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);    &#125; finally &#123;\t    try &#123;\t\t\t\tif (conn != null) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\n코딩을 하셨으면 DB에 연결이 되는지 확인을 해보도록 하겠습니다. 상단의 ▶를 눌러주셔서 실행을 합니다.\n\n실행을 하시면 위와같이 DB 연결 성공이라고 나오게 됩니다.\n그럼 테이블에 간단한 데이터를 Insert 해보도록 하겠습니다.\nTestInsert.java를 열어주시기 바랍니다.\n그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758import java.sql.Connection;import java.sql.DriverManager;import java.sql.PreparedStatement;import java.sql.SQLException;public class TestInsert &#123;\tpublic static void main(String[] args) &#123;\t\tConnection conn = null;\t\tPreparedStatement pstmt = null;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://10.0.1.30/akibatv&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;akibatv&quot;, &quot;akibatv&quot;);\t\t\tSystem.out.println(&quot;DB 연결 성공&quot;);\t\t\t// Insert문 ?부분은 아래의 입력값이 자동으로 변환이 됩니다.\t\t\tString sql = &quot; INSERT INTO test VALUES (?,?,?) &quot;;\t\t\tpstmt = conn.prepareStatement(sql);\t\t\tint index = 1;\t\t\t// Insert 데이터값\t\t\t// 이름은 String형태 TEST\t\t\tpstmt.setString(index++, &quot;TEST&quot;);\t\t\t// 나이는 Int형태 99살\t\t\tpstmt.setInt(index++, 99);\t\t\t// 나이는 String형태 20200607\t\t\tpstmt.setString(index++, &quot;20200607&quot;);\t\t\t// SQL실행\t\t\tint count = pstmt.executeUpdate();\t\t\tif (count == 0) &#123;\t\t\t\tSystem.out.println(&quot;데이터값에 이상이 있습니다.&quot;);\t\t\t&#125; else &#123;\t\t\t\tSystem.out.println(&quot;데이터 Insert 성공!&quot;);\t\t\t&#125;\t\t&#125; catch (ClassNotFoundException e)&#123;\t\t\tSystem.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\nDB연결과 데이터 Insert가 성공했다고 출력 됩니다.\n그럼 정상적으로 데이터가 들어갔는지 phpMyAdmin에서 확인해 보도록 하겠습니다.\n\nphpMyAdmin에서도 데이터가 정상적으로 등록된것을 확인할수가 있습니다.\n그럼 이번에는 등록한 데이터를 출력하는 Select를 해보도록 하겠습니다.\nTestSelect.java를 열어주시기 바랍니다.\n그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556import java.sql.Connection;import java.sql.DriverManager;import java.sql.ResultSet;import java.sql.SQLException;import java.sql.Statement;public class TestSelect &#123;\tpublic static void main(String[] args) &#123;\t\tConnection conn = null;\t\tStatement stmt = null;    ResultSet rs = null;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://10.0.1.30/akibatv&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;akibatv&quot;, &quot;akibatv&quot;);\t\t\tSystem.out.println(&quot;DB 연결 성공&quot;);\t\t\t// Select 쿼리문\t\t\tString sql = &quot; SELECT name, age, birthday FROM test &quot;;\t\t\t// 객체 생성\t\t\tstmt = conn.createStatement();\t\t\t// SQL실행\t\t\trs = stmt.executeQuery(sql);\t\t\t// 결과값 출력\t\t\twhile (rs.next()) &#123;\t\t\t\tString name = rs.getString(1);\t\t\t\tString age = rs.getString(2);\t\t\t\tString birthday = rs.getString(3);\t\t\t\tSystem.out.println(&quot;이름 : &quot; + name);\t\t\t\tSystem.out.println(&quot;나이 : &quot; + age);\t\t\t\tSystem.out.println(&quot;생년월일 : &quot; + birthday);\t\t\t&#125;\t\t&#125; catch (ClassNotFoundException e)&#123;\t\t\tSystem.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\nDB연결과 Select가 성공후 콘솔창에 내용이 출력된것을 확인할수 있습니다.\n그럼 이번에는 등록한 데이터를 출력하는 Update를 해보도록 하겠습니다.\nTestUpdate.java를 열어주시기 바랍니다.\n그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import java.sql.Connection;import java.sql.DriverManager;import java.sql.PreparedStatement;import java.sql.SQLException;public class TestUpdate &#123;\tpublic static void main(String[] args) &#123;\t\tConnection conn = null;\t\tPreparedStatement pstmt = null;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://10.0.1.30/akibatv&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;akibatv&quot;, &quot;akibatv&quot;);\t\t\tSystem.out.println(&quot;DB 연결 성공&quot;);\t\t\t// Update 쿼리문\t\t\tString sql = &quot; UPDATE test SET name = ?, age = ?, birthday = ? &quot;;\t\t\t// 객체 생성과 쿼리문을 넘겨줍니다.\t\t\tpstmt = conn.prepareStatement(sql);\t\t\tint index = 1;\t\t\t// Update 데이터값\t\t\t// 이름은 String형태 AkibaTV\t\t\tpstmt.setString(index++, &quot;AkibaTV&quot;);\t\t\t// 나이는 Int형태 15살\t\t\tpstmt.setInt(index++, 15);\t\t\t// 나이는 String형태 19990101\t\t\tpstmt.setString(index++, &quot;19990101&quot;);\t\t\t// SQL실행\t\t\tint count = pstmt.executeUpdate();\t\t\tif (count == 0) &#123;\t\t\t\tSystem.out.println(&quot;데이터값에 이상이 있습니다.&quot;);\t\t\t&#125; else &#123;\t\t\t\tSystem.out.println(&quot;데이터 Update 성공!&quot;);\t\t\t&#125;\t\t&#125; catch (ClassNotFoundException e)&#123;\t\t\tSystem.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\nDB연결과 데이터 Update가 성공했다고 출력 됩니다.\n그럼 정상적으로 데이터가 갱신이 되었는지 phpMyAdmin에서 확인해 보도록 하겠습니다.\n\nphpMyAdmin에서도 정상적으로 데이터가 갱신된것을 확인하실수 있습니다.\n그럼 이번에는 마지막으로 데이터를 삭제하는 Delete를 해보도록 하겠습니다.\nTestDelete.java를 열어주시기 바랍니다.\n그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import java.sql.Connection;import java.sql.DriverManager;import java.sql.PreparedStatement;import java.sql.SQLException;public class TestDelete &#123;\tpublic static void main(String[] args) &#123;\t\tConnection conn = null;\t\tPreparedStatement pstmt = null;\t\ttry &#123;\t\t\t// mariaDB 드라이버 설정\t\t\tClass.forName(&quot;org.mariadb.jdbc.Driver&quot;);\t\t\t// 접속할 DB주소 설정\t\t\tString url = &quot;jdbc:mysql://10.0.1.30/akibatv&quot;;\t\t\t// 접속할 아이디, 비밀번호 설정\t\t\tconn = DriverManager.getConnection(url, &quot;akibatv&quot;, &quot;akibatv&quot;);\t\t\tSystem.out.println(&quot;DB 연결 성공&quot;);\t\t\t// Update 쿼리문\t\t\tString sql = &quot; DELETE FROM test WHERE name = ? &quot;;\t\t\t// 객체 생성과 쿼리문을 넘겨줍니다.\t\t\tpstmt = conn.prepareStatement(sql);\t\t\tint index = 1;\t\t\t// Delete 데이터값\t\t\tpstmt.setString(index++, &quot;AkibaTV&quot;);\t\t\t// SQL실행\t\t\tint count = pstmt.executeUpdate();\t\t\tif (count == 0) &#123;\t\t\t\tSystem.out.println(&quot;데이터값에 이상이 있습니다.&quot;);\t\t\t&#125; else &#123;\t\t\t\tSystem.out.println(&quot;데이터 Delete 성공!&quot;);\t\t\t&#125;\t\t&#125; catch (ClassNotFoundException e)&#123;\t\t\tSystem.out.println(&quot;mariaDB Driver를 찾을수 없습니다.&quot;);\t\t&#125; catch (SQLException e) &#123;\t\t\tSystem.out.println(&quot;Database 연결중 에러가 발생 했습니다.&quot;);\t\t&#125; finally &#123;\t\t\ttry &#123;\t\t\t\tif (conn != null) &#123;\t\t\t\t\tconn.close();\t\t\t\t&#125;\t\t\t&#125; catch (SQLException e) &#123;\t\t\t\te.printStackTrace();\t\t\t&#125;\t\t&#125;\t&#125;&#125;\n\nDB연결과 데이터 Delete가 성공했다고 출력 됩니다.\n그럼 정상적으로 데이터가 삭제가 되었는지 phpMyAdmin에서 확인해 보도록 하겠습니다.\n\nphpMyAdmin에서도 정상적으로 데이터가 삭제된것을 확인하실수 있습니다.","dateCreated":"2020-06-10T01:00:00+09:00","dateModified":"2020-12-26T22:53:38+09:00","datePublished":"2020-06-10T01:00:00+09:00","description":"\nJAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기이번에 소개할 내용은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 입니다.","headline":"JAVA에서 JDBC를 이용해 MariaDB 사용해 보기","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/10/java/java-008/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/10/java/java-008/","keywords":"MariaDB, NPM, phpMyAdmin, Java, connection, delete, insert, select, update, jar, jdk, 이클립스, eclipse, jre, Open JDK, Oracle, Oracle JDK, Oracle JRE, 오라클, sql, JDBC, lib","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="JAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기이번에 소개할 내용은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JAVA에서 JDBC를 이용해 MariaDB 사용해 보기">
+<meta property="og:url" content="https://playneko.github.io/2020/06/10/java/java-008/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="JAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기이번에 소개할 내용은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/001-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/002-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/003-8.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/004-7.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/005-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/006-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/007-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/008-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/009-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/010-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/011-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/012-5.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/013-6.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/014-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/015-3.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/016-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/017-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/018-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/019-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/020-4.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/021-1-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/022-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/023-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/024-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/025-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/026-2.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/027.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/028-1.png">
+<meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/029-1.png">
+<meta property="article:published_time" content="2020-06-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T13:53:38.568Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="phpMyAdmin">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="connection">
+<meta property="article:tag" content="delete">
+<meta property="article:tag" content="insert">
+<meta property="article:tag" content="select">
+<meta property="article:tag" content="update">
+<meta property="article:tag" content="jar">
+<meta property="article:tag" content="jdk">
+<meta property="article:tag" content="이클립스">
+<meta property="article:tag" content="eclipse">
+<meta property="article:tag" content="jre">
+<meta property="article:tag" content="Open JDK">
+<meta property="article:tag" content="Oracle">
+<meta property="article:tag" content="Oracle JDK">
+<meta property="article:tag" content="Oracle JRE">
+<meta property="article:tag" content="오라클">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="JDBC">
+<meta property="article:tag" content="lib">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/10/java/java-008/001-8.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/10/java/java-008/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/10/java/java-008/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            JAVA에서 JDBC를 이용해 MariaDB 사용해 보기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-10T01:00:00+09:00">
+	
+		    2020/06/10 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="JAVA프로그램에서-JDBC를-이용해-MariaDB-사용해-보기"><a href="#JAVA프로그램에서-JDBC를-이용해-MariaDB-사용해-보기" class="headerlink" title="JAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기"></a>JAVA프로그램에서 JDBC를 이용해 MariaDB 사용해 보기</h2><p>안녕하세요.</p>
+<p>이번에 소개할 내용은 JAVA에서 JDBC를 이용해 MariaDB 사용해 보기 입니다.</p>
+<p>JDBC란 JAVA와 디비를 연결해 사용해줄수 있게 해주는 다리 역할로</p>
+<p>Oracle, MySql, PostgreSql, MS-SQL, MariaDB….등등 수많은 DB가 있습니다.</p>
+<p>이런 수많은 디비들을 다 개발자가 관리하며 접속하는것이 힘들기 때문에</p>
+<p>JDBC가 중간 역할로 하나의 공통 메소드를 사용하여 어떤 DB를 사용해도</p>
+<p>똑같은 메소드로 공통 처리가 가능하게 해주는 역할을 합니다.</p>
+<p>그러면 이제 MariaDB를 어떻게하면 JAVA에서 사용가능한지 해보도록 하겠습니다.</p>
+<p>우선 MariaDB를 사용하기 위해선 드라이버를 다운로드 받으셔야만 합니다.</p>
+<p>아래의 링크에서 드라이버를 다운받아 주세요.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://downloads.mariadb.org/connector-java/">https://downloads.mariadb.org/connector-java/</a></p>
+<p>다운로드 방법은 아래의 캡쳐를 보고 따라하시면 됩니다.</p>
+<p><img src="001-8.png" alt="image"></p>
+<p>다운로드 버튼을 누르시면 아래의 페이지로 이동을 하게 되며</p>
+<p>jar 파일을 두종류로 나눠져서 다운로드가 가능 합니다.</p>
+<p>소스를 포함한 jar을 다운로드 할것인지 이경우는 소스를 전부 포함하고 있기에 용량이 큽니다.</p>
+<p>다음은 소스를 포함하지 않은 DB를 사용하기 위한 jar파일 입니다.</p>
+<p>어느것을 다운로드 받아도 사용하는데는 지장은 없기때문에 저는 소스가 포함되지 않은 jar을 다운받겠습니다.</p>
+<p>파일명을 클릭하시기 바랍니다.</p>
+<p><img src="002-7.png" alt="image"></p>
+<p>아래의 페이지로 이동을 하시면 mariadb-java-client-2.6.0.jar 을 클릭하시어 다운로드 받습니다.</p>
+<p><img src="003-8.png" alt="image"></p>
+<p>다운로드가 되셨으면 이클립스를 실행하시기 바랍니다.</p>
+<p><img src="004-7.png" alt="image"></p>
+<p>이클립스를 실행하시고 기존에 만들어둔 프로젝트에서 jar 파일을 넣어둘 폴더를 추가하도록 하겠습니다.</p>
+<p><img src="005-6.png" alt="image"></p>
+<p><img src="006-6.png" alt="image"></p>
+<p>폴더명은 lib로 입력후 finish버튼을 눌러주세요.</p>
+<p><img src="007-6.png" alt="image"></p>
+<p>lib폴더가 추가 된것을 확인할수 있습니다.</p>
+<p>다운로드 받으신 mariadb-java-client-2.6.0.jar 파일을 Ctrl + X키로 잘라내신후</p>
+<p>이클립스의 lib폴더에 붙여넣어주시기 바랍니다.</p>
+<p><img src="008-6.png" alt="image"></p>
+<p><img src="009-5.png" alt="image"></p>
+<p>lib폴더에 mariadb-java-client-2.6.0.jar 파일이 추가된것을 확인할수 있습니다.</p>
+<p><img src="010-5.png" alt="image"></p>
+<p>이젠 추가한 jar파일을 빌드패스에 등록해 줍니다.</p>
+<p><img src="011-5.png" alt="image"></p>
+<p>mariadb-java-client-2.6.0.jar를 빌드패스로 추가했습니다.</p>
+<p>이렇게해서 JAVA에서 MariaDB를 사용할수 있게 되었습니다.</p>
+<p>그러면 JDBC를 이용해서 MariaDB에 접속후 Select, Insert, Update, Delete를 해보도록 하겠습니다만</p>
+<p>우선 MariaDB에 테이블을 생성을 하도록 하겠습니다.</p>
+<p>아직 환경이나 DB가 설치가 안되어 있으신 분은 라즈베리파이 또는 리눅스에서 NPM (Nginx + PHP + MariaDB) 설치하기를 참고해주시기 바랍니다.</p>
+<p><img src="012-5.png" alt="image"></p>
+<p>우선 DB에 간단한 테이블을 만들어 보도록 하겠습니다.</p>
+<p>phpMyAdmin에 로그인을 해주시기 바랍니다.</p>
+<p><img src="013-6.png" alt="image"></p>
+<p>로그인을 하셨으면 New링크를 누르시고 데이터베이스를 추가를 하도록 하겠습니다.</p>
+<p><img src="014-3.png" alt="image"></p>
+<p>데이터베이스명과 utf8mb4_unicode_ci를 선택하시고 만들기 버튼을 눌러주세요.</p>
+<p><img src="015-3.png" alt="image"></p>
+<p>데이터베이스가 추가된것을 보실수 있습니다.</p>
+<p>이젠 간단한 테이블을 만들어 보도록 하겠습니다.</p>
+<p><img src="016-4.png" alt="image"></p>
+<p>테이블명은 test, 컬럼은 이름,나이,생년월일을 만들것이기에 3개로 지정후 실행을 눌러주세요.</p>
+<p><img src="017-4.png" alt="image"></p>
+<p>컬럼을 위와같이 설정후 저장을 눌러주세요.</p>
+<p><img src="018-4.png" alt="image"></p>
+<p>테이블이 추가가 되었습니다.</p>
+<p>그럼 다시 이클립스로 돌아오셔서 본격적으로 코딩을 시작하도록 하겠습니다.</p>
+<p>아래와같이 5개의 클래스파일을 만들도록 하겠습니다.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TestConnection.java</span><br><span class="line">TestInsert.java</span><br><span class="line">TestSelect.java</span><br><span class="line">TestUpdate.java</span><br><span class="line">TestDelete.java</span><br></pre></td></tr></table></figure>
+<p><img src="019-4.png" alt="image"></p>
+<p>5개의 클래스파일 전부 위와같이 세팅후 추가를 해주시기 바랍니다.</p>
+<p><img src="020-4.png" alt="image"></p>
+<p>클래스파일을 전부 추가한 상태 입니다.</p>
+<p>이제 TestConnection.java부터 코딩을 하며 추가한 데이터베이스에 연결이 되는지 확인하도록 하겠습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestConnection</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://10.0.1.30/akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;akibatv&quot;</span>, <span class="string">&quot;akibatv&quot;</span>);</span><br><span class="line">      System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	    <span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="021-1-1.png" alt="image"></p>
+<p>코딩을 하셨으면 DB에 연결이 되는지 확인을 해보도록 하겠습니다. 상단의 ▶를 눌러주셔서 실행을 합니다.</p>
+<p><img src="022-2.png" alt="image"></p>
+<p>실행을 하시면 위와같이 DB 연결 성공이라고 나오게 됩니다.</p>
+<p>그럼 테이블에 간단한 데이터를 Insert 해보도록 하겠습니다.</p>
+<p>TestInsert.java를 열어주시기 바랍니다.</p>
+<p>그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInsert</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		PreparedStatement pstmt = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://10.0.1.30/akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;akibatv&quot;</span>, <span class="string">&quot;akibatv&quot;</span>);</span><br><span class="line">			System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Insert문 ?부분은 아래의 입력값이 자동으로 변환이 됩니다.</span></span><br><span class="line">			String sql = <span class="string">&quot; INSERT INTO test VALUES (?,?,?) &quot;</span>;</span><br><span class="line">			pstmt = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// Insert 데이터값</span></span><br><span class="line">			<span class="comment">// 이름은 String형태 TEST</span></span><br><span class="line">			pstmt.setString(index++, <span class="string">&quot;TEST&quot;</span>);</span><br><span class="line">			<span class="comment">// 나이는 Int형태 99살</span></span><br><span class="line">			pstmt.setInt(index++, <span class="number">99</span>);</span><br><span class="line">			<span class="comment">// 나이는 String형태 20200607</span></span><br><span class="line">			pstmt.setString(index++, <span class="string">&quot;20200607&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			<span class="keyword">int</span> count = pstmt.executeUpdate();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터값에 이상이 있습니다.&quot;</span>);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터 Insert 성공!&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="023-2.png" alt="image"></p>
+<p>DB연결과 데이터 Insert가 성공했다고 출력 됩니다.</p>
+<p>그럼 정상적으로 데이터가 들어갔는지 phpMyAdmin에서 확인해 보도록 하겠습니다.</p>
+<p><img src="024-2.png" alt="image"></p>
+<p>phpMyAdmin에서도 데이터가 정상적으로 등록된것을 확인할수가 있습니다.</p>
+<p>그럼 이번에는 등록한 데이터를 출력하는 Select를 해보도록 하겠습니다.</p>
+<p>TestSelect.java를 열어주시기 바랍니다.</p>
+<p>그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSelect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">    ResultSet rs = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://10.0.1.30/akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;akibatv&quot;</span>, <span class="string">&quot;akibatv&quot;</span>);</span><br><span class="line">			System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Select 쿼리문</span></span><br><span class="line">			String sql = <span class="string">&quot; SELECT name, age, birthday FROM test &quot;</span>;</span><br><span class="line">			<span class="comment">// 객체 생성</span></span><br><span class="line">			stmt = conn.createStatement();</span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			rs = stmt.executeQuery(sql);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 결과값 출력</span></span><br><span class="line">			<span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">				String name = rs.getString(<span class="number">1</span>);</span><br><span class="line">				String age = rs.getString(<span class="number">2</span>);</span><br><span class="line">				String birthday = rs.getString(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">				System.out.println(<span class="string">&quot;이름 : &quot;</span> + name);</span><br><span class="line">				System.out.println(<span class="string">&quot;나이 : &quot;</span> + age);</span><br><span class="line">				System.out.println(<span class="string">&quot;생년월일 : &quot;</span> + birthday);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="025-2.png" alt="image"></p>
+<p>DB연결과 Select가 성공후 콘솔창에 내용이 출력된것을 확인할수 있습니다.</p>
+<p>그럼 이번에는 등록한 데이터를 출력하는 Update를 해보도록 하겠습니다.</p>
+<p>TestUpdate.java를 열어주시기 바랍니다.</p>
+<p>그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestUpdate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		PreparedStatement pstmt = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://10.0.1.30/akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;akibatv&quot;</span>, <span class="string">&quot;akibatv&quot;</span>);</span><br><span class="line">			System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Update 쿼리문</span></span><br><span class="line">			String sql = <span class="string">&quot; UPDATE test SET name = ?, age = ?, birthday = ? &quot;</span>;</span><br><span class="line">			<span class="comment">// 객체 생성과 쿼리문을 넘겨줍니다.</span></span><br><span class="line">			pstmt = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// Update 데이터값</span></span><br><span class="line">			<span class="comment">// 이름은 String형태 AkibaTV</span></span><br><span class="line">			pstmt.setString(index++, <span class="string">&quot;AkibaTV&quot;</span>);</span><br><span class="line">			<span class="comment">// 나이는 Int형태 15살</span></span><br><span class="line">			pstmt.setInt(index++, <span class="number">15</span>);</span><br><span class="line">			<span class="comment">// 나이는 String형태 19990101</span></span><br><span class="line">			pstmt.setString(index++, <span class="string">&quot;19990101&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			<span class="keyword">int</span> count = pstmt.executeUpdate();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터값에 이상이 있습니다.&quot;</span>);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터 Update 성공!&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="026-2.png" alt="image"></p>
+<p>DB연결과 데이터 Update가 성공했다고 출력 됩니다.</p>
+<p>그럼 정상적으로 데이터가 갱신이 되었는지 phpMyAdmin에서 확인해 보도록 하겠습니다.</p>
+<p><img src="027.png" alt="image"></p>
+<p>phpMyAdmin에서도 정상적으로 데이터가 갱신된것을 확인하실수 있습니다.</p>
+<p>그럼 이번에는 마지막으로 데이터를 삭제하는 Delete를 해보도록 하겠습니다.</p>
+<p>TestDelete.java를 열어주시기 바랍니다.</p>
+<p>그리고 아래와 같이 코딩을 하시고 상단의 ▶를 눌러주셔서 실행을 합니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDelete</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		PreparedStatement pstmt = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// mariaDB 드라이버 설정</span></span><br><span class="line">			Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 DB주소 설정</span></span><br><span class="line">			String url = <span class="string">&quot;jdbc:mysql://10.0.1.30/akibatv&quot;</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 접속할 아이디, 비밀번호 설정</span></span><br><span class="line">			conn = DriverManager.getConnection(url, <span class="string">&quot;akibatv&quot;</span>, <span class="string">&quot;akibatv&quot;</span>);</span><br><span class="line">			System.out.println(<span class="string">&quot;DB 연결 성공&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Update 쿼리문</span></span><br><span class="line">			String sql = <span class="string">&quot; DELETE FROM test WHERE name = ? &quot;</span>;</span><br><span class="line">			<span class="comment">// 객체 생성과 쿼리문을 넘겨줍니다.</span></span><br><span class="line">			pstmt = conn.prepareStatement(sql);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">			<span class="comment">// Delete 데이터값</span></span><br><span class="line">			pstmt.setString(index++, <span class="string">&quot;AkibaTV&quot;</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// SQL실행</span></span><br><span class="line">			<span class="keyword">int</span> count = pstmt.executeUpdate();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터값에 이상이 있습니다.&quot;</span>);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;데이터 Delete 성공!&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e)&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;mariaDB Driver를 찾을수 없습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Database 연결중 에러가 발생 했습니다.&quot;</span>);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">					conn.close();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="028-1.png" alt="image"></p>
+<p>DB연결과 데이터 Delete가 성공했다고 출력 됩니다.</p>
+<p>그럼 정상적으로 데이터가 삭제가 되었는지 phpMyAdmin에서 확인해 보도록 하겠습니다.</p>
+<p><img src="029-1.png" alt="image"></p>
+<p>phpMyAdmin에서도 정상적으로 데이터가 삭제된것을 확인하실수 있습니다.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/JDBC/" rel="tag">JDBC</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Java/" rel="tag">Java</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/MariaDB/" rel="tag">MariaDB</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/NPM/" rel="tag">NPM</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Open-JDK/" rel="tag">Open JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle/" rel="tag">Oracle</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JDK/" rel="tag">Oracle JDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Oracle-JRE/" rel="tag">Oracle JRE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/connection/" rel="tag">connection</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/delete/" rel="tag">delete</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/eclipse/" rel="tag">eclipse</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/insert/" rel="tag">insert</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jar/" rel="tag">jar</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jdk/" rel="tag">jdk</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/jre/" rel="tag">jre</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/lib/" rel="tag">lib</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/phpMyAdmin/" rel="tag">phpMyAdmin</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/select/" rel="tag">select</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/sql/" rel="tag">sql</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/update/" rel="tag">update</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%98%A4%EB%9D%BC%ED%81%B4/" rel="tag">오라클</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4/" rel="tag">이클립스</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/10/java/java-008/';
+              
+            this.page.identifier = '2020/06/10/java/java-008/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>
