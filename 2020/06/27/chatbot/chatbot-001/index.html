@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+    <title>라인(Line) 로그인 API 사용법과 개요 설명 - 여러가지 개발정보를 공유하는 블로그 입니다.</title>
+    <meta name="author" content="Playneko">
+    
+        <meta name="keywords" content="Android,API,E메일,iOS,line,LINE STORE,OAuth,Objective-C,OpenID,QR,SDK,Swift,Unity,네이버,라인,로그인,스마트폰,통합채널">
+    
+    
+    
+        
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss2.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png"},"articleBody":"\n라인(Line) 로그인 API 사용법과 개요 설명안녕하세요. AkibaTV입니다.\n이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.\n라인이라면 한번쯤 들어보셨을 겁니다.\n네이버가 지분 50%이상 가지고 있는 라인이란 회사 입니다.\n이번에 라인(Line) API 사용법에 들어가기 전에\n가장 기본적인 로그인 API에 대한 개요를 알아보도록 하겠습니다.\n개요에 대한 내용은 공식 사이트에 개재되어 있습니다.\nLINEログインの概要\nLINE 로그인을 웹 애플리케이션과 네이티브 응용 프로그램에 통합하면 사용자가 LINE 로그인을 사용할 수있게됩니다.\n사용자가 LINE 로그인을 사용하면 웹 응용 프로그램과 네이티브 응용 프로그램에서 사용할 사용자 계정을 사용자의 LINE 계정에서 쉽게 만들 수 있습니다.\nLINE 로그인은 웹 응용 프로그램, iOS 앱, Android 어플리케이션 또는 Unity 게임에 통합 할수 있습니다.\n시작하기응용 프로그램의 종류에 관계없이 LINE 로그인 채널을 만듭니다. 자세한 내용은 “LINE 로그인을 이용하려면“을 참조하십시오.\n웹 응용 프로그램에 LINE 로그인을 통합LINE 로그인을 당신의 웹 응용 프로그램에 통합하여 사용자가 쉽게 계정을 생성하여 로그인 할 수 있습니다.\n사용자가 장치의 LINE에 로그인 한 경우, LINE 로그인을 사용하여 자동으로 당신이 개발 한 웹 응용 프로그램에 로그인 할 수 있습니다.\n인증및 권한부여 프로세스는 OAuth 2.0 과 OpenID® Connect 프로토콜을 기반으로합니다.\n자세한 내용은 “웹 응용 프로그램에 LINE 로그인을 통합“을 참조하십시오.\nLINE 로그인하여 개선하는 사용자 경험을 예로 LINE STORE 웹 사이트를 참고하십시오.\n\n네이티브 앱에 LINE 로그인을 통합LINE SDK를 사용하여 LINE 로그인 앱에 통합하면, LINE에서 사용자 인증을 처리 할 수 ​​있습니다.\n사용자가 장치의 LINE에 로그인되어 있다면, 사용자는 E메일 주소와 암호를 입력하지 않고 안드로이드에 로그인 할 수 있습니다.\nAndroid, iOS (Swift 및 Objective-C), Unity용 SDK를 사용할 수 있습니다.\n\nLINE SDK for iOS Swift 개요\nLINE SDK for iOS Objective-C의 개요\nLINE SDK for Android 개요\nLINE SDK for Unity 개요\nLINE SDK for Flutter\n\nLINE 로그인 인증 방법LINE 로그인이 내장 된 앱은 다음 중 하나의 인증 방식으로 로그인 할 수 있습니다.\n\n\n\n인증 방법\n설명\n\n\n\n자동 로그인\n사용자 개입없이 로그인. LINE 로그인 및 확인 화면이 표시되지 않습니다\n\n\n이메일 주소 로그인\nLINE 로그인 화면에 이메일 주소와 비밀번호를 입력하여 로그인\n\n\nQR 코드 로그인\nLINE 로그인 화면에 표시된 QR 코드를 스마트폰 버전 LINE의 QR 코드 리더로 스캔하여 로그인\n\n\n싱글 사인온 (SSO)으로 로그인\n다음 계정으로 로그인 하라고 표시된 확인 화면에서 로그인 버튼을 클릭하여 로그인\n\n\n인증 방법당 조건과 실제로 표시되는 화면 내용은 “인증 프로세스“를 참조하십시오.\n다음 단계LINE 로그인 앱에 통합 채널을 생성해야합니다. 작성 지침 “LINE 로그인을 이용하려면“을 참조하십시오.","dateCreated":"2020-06-27T01:00:00+09:00","dateModified":"2020-12-27T11:43:36+09:00","datePublished":"2020-06-27T01:00:00+09:00","description":"\n라인(Line) 로그인 API 사용법과 개요 설명이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.","headline":"라인(Line) 로그인 API 사용법과 개요 설명","image":["000.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://playneko.github.io/2020/06/27/chatbot/chatbot-001/"},"publisher":{"@type":"Organization","name":"Playneko","sameAs":["https://github.com/playneko"],"image":"image.png","logo":{"@type":"ImageObject","url":"image.png"}},"url":"https://playneko.github.io/2020/06/27/chatbot/chatbot-001/","keywords":"API, 네이버, Android, E메일, iOS, line, LINE STORE, OAuth, Objective-C, OpenID, QR, SDK, Swift, Unity, 라인, 로그인, 스마트폰, 통합채널","thumbnailUrl":"000.png"}</script>
+    <meta name="description" content="라인(Line) 로그인 API 사용법과 개요 설명이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="라인(Line) 로그인 API 사용법과 개요 설명">
+<meta property="og:url" content="https://playneko.github.io/2020/06/27/chatbot/chatbot-001/index.html">
+<meta property="og:site_name" content="여러가지 개발정보를 공유하는 블로그 입니다.">
+<meta property="og:description" content="라인(Line) 로그인 API 사용법과 개요 설명이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://playneko.github.io/2020/06/27/chatbot/chatbot-001/001-20.png">
+<meta property="article:published_time" content="2020-06-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-27T02:43:36.048Z">
+<meta property="article:author" content="Playneko">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="네이버">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="E메일">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="line">
+<meta property="article:tag" content="LINE STORE">
+<meta property="article:tag" content="OAuth">
+<meta property="article:tag" content="Objective-C">
+<meta property="article:tag" content="OpenID">
+<meta property="article:tag" content="QR">
+<meta property="article:tag" content="SDK">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="Unity">
+<meta property="article:tag" content="라인">
+<meta property="article:tag" content="로그인">
+<meta property="article:tag" content="스마트폰">
+<meta property="article:tag" content="통합채널">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://playneko.github.io/2020/06/27/chatbot/chatbot-001/001-20.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/assets/images/image.png">
+    
+    
+        <meta property="og:image" content="https://playneko.github.io/2020/06/27/chatbot/chatbot-001/000.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://playneko.github.io/2020/06/27/chatbot/chatbot-001/000.png">
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-lzdpinkjkfznsdiewiiijzmxokzrox4doj5jzhb6hid0rnf6y9ru29jnd5cl.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/" aria-label>
+            여러가지 개발정보를 공유하는 블로그 입니다.
+        </a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about" aria-label="링크 열기: /#about">
+        
+        
+            <img class="header-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about" aria-label="저자에 대해 더 알아보기">
+                    <img class="sidebar-profile-picture" src="/assets/images/image.png" alt="저자 이미지">
+                </a>
+                <h4 class="sidebar-profile-name">Playneko</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" rel="noopener" title="Home">
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" rel="noopener" title="카테고리">
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" rel="noopener" title="태그">
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" rel="noopener" title="아카이브">
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link open-algolia-search" href="#search" rel="noopener" title="검색">
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">검색</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="#about" rel="noopener" title="About">
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/playneko" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/atom.xml" rel="noopener" title="RSS">
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4" class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-center">
+    
+        <h1 class="post-title">
+            라인(Line) 로그인 API 사용법과 개요 설명
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-27T01:00:00+09:00">
+	
+		    2020/06/27 01:00
+    	
+    </time>
+    
+        <span>카테고리 </span>
+        
+    <a class="category-link" href="/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+            <!-- excerpt -->
+<h2 id="라인-Line-로그인-API-사용법과-개요-설명"><a href="#라인-Line-로그인-API-사용법과-개요-설명" class="headerlink" title="라인(Line) 로그인 API 사용법과 개요 설명"></a>라인(Line) 로그인 API 사용법과 개요 설명</h2><p>안녕하세요. AkibaTV입니다.</p>
+<p>이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.</p>
+<p>라인이라면 한번쯤 들어보셨을 겁니다.</p>
+<p>네이버가 지분 50%이상 가지고 있는 라인이란 회사 입니다.</p>
+<p>이번에 라인(Line) API 사용법에 들어가기 전에</p>
+<p>가장 기본적인 로그인 API에 대한 개요를 알아보도록 하겠습니다.</p>
+<p>개요에 대한 내용은 공식 사이트에 개재되어 있습니다.</p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/overview/#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">LINEログインの概要</a></p>
+<p>LINE 로그인을 웹 애플리케이션과 네이티브 응용 프로그램에 통합하면 사용자가 LINE 로그인을 사용할 수있게됩니다.</p>
+<p>사용자가 LINE 로그인을 사용하면 웹 응용 프로그램과 네이티브 응용 프로그램에서 사용할 사용자 계정을 사용자의 LINE 계정에서 쉽게 만들 수 있습니다.</p>
+<p>LINE 로그인은 웹 응용 프로그램, iOS 앱, Android 어플리케이션 또는 Unity 게임에 통합 할수 있습니다.</p>
+<h4 id="시작하기"><a href="#시작하기" class="headerlink" title="시작하기"></a>시작하기</h4><p>응용 프로그램의 종류에 관계없이 LINE 로그인 채널을 만듭니다. 자세한 내용은 “<a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/getting-started/">LINE 로그인을 이용하려면</a>“을 참조하십시오.</p>
+<h4 id="웹-응용-프로그램에-LINE-로그인을-통합"><a href="#웹-응용-프로그램에-LINE-로그인을-통합" class="headerlink" title="웹 응용 프로그램에 LINE 로그인을 통합"></a>웹 응용 프로그램에 LINE 로그인을 통합</h4><p>LINE 로그인을 당신의 웹 응용 프로그램에 통합하여 사용자가 쉽게 계정을 생성하여 로그인 할 수 있습니다.</p>
+<p>사용자가 장치의 LINE에 로그인 한 경우, LINE 로그인을 사용하여 자동으로 당신이 개발 한 웹 응용 프로그램에 로그인 할 수 있습니다.</p>
+<p>인증및 권한부여 프로세스는 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://tools.ietf.org/html/rfc6749">OAuth 2.0</a> 과 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://openid.net/connect/">OpenID® Connect</a> 프로토콜을 기반으로합니다.</p>
+<p>자세한 내용은 “<a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/">웹 응용 프로그램에 LINE 로그인을 통합</a>“을 참조하십시오.</p>
+<p>LINE 로그인하여 개선하는 사용자 경험을 예로 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://store.line.me/">LINE STORE</a> 웹 사이트를 참고하십시오.</p>
+<p><img src="001-20.png" alt="image"></p>
+<h4 id="네이티브-앱에-LINE-로그인을-통합"><a href="#네이티브-앱에-LINE-로그인을-통합" class="headerlink" title="네이티브 앱에 LINE 로그인을 통합"></a>네이티브 앱에 LINE 로그인을 통합</h4><p>LINE SDK를 사용하여 LINE 로그인 앱에 통합하면, LINE에서 사용자 인증을 처리 할 수 ​​있습니다.</p>
+<p>사용자가 장치의 LINE에 로그인되어 있다면, 사용자는 E메일 주소와 암호를 입력하지 않고 안드로이드에 로그인 할 수 있습니다.</p>
+<p>Android, iOS (Swift 및 Objective-C), Unity용 SDK를 사용할 수 있습니다.</p>
+<ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/ios-sdk/swift/overview/">LINE SDK for iOS Swift 개요</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/ios-sdk/objective-c/overview/">LINE SDK for iOS Objective-C의 개요</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/android-sdk/overview/">LINE SDK for Android 개요</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/unity-sdk/overview/">LINE SDK for Unity 개요</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/flutter-sdk/">LINE SDK for Flutter</a></li>
+</ul>
+<h4 id="LINE-로그인-인증-방법"><a href="#LINE-로그인-인증-방법" class="headerlink" title="LINE 로그인 인증 방법"></a>LINE 로그인 인증 방법</h4><p>LINE 로그인이 내장 된 앱은 다음 중 하나의 인증 방식으로 로그인 할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>인증 방법</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-auto-login">자동 로그인</a></td>
+<td>사용자 개입없이 로그인. LINE 로그인 및 확인 화면이 표시되지 않습니다</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#mail-or-qrcode-login">이메일 주소 로그인</a></td>
+<td>LINE 로그인 화면에 이메일 주소와 비밀번호를 입력하여 로그인</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#mail-or-qrcode-login">QR 코드 로그인</a></td>
+<td>LINE 로그인 화면에 표시된 QR 코드를 스마트폰 버전 LINE의 QR 코드 리더로 스캔하여 로그인</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-sso-login">싱글 사인온 (SSO)으로 로그인</a></td>
+<td>다음 계정으로 로그인 하라고 표시된 확인 화면에서 로그인 버튼을 클릭하여 로그인</td>
+</tr>
+</tbody></table>
+<p>인증 방법당 조건과 실제로 표시되는 화면 내용은 “<a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authentication-process">인증 프로세스</a>“를 참조하십시오.</p>
+<h4 id="다음-단계"><a href="#다음-단계" class="headerlink" title="다음 단계"></a>다음 단계</h4><p>LINE 로그인 앱에 통합 채널을 생성해야합니다. 작성 지침 “<a target="_blank" rel="external nofollow noopener noreferrer" href="https://developers.line.biz/ja/docs/line-login/getting-started/">LINE 로그인을 이용하려면</a>“을 참조하십시오.</p>
+            
+
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 광고 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6351488118670184" data-ad-slot="6351488118670184" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">태그</span><br>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/API/" rel="tag">API</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Android/" rel="tag">Android</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/E%EB%A9%94%EC%9D%BC/" rel="tag">E메일</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/LINE-STORE/" rel="tag">LINE STORE</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OAuth/" rel="tag">OAuth</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Objective-C/" rel="tag">Objective-C</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/OpenID/" rel="tag">OpenID</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/QR/" rel="tag">QR</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/SDK/" rel="tag">SDK</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Swift/" rel="tag">Swift</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/Unity/" rel="tag">Unity</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/iOS/" rel="tag">iOS</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/line/" rel="tag">line</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%84%A4%EC%9D%B4%EB%B2%84/" rel="tag">네이버</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%9D%BC%EC%9D%B8/" rel="tag">라인</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%A1%9C%EA%B7%B8%EC%9D%B8/" rel="tag">로그인</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0/" rel="tag">스마트폰</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%86%B5%ED%95%A9%EC%B1%84%EB%84%90/" rel="tag">통합채널</a>
+
+            </div>
+        
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Playneko. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/image.png" alt="저자 이미지">
+        
+            <h4 id="about-card-name">Playneko</h4>
+        
+            <div id="about-card-bio"><p>아키하바라와 개발정보를 공유하는 블로그 입니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>프리랜서</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                Japan, Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-gm8gmbvk80lparwvaqm5rrecxme2iweqt0kvzbyivftosf08ty8uikvymzgo.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+        <script>
+          var disqus_config = function() {
+            this.page.url = 'https://playneko.github.io/2020/06/27/chatbot/chatbot-001/';
+              
+            this.page.identifier = '2020/06/27/chatbot/chatbot-001/';
+              
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'playneko-github-io';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+    
+
+
+
+
+    </body>
+</html>

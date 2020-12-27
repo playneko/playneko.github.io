@@ -341,6 +341,114 @@
     </item>
     
     <item>
+      <title>라인(LINE) LINE Message API 챗봇 만들기</title>
+      <link>https://playneko.github.io/2020/07/27/chatbot/chatbot-005/</link>
+      <guid>https://playneko.github.io/2020/07/27/chatbot/chatbot-005/</guid>
+      <pubDate>Sun, 26 Jul 2020 15:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라인(LINE) LINE Message API 챗봇 만들기&lt;br&gt;이번에 소개할 내용은 라인(LINE) LINE Message API 챗봇 만들기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라인-LINE-LINE-Message-API-챗봇-만들기"><a href="#라인-LINE-LINE-Message-API-챗봇-만들기" class="headerlink" title="라인(LINE) LINE Message API 챗봇 만들기"></a>라인(LINE) LINE Message API 챗봇 만들기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라인(LINE) LINE Message API 챗봇 만들기 입니다.</p><p>라인(LINE) Message API 개발자 등록하기에 이어서</p><p>본격적으로 라인 챗봇을 만드는 방법을 알아 보도록 하겠습니다.</p><p>텔레그램 챗봇에 이어 라인 챗봇까지 만드는 방법을 알게 되시면</p><p>누구나 쉽게 챗봇을 만드실수가 있게 됩니다.</p><p>라인 챗봇을 만들기 위해 PHP를 이용해서 메세지를 보내보도록 하겠습니다.</p><p>Visual Studio Code(비주얼 스튜디오 코드)로 실행하신후 line_webhook.php로 파일을 추가해 주시기 바랍니다.</p><p><img src="001-1-2.png" alt="image"></p><p>추가를 하셨으면 아래와 같이 코딩을 해주시기 바랍니다.</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 억세스토큰값은 라인 개발자 페이지를 참고를 해주시기 바랍니다.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">// 유저로부터 메세지를 받습니다.</span></span><br><span class="line">    <span class="variable">$json_string</span> = file_get_contents(<span class="string">&#x27;php://input&#x27;</span>);</span><br><span class="line">    <span class="variable">$jsonObj</span> = json_decode(<span class="variable">$json_string</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$type</span> = <span class="variable">$jsonObj</span>-&gt;&#123;<span class="string">&quot;events&quot;</span>&#125;[<span class="number">0</span>]-&gt;&#123;<span class="string">&quot;message&quot;</span>&#125;-&gt;&#123;<span class="string">&quot;type&quot;</span>&#125;;</span><br><span class="line">    <span class="comment">// 메세지 취득</span></span><br><span class="line">    <span class="variable">$text</span> = trim(<span class="variable">$jsonObj</span>-&gt;&#123;<span class="string">&quot;events&quot;</span>&#125;[<span class="number">0</span>]-&gt;&#123;<span class="string">&quot;message&quot;</span>&#125;-&gt;&#123;<span class="string">&quot;text&quot;</span>&#125;);</span><br><span class="line">    <span class="comment">// ReplyToken취득</span></span><br><span class="line">    <span class="variable">$replyToken</span> = <span class="variable">$jsonObj</span>-&gt;&#123;<span class="string">&quot;events&quot;</span>&#125;[<span class="number">0</span>]-&gt;&#123;<span class="string">&quot;replyToken&quot;</span>&#125;;</span><br><span class="line">    <span class="comment">//UserID</span></span><br><span class="line">    <span class="variable">$userId</span> = <span class="variable">$jsonObj</span>-&gt;&#123;<span class="string">&quot;events&quot;</span>&#125;[<span class="number">0</span>]-&gt;&#123;<span class="string">&quot;source&quot;</span>&#125;-&gt;&#123;<span class="string">&quot;userId&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 텍스트 메세지 이외는 처리를 하지 않습니다.</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$type</span> != <span class="string">&quot;text&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$apiUrl</span> = <span class="string">&quot;https://api.line.me/v2/bot/message/reply&quot;</span>;</span><br><span class="line">    <span class="variable">$accessToken</span> = <span class="string">&quot;Line 토큰정보&quot;</span>;</span><br><span class="line">    <span class="variable">$messages</span> = <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;text&#x27;</span> =&gt; <span class="string">&#x27;알수없는 명령어 입니다.&#x27;</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$text</span>)) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$text</span> == <span class="string">&quot;하이&quot;</span> || <span class="variable">$text</span> == <span class="string">&quot;안녕&quot;</span>) &#123;</span><br><span class="line">            <span class="variable">$snedMessage</span> = <span class="string">&quot;안녕하세요. AkibaTV입니다.&quot;</span>;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$text</span> == <span class="string">&quot;도움말&quot;</span>) &#123;</span><br><span class="line">            <span class="variable">$snedMessage</span> = <span class="string">&quot;도움말 입니다.\n&quot;</span>;</span><br><span class="line">            <span class="variable">$snedMessage</span> .= <span class="string">&quot;현재 사용가능한 명령어는\n&quot;</span>;</span><br><span class="line">            <span class="variable">$snedMessage</span> .= <span class="string">&quot;하이, 안녕, 도움말이 있습니다.\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$snedMessage</span> = <span class="string">&quot;등록 되어있지 않은 명령어 입니다.&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$messages</span>[<span class="string">&#x27;text&#x27;</span>] = <span class="variable">$snedMessage</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$messages</span>)) &#123;</span><br><span class="line">        <span class="variable">$post_data</span> = [</span><br><span class="line">            <span class="string">&quot;replyToken&quot;</span> =&gt; <span class="variable">$replyToken</span>,</span><br><span class="line">            <span class="string">&quot;messages&quot;</span> =&gt; [<span class="variable">$messages</span>]</span><br><span class="line">        ];</span><br><span class="line"></span><br><span class="line">        <span class="variable">$ch</span> = curl_init(<span class="variable">$apiUrl</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_POST, <span class="literal">true</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_CUSTOMREQUEST, <span class="string">&#x27;POST&#x27;</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="literal">true</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_POSTFIELDS, json_encode(<span class="variable">$post_data</span>));</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">&#x27;Content-Type: application/json; charser=UTF-8&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Authorization: Bearer &#x27;</span> . <span class="variable">$accessToken</span></span><br><span class="line">        ));</span><br><span class="line">        <span class="variable">$result</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p><img src="002-1-2.jpg" alt="image"></p><p>실제로 제대로 동작을 하는지 확인을 해보도록 하겠습니다.</p><p>라인봇을 동작하기 위해선 웹훅을 올려놓을 서버가 반듯이 https를 지원하는 서버이어야만 합니다.</p><p>저의 경우 웹호스팅 서버가 https를 지원하기에 웹호스팅 서버에 올려놓도록 하겠습니다.</p><p><img src="003-2.jpg" alt="image"></p><p>라인 개발자 페이지에 로그인을 해주시기 바랍니다.</p><p><img src="004-3.jpg" alt="image"></p><p>Messaging API탭으로 이동을 하신후 스크롤을 해주시면</p><p><img src="005-3.jpg" alt="image"></p><p>Webhook setting이 나오게 됩니다. 그럼 Webhook URL의 Edit버튼을 눌러주시고</p><p><img src="006-2.jpg" alt="image"></p><p>line_webhook.php을 작성하신 URL을 적어주시면 되겠습니다.</p><p>그리고 Update버튼을 눌러주시기 바랍니다.</p><p><img src="007-2.jpg" alt="image"></p><p>Verity버튼을 눌러서 등록하신 URL이 정상 작동하는지 체크를 합니다.</p><p>Success가 나오면 문제없이 작동하고 있는것 입니다.</p><p><img src="008-2.jpg" alt="image"></p><p>Use webhook을 활성화 시켜주셔서 웹훅을 사용가능하게 변경해 줍니다.</p><p><img src="009-2.jpg" alt="image"></p><p>Channal access token입니다만 이것은 코딩을 하실때 여기에 나오는 억세스 토큰을 입력해 주시기 바랍니다.</p><p>위의 과정까지 다 하셨으면 일단 모든 과정은 끝났습니다.</p><p>실제 라인에서 동작 확인을 해보도록 하기 위해서</p><p>위에 QR코드를 이용해서 친구 등록을 해주시면 아래와 같이 챗봇의 채팅방이 개설이 됩니다.</p><p><img src="010-2.jpg" alt="image"></p><p>채팅방이 개설이 된후 채팅방으로 들어가시면</p><p><img src="011-1.jpg" alt="image"></p><p>위와같이 기본 환영 메세지가 나오게 됩니다.</p><p><img src="012-1.jpg" alt="image"></p><p>코딩시에 등록한 명령어들을 입력을 하시면 위와같이 챗봇이 반응을하고</p><p>답변을 주는 형태로 되어 있습니다.</p><p>일본어로 나오는 메세지에 대해서는 설정문제로 계속 나옵니다만</p><p>문제가 해결되면 해결방안에 대해서 설명을 올리도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/Bot/">Bot</category>
+      
+      <category domain="https://playneko.github.io/tags/PC/">PC</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%84%B8%EC%A7%80/">메세지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/">어플리케이션</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%84%ED%8C%85%EB%B0%A9/">채팅방</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%97%EB%B4%87/">챗봇</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1/">카카오톡</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%95%B8%EB%93%9C%ED%8F%B0/">핸드폰</category>
+      
+      <category domain="https://playneko.github.io/tags/line/">line</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%9D%B8/">라인</category>
+      
+      <category domain="https://playneko.github.io/tags/channel/">channel</category>
+      
+      <category domain="https://playneko.github.io/tags/Developers/">Developers</category>
+      
+      <category domain="https://playneko.github.io/tags/Messaging/">Messaging</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%8B%A0%EC%A0%80/">메신저</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/27/chatbot/chatbot-005/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>라인(LINE) Message API 개발자 등록하기</title>
+      <link>https://playneko.github.io/2020/07/24/chatbot/chatbot-004/</link>
+      <guid>https://playneko.github.io/2020/07/24/chatbot/chatbot-004/</guid>
+      <pubDate>Thu, 23 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라인(LINE) Message API 개발자 등록하기&lt;br&gt;이번에 소개할 내용은 라인(LINE) Message API 개발자 등록하기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라인-LINE-Message-API-개발자-등록하기"><a href="#라인-LINE-Message-API-개발자-등록하기" class="headerlink" title="라인(LINE) Message API 개발자 등록하기"></a>라인(LINE) Message API 개발자 등록하기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라인(LINE) Message API 개발자 등록하기 입니다.</p><p>라인 메신저를 이용한 챗봇 개발을 알아보고 어떤식으로</p><p>개발자를 등록과 API사용법등을 알아보도록 하겠습니다.</p><p>우선 개발자를 등록하기 위해서 아래의 링크를 타고 들어가 주세요.</p><p><a href="https://developers.line.biz/ja/services/messaging-api/">https://developers.line.biz/ja/services/messaging-api/</a></p><p><img src="001-12.png" alt="image"></p><p>상단의 로그인 버튼을 눌러주시기 바랍니다.</p><p><img src="002-11.png" alt="image"></p><p>계정이 있으신 분은 라인아이디로 로그인을 해주시기 바라며</p><p>계정을 가지고 계시지 않은 분들은 라인에서 아이디를 등록후 [<a href="https://account.line.biz/signup">アカウントを作成</a>]를 클릭해 주세요.</p><p><img src="003-11.png" alt="image"></p><p>계정을 등록하기 위해서 [LINEアカウント登録]버튼을 눌러주시기 바랍니다.</p><p><img src="004-2.jpg" alt="image"></p><p>라인에서 생성하신 메일계정과 비밀번호를 입력하시고 로그인을 눌러주시기 바랍니다.</p><p><img src="005-2.jpg" alt="image"></p><p>로그인하신후 위와같이 나오시면 Create버튼을 눌러주시기 바랍니다.</p><p><img src="006-1.jpg" alt="image"></p><p>프로바이더명을 입력을 하시고 Create버튼을 눌러주시기 바랍니다.</p><p><img src="007-1.jpg" alt="image"></p><p>라인 챗봇을 만들기 위해서 Create a Messaging API channel을 선택해 주시기 바랍니다.</p><p><img src="008-1.jpg" alt="image"></p><p><img src="009-1.jpg" alt="image"></p><p><img src="010-1.jpg" alt="image"></p><p>필요한 정보를 입력후 Create버튼을 눌러주시기 바랍니다.</p><p><img src="011.jpg" alt="image"></p><p>이용규약에 동의를 눌러주시기 바랍니다.</p><p><img src="012.jpg" alt="image"></p><p>라인 챗봇을 만들기 위한 개발자 등록이 완료 되었습니다.</p><p>이걸로 챗봇을 만들기 위한 준비는 되었습니다.</p><p>다음에는 라인 챗봇 API를 연동해서 메세지를 주고 받기를 해보도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/Bot/">Bot</category>
+      
+      <category domain="https://playneko.github.io/tags/PC/">PC</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%84%B8%EC%A7%80/">메세지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/">어플리케이션</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%84%ED%8C%85%EB%B0%A9/">채팅방</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%97%EB%B4%87/">챗봇</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1/">카카오톡</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%95%B8%EB%93%9C%ED%8F%B0/">핸드폰</category>
+      
+      <category domain="https://playneko.github.io/tags/line/">line</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%9D%B8/">라인</category>
+      
+      <category domain="https://playneko.github.io/tags/channel/">channel</category>
+      
+      <category domain="https://playneko.github.io/tags/Developers/">Developers</category>
+      
+      <category domain="https://playneko.github.io/tags/Messaging/">Messaging</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%8B%A0%EC%A0%80/">메신저</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/24/chatbot/chatbot-004/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>라즈베리파이에서 PHP를 이용해서 텔레그램 메세지 보내기</title>
       <link>https://playneko.github.io/2020/07/23/rasberry-pi/rasberry-pi-043/</link>
       <guid>https://playneko.github.io/2020/07/23/rasberry-pi/rasberry-pi-043/</guid>
@@ -429,6 +537,110 @@
       
       
       <comments>https://playneko.github.io/2020/07/23/rasberry-pi/rasberry-pi-043/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>텔레그램 챗봇 API를 이용한 메세지 보내기</title>
+      <link>https://playneko.github.io/2020/07/22/chatbot/chatbot-003/</link>
+      <guid>https://playneko.github.io/2020/07/22/chatbot/chatbot-003/</guid>
+      <pubDate>Tue, 21 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;텔레그램 챗봇 API를 이용한 메세지 보내기&lt;br&gt;이번에 소개할 내용은 텔레그램 챗봇 API를 이용한 메세지 보내기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="텔레그램-챗봇-API를-이용한-메세지-보내기"><a href="#텔레그램-챗봇-API를-이용한-메세지-보내기" class="headerlink" title="텔레그램 챗봇 API를 이용한 메세지 보내기"></a>텔레그램 챗봇 API를 이용한 메세지 보내기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 텔레그램 챗봇 API를 이용한 메세지 보내기 입니다.</p><p>저번시간에는 챗봇 만들기에 이어서 이번에는 메세지를 보내고</p><p>채팅방에서 메세지를 받는것을 해보도록 하겠습니다.</p><p>우선 채팅방 아이디를 취득을 위해서 웹브라우저를 실행을 하신후 아래의 주소를 입력해 주시기 바랍니다.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># $&#123;telegramBotToken&#125;에는 봇파더로부터 받으신 토크값을 넣어주세요.</span><br><span class="line">https://api.telegram.org/bot$&#123;telegramBotToken&#125;/getMe</span><br></pre></td></tr></table></figure><p><img src="001-1.jpg" alt="image"></p><p>위와같이 정보가 나오시면 id값이 채팅방 ID가 됩니다.</p><p>채팅정보를 취득을 위해서 아래와 같이 입력을 해주시기 바랍니다.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># $&#123;telegramBotToken&#125; : 토큰값</span><br><span class="line">https://api.telegram.org/bot$&#123;telegramBotToken&#125;/getUpdates</span><br></pre></td></tr></table></figure><p><img src="002-1.jpg" alt="image"></p><p>아래와 같이 웹브라우저에 입력후 메세지를 전송해 보도록 하겠습니다.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># $&#123;telegramBotToken&#125; : 토큰값</span><br><span class="line"># $&#123;telegramChatId&#125; : 채팅방 ID</span><br><span class="line"># $&#123;text&#125; : 전송할 메세지</span><br><span class="line">https://api.telegram.org/bot$&#123;telegramBotToken&#125;/sendMessage?chat_id=$&#123;telegramChatId&#125;&amp;text=$&#123;text&#125;</span><br></pre></td></tr></table></figure><p><img src="003-1.jpg" alt="image"></p><p>메세지를 전송을 하게 되면 위와같이 나오면 성공적으로 된것 입니다.</p><p>텔레그램 메신저를 확인해서 메세지가 왔는지 확인해 보도록 하겠습니다.</p><p><img src="004-1.jpg" alt="image"></p><p>위와같이 메세지가 전송된것을 확인 하실수 있습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/Bot/">Bot</category>
+      
+      <category domain="https://playneko.github.io/tags/BotFather/">BotFather</category>
+      
+      <category domain="https://playneko.github.io/tags/PC/">PC</category>
+      
+      <category domain="https://playneko.github.io/tags/Telegram/">Telegram</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%84%B8%EC%A7%80/">메세지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B4%87%ED%8C%8C%EB%8D%94/">봇파더</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/">어플리케이션</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%84%ED%8C%85%EB%B0%A9/">채팅방</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%97%EB%B4%87/">챗봇</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1/">카카오톡</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8/">텔레그램</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%95%B8%EB%93%9C%ED%8F%B0/">핸드폰</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%9D%B8/">라인</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/22/chatbot/chatbot-003/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>텔레그램 봇파더를 이용한 챗봇 만들어 보기</title>
+      <link>https://playneko.github.io/2020/07/21/chatbot/chatbot-002/</link>
+      <guid>https://playneko.github.io/2020/07/21/chatbot/chatbot-002/</guid>
+      <pubDate>Mon, 20 Jul 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;텔레그램 봇파더를 이용한 챗봇 만들어 보기&lt;br&gt;이번에 소개할 내용은 텔레그램 봇파더를 이용한 챗봇 만들어 보기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="텔레그램-봇파더를-이용한-챗봇-만들어-보기"><a href="#텔레그램-봇파더를-이용한-챗봇-만들어-보기" class="headerlink" title="텔레그램 봇파더를 이용한 챗봇 만들어 보기"></a>텔레그램 봇파더를 이용한 챗봇 만들어 보기</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 텔레그램 봇파더를 이용한 챗봇 만들어 보기 입니다.</p><p>라인이나 카카오톡과 같이 복잡한 절차를 거쳐서 챗봇을 만드는게 아닌</p><p>핸드폰으로 간단하게 챗봇을 생성후 <a href="https://core.telegram.org/bots/api">API</a>를 조금만 다루시면 손쉽게 챗봇을 만드실수가 있습니다.</p><p>어떻게 챗봇을 만드는지 알아보도록 하겠습니다.</p><p>핸드폰 또는 PC에서 텔레그램 어플리케이션을 다운로드 받으신후 실행해 주세요.</p><p><img src="001.jpg" alt="image"></p><p>친구 검색에 BotFather를 입력해 주신후 첫번째 봇파더를 선택해 주세요.</p><p><img src="002.jpg" alt="image"></p><p>봇파더를 선택하신후 위와같이 나오시면 [시작] 버튼을 눌러주세요.</p><p><img src="003.jpg" alt="image"></p><p>시작을 누르시면 위와같이 무엇을 할것인지에 대한 목록이 나오게 됩니다.</p><p><img src="004.jpg" alt="image"></p><p>그럼 /newbot을 입력해 주시기 바랍니다.</p><p>그러면 사용할 챗봇명을 입력하라고 나오게 됩니다.</p><p>원하시는 챗봇명을 입력해 주시면 됩니다만 마지막에 bot을 반듯이 입력을 해주셔야만 합니다.</p><p><img src="005.jpg" alt="image"></p><p><img src="006.jpg" alt="image"></p><p>저는 AkibaTVBot이라고 입력을 했습니다.</p><p>원하는 챗봇명을 입력후 챗봇이 생성이 되면 토큰값이 발급이 됩니다.</p><p>t.me/AkibaTVBot을 클릭하시면 채팅방에 참가를 하게 됩니다.</p><p><img src="007.jpg" alt="image"></p><p>채팅방에 접속후 시작을 눌러주시기 바랍니다.</p><p><img src="008.jpg" alt="image"></p><p>챗봇과 대화를 할수있는 상태가 되었습니다.</p><p><img src="009.jpg" alt="image"></p><p>그럼 적당히 챗봇에 명령을 해보지만 반응은 없습니다.</p><p>아래의 명령어를 웹브라우저에 입력을 해주시기 바랍니다.</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 챗봇 생성 확인</span><br><span class="line">https://api.telegram.org/bot$&#123;telegramBotToken&#125;/getUpdates</span><br></pre></td></tr></table></figure><p><img src="010.jpg" alt="image"></p><p>위와같이 나오면 정상적으로 챗봇이 등록된것입니다.</p><p>다음에는 챗봇을 이용해 메세지 전송을 해보도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80/">웹브라우저</category>
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/Bot/">Bot</category>
+      
+      <category domain="https://playneko.github.io/tags/BotFather/">BotFather</category>
+      
+      <category domain="https://playneko.github.io/tags/PC/">PC</category>
+      
+      <category domain="https://playneko.github.io/tags/Telegram/">Telegram</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A9%94%EC%84%B8%EC%A7%80/">메세지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B4%87%ED%8C%8C%EB%8D%94/">봇파더</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%96%B4%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98/">어플리케이션</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%84%ED%8C%85%EB%B0%A9/">채팅방</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B1%97%EB%B4%87/">챗봇</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1/">카카오톡</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%85%94%EB%A0%88%EA%B7%B8%EB%9E%A8/">텔레그램</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%95%B8%EB%93%9C%ED%8F%B0/">핸드폰</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%9D%B8/">라인</category>
+      
+      
+      <comments>https://playneko.github.io/2020/07/21/chatbot/chatbot-002/#disqus_thread</comments>
       
     </item>
     
@@ -1561,6 +1773,64 @@
     </item>
     
     <item>
+      <title>라인(Line) 로그인 API 사용법과 개요 설명</title>
+      <link>https://playneko.github.io/2020/06/27/chatbot/chatbot-001/</link>
+      <guid>https://playneko.github.io/2020/06/27/chatbot/chatbot-001/</guid>
+      <pubDate>Fri, 26 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;라인(Line) 로그인 API 사용법과 개요 설명&lt;br&gt;이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라인-Line-로그인-API-사용법과-개요-설명"><a href="#라인-Line-로그인-API-사용법과-개요-설명" class="headerlink" title="라인(Line) 로그인 API 사용법과 개요 설명"></a>라인(Line) 로그인 API 사용법과 개요 설명</h2><p>안녕하세요. AkibaTV입니다.</p><p>이번에 소개할 내용은 라인(Line) 로그인 API 사용법과 개요 설명 입니다.</p><p>라인이라면 한번쯤 들어보셨을 겁니다.</p><p>네이버가 지분 50%이상 가지고 있는 라인이란 회사 입니다.</p><p>이번에 라인(Line) API 사용법에 들어가기 전에</p><p>가장 기본적인 로그인 API에 대한 개요를 알아보도록 하겠습니다.</p><p>개요에 대한 내용은 공식 사이트에 개재되어 있습니다.</p><p><a href="https://developers.line.biz/ja/docs/line-login/overview/#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">LINEログインの概要</a></p><p>LINE 로그인을 웹 애플리케이션과 네이티브 응용 프로그램에 통합하면 사용자가 LINE 로그인을 사용할 수있게됩니다.</p><p>사용자가 LINE 로그인을 사용하면 웹 응용 프로그램과 네이티브 응용 프로그램에서 사용할 사용자 계정을 사용자의 LINE 계정에서 쉽게 만들 수 있습니다.</p><p>LINE 로그인은 웹 응용 프로그램, iOS 앱, Android 어플리케이션 또는 Unity 게임에 통합 할수 있습니다.</p><h4 id="시작하기"><a href="#시작하기" class="headerlink" title="시작하기"></a>시작하기</h4><p>응용 프로그램의 종류에 관계없이 LINE 로그인 채널을 만듭니다. 자세한 내용은 “<a href="https://developers.line.biz/ja/docs/line-login/getting-started/">LINE 로그인을 이용하려면</a>“을 참조하십시오.</p><h4 id="웹-응용-프로그램에-LINE-로그인을-통합"><a href="#웹-응용-프로그램에-LINE-로그인을-통합" class="headerlink" title="웹 응용 프로그램에 LINE 로그인을 통합"></a>웹 응용 프로그램에 LINE 로그인을 통합</h4><p>LINE 로그인을 당신의 웹 응용 프로그램에 통합하여 사용자가 쉽게 계정을 생성하여 로그인 할 수 있습니다.</p><p>사용자가 장치의 LINE에 로그인 한 경우, LINE 로그인을 사용하여 자동으로 당신이 개발 한 웹 응용 프로그램에 로그인 할 수 있습니다.</p><p>인증및 권한부여 프로세스는 <a href="https://tools.ietf.org/html/rfc6749">OAuth 2.0</a> 과 <a href="https://openid.net/connect/">OpenID® Connect</a> 프로토콜을 기반으로합니다.</p><p>자세한 내용은 “<a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/">웹 응용 프로그램에 LINE 로그인을 통합</a>“을 참조하십시오.</p><p>LINE 로그인하여 개선하는 사용자 경험을 예로 <a href="https://store.line.me/">LINE STORE</a> 웹 사이트를 참고하십시오.</p><p><img src="001-20.png" alt="image"></p><h4 id="네이티브-앱에-LINE-로그인을-통합"><a href="#네이티브-앱에-LINE-로그인을-통합" class="headerlink" title="네이티브 앱에 LINE 로그인을 통합"></a>네이티브 앱에 LINE 로그인을 통합</h4><p>LINE SDK를 사용하여 LINE 로그인 앱에 통합하면, LINE에서 사용자 인증을 처리 할 수 ​​있습니다.</p><p>사용자가 장치의 LINE에 로그인되어 있다면, 사용자는 E메일 주소와 암호를 입력하지 않고 안드로이드에 로그인 할 수 있습니다.</p><p>Android, iOS (Swift 및 Objective-C), Unity용 SDK를 사용할 수 있습니다.</p><ul><li><a href="https://developers.line.biz/ja/docs/ios-sdk/swift/overview/">LINE SDK for iOS Swift 개요</a></li><li><a href="https://developers.line.biz/ja/docs/ios-sdk/objective-c/overview/">LINE SDK for iOS Objective-C의 개요</a></li><li><a href="https://developers.line.biz/ja/docs/android-sdk/overview/">LINE SDK for Android 개요</a></li><li><a href="https://developers.line.biz/ja/docs/unity-sdk/overview/">LINE SDK for Unity 개요</a></li><li><a href="https://developers.line.biz/ja/docs/flutter-sdk/">LINE SDK for Flutter</a></li></ul><h4 id="LINE-로그인-인증-방법"><a href="#LINE-로그인-인증-방법" class="headerlink" title="LINE 로그인 인증 방법"></a>LINE 로그인 인증 방법</h4><p>LINE 로그인이 내장 된 앱은 다음 중 하나의 인증 방식으로 로그인 할 수 있습니다.</p><table><thead><tr><th>인증 방법</th><th>설명</th></tr></thead><tbody><tr><td><a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-auto-login">자동 로그인</a></td><td>사용자 개입없이 로그인. LINE 로그인 및 확인 화면이 표시되지 않습니다</td></tr><tr><td><a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#mail-or-qrcode-login">이메일 주소 로그인</a></td><td>LINE 로그인 화면에 이메일 주소와 비밀번호를 입력하여 로그인</td></tr><tr><td><a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#mail-or-qrcode-login">QR 코드 로그인</a></td><td>LINE 로그인 화면에 표시된 QR 코드를 스마트폰 버전 LINE의 QR 코드 리더로 스캔하여 로그인</td></tr><tr><td><a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-sso-login">싱글 사인온 (SSO)으로 로그인</a></td><td>다음 계정으로 로그인 하라고 표시된 확인 화면에서 로그인 버튼을 클릭하여 로그인</td></tr></tbody></table><p>인증 방법당 조건과 실제로 표시되는 화면 내용은 “<a href="https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authentication-process">인증 프로세스</a>“를 참조하십시오.</p><h4 id="다음-단계"><a href="#다음-단계" class="headerlink" title="다음 단계"></a>다음 단계</h4><p>LINE 로그인 앱에 통합 채널을 생성해야합니다. 작성 지침 “<a href="https://developers.line.biz/ja/docs/line-login/getting-started/">LINE 로그인을 이용하려면</a>“을 참조하십시오.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%B1%97%EB%B4%87-ChatBot/">챗봇(ChatBot)</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/API/">API</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%84%A4%EC%9D%B4%EB%B2%84/">네이버</category>
+      
+      <category domain="https://playneko.github.io/tags/Android/">Android</category>
+      
+      <category domain="https://playneko.github.io/tags/E%EB%A9%94%EC%9D%BC/">E메일</category>
+      
+      <category domain="https://playneko.github.io/tags/iOS/">iOS</category>
+      
+      <category domain="https://playneko.github.io/tags/line/">line</category>
+      
+      <category domain="https://playneko.github.io/tags/LINE-STORE/">LINE STORE</category>
+      
+      <category domain="https://playneko.github.io/tags/OAuth/">OAuth</category>
+      
+      <category domain="https://playneko.github.io/tags/Objective-C/">Objective-C</category>
+      
+      <category domain="https://playneko.github.io/tags/OpenID/">OpenID</category>
+      
+      <category domain="https://playneko.github.io/tags/QR/">QR</category>
+      
+      <category domain="https://playneko.github.io/tags/SDK/">SDK</category>
+      
+      <category domain="https://playneko.github.io/tags/Swift/">Swift</category>
+      
+      <category domain="https://playneko.github.io/tags/Unity/">Unity</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%9D%B8/">라인</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A1%9C%EA%B7%B8%EC%9D%B8/">로그인</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0/">스마트폰</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%86%B5%ED%95%A9%EC%B1%84%EB%84%90/">통합채널</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/27/chatbot/chatbot-001/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>라즈베리파이 또는 리눅스 PHP에서 MariaDB 사용하기</title>
       <link>https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/</link>
       <guid>https://playneko.github.io/2020/06/26/rasberry-pi/rasberry-pi-031/</guid>
@@ -1761,6 +2031,54 @@
     </item>
     
     <item>
+      <title>micro:bit 마이크로비트 처음 사용자 코딩방법 소개</title>
+      <link>https://playneko.github.io/2020/06/23/micro-bit/micro-bit-001/</link>
+      <guid>https://playneko.github.io/2020/06/23/micro-bit/micro-bit-001/</guid>
+      <pubDate>Mon, 22 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;micro:bit 마이크로비트 처음 사용자 코딩방법 소개&lt;br&gt;이번에 소개할 내용은 micro:bit 마이크로비트 처음 사용자 코딩방법 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="micro-bit-마이크로비트-처음-사용자-코딩방법-소개"><a href="#micro-bit-마이크로비트-처음-사용자-코딩방법-소개" class="headerlink" title="micro:bit 마이크로비트 처음 사용자 코딩방법 소개"></a>micro:bit 마이크로비트 처음 사용자 코딩방법 소개</h2><p>안녕하세요. AkibaTV 입니다.</p><p>이번에 소개할 내용은 micro:bit 마이크로비트 처음 사용자 코딩방법 입니다.</p><p>처음 마이크로 비트를 구매하시고 어떻게 코딩해서 어떻게 동작시키는지</p><p>기본 방법을 같이 해보도록 하겠습니다.</p><p>마이크로비트 코딩을 위해서 마이크로소프트가 제공하는 개발툴을 이용해 보도록 하겠습니다.</p><p>아래의 사이트로 접속하시면 바로 프로젝트 생성과 개발이 가능 합니다.</p><p><a href="https://makecode.microbit.org/">https://makecode.microbit.org/</a></p><p><img src="20200619_224643.png" alt="image"></p><p>사이트에 접속을 하시면 위와같이 내 프로젝트를 생성하는 버튼과</p><p>따라만 해도 구현이 가능한 예제들과 영상들이 있습니다.</p><p>우선 새 프로젝트를 생성 해보도록 하겠습니다.</p><p>새 프로젝트 버튼을 눌러주세요.</p><p><img src="20200619_225134.png" alt="image"></p><p>위와같이 나오시면 생성하실 프로젝트명을 입력하시고</p><p>옵션은 기본으로 하시고 만들기 버튼을 눌러주시기 바랍니다.</p><p><img src="20200619_225323.png" alt="image"></p><p>프로젝트를 만드시면 위와같이 새 프로젝트가 생성이 되었습니다.</p><p>왼쪽메뉴에서 만들고싶은 메뉴를 선택후 실행화면에 끌어다 놓으시면</p><p>하단의 마이크로비트 화면으로 동작화면을 테스트를 해보실수가 있게 됩니다.</p><p><img src="20200620_182654.png" alt="image"></p><p>간단한 작업에 대해서는 끌어다 놓고 실행만으로 코딩이 끝나게 됩니다.</p><p>간단한 작업에 대해서는 끌어다 놓고 실행만으로 코딩이 끝나게 됩니다.</p><p><img src="005-13.png" alt="image"></p><p>그럼 왼쪽 하단의 …버튼을 누르시고 장치 페어링을 클릭해 주세요.</p><p><img src="006-12.png" alt="image"></p><p>그럼 위와같이 장치 연결방법에 대한 설명이 나오며 장치페어링 버튼을 눌러주세요.</p><p><img src="007-10.png" alt="image"></p><p>그럼 장치를 연결할 장치 목록이 나오며 장치를 선택하시면 장치가 연결이 완료가 됩니다.</p><p><img src="008-9.png" alt="image"></p><p>장치 연결까지 되셨으면 이제 작업한 결과물을 장치에서 직접 확인을 해야하니 왼쪽하단의 … 옆 버튼을 눌러주시면</p><p>현재 만들어진 프로젝트가 다운로드를 시작하면서 장치에 업로드를 하게 됩니다.</p><p><img src="009-7.png" alt="image"></p><p>다운로드가 완료가 되면 장치에 프로그램이 입력이 되며 자동으로 마이크로 비트에서 실행이 됩니다.</p><p><img src="001-7-1536x1396.jpg" alt="image"></p><p>위와같이 나오시면 성공적으로 되었습니다.</p><p>다음에는 좀더 다양한 주제의 마이크로비트 프로젝트를 해보도록 하겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/micro-bit/">micro:bit</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%86%8C%ED%94%84%ED%8A%B8/">마이크로소프트</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/">프로젝트</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC/">아키하바라</category>
+      
+      <category domain="https://playneko.github.io/tags/akihabara/">akihabara</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%EB%B0%94/">아키바</category>
+      
+      <category domain="https://playneko.github.io/tags/micro/">micro</category>
+      
+      <category domain="https://playneko.github.io/tags/micro-bit/">micro:bit</category>
+      
+      <category domain="https://playneko.github.io/tags/microsoft/">microsoft</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%82%A2%E3%82%AD%E3%83%90%E7%A7%8B%E8%91%89%E5%8E%9F/">アキバ秋葉原</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C/">마이크로</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EB%B9%84%ED%8A%B8/">마이크로비트</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9E%A5%EC%B9%98/">장치</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%8E%98%EC%96%B4%EB%A7%81/">페어링</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/23/micro-bit/micro-bit-001/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>라즈베리파이 웹서버에서 jQuery toggle 사용하기</title>
       <link>https://playneko.github.io/2020/06/22/rasberry-pi/rasberry-pi-028/</link>
       <guid>https://playneko.github.io/2020/06/22/rasberry-pi/rasberry-pi-028/</guid>
@@ -1891,6 +2209,60 @@
     </item>
     
     <item>
+      <title>돈까스 동인지 돈까스! Vol.5 전국편 (일본 전국 맛집 멋집 돈까스집 소개)</title>
+      <link>https://playneko.github.io/2020/06/20/akihabara/akihabara-004/</link>
+      <guid>https://playneko.github.io/2020/06/20/akihabara/akihabara-004/</guid>
+      <pubDate>Fri, 19 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;돈까스 동인지 돈까스! Vol.5 전국편 (일본 전국 맛집 멋집 돈까스집 소개)&lt;br&gt;동인 작가 써클 밤나무와 곶간의 돈까스 동인지  [돈까스! Vol.5 전국편]&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="돈까스-동인지-돈까스-Vol-5-전국편-일본-전국-맛집-멋집-돈까스집-소개"><a href="#돈까스-동인지-돈까스-Vol-5-전국편-일본-전국-맛집-멋집-돈까스집-소개" class="headerlink" title="돈까스 동인지 돈까스! Vol.5 전국편 (일본 전국 맛집 멋집 돈까스집 소개)"></a>돈까스 동인지 돈까스! Vol.5 전국편 (일본 전국 맛집 멋집 돈까스집 소개)</h2><p><img src="2_323da9f2c30c24f145397b122aa2a5cd.png" alt="image"></p><p>동인 작가 써클 밤나무와 곶간의 돈까스 동인지  [돈까스! Vol.5 전국편]</p><p><img src="3_0661fbde457d91cc76b46a75647f2eb8.png" alt="image"></p><p>소금절임 특상 리브심지 돈까스</p><p>(고기가 아주 부드럽고 입안에서 고기의 육즙이 터지는 듯한 식감)</p><p><img src="4_3e40a79dc80e23273c3f871384109a82.png" alt="image"></p><p>와카바 (후쿠오카)</p><p>카고시마산 운마카 상급 등심(돼지) 커틀릿 정식 입니다.</p><p>후쿠오카 텐진에 있는 엄선한 빵가루와 저온에서 튀긴 명품 돼지고기 입니다.</p><p><img src="5_baf1aabc1f393873ba32c2142a7f7078.png" alt="image"></p><p>야바톤 본점(아이치현)과 라지사이즈 돈까스 정식(기본 소스와 된장소스 반반)</p><p>된장소스와 기본 소스 두가지 맛을 즐길수 있는 짚신 돈까스</p><p>동인 작가 써클 밤나무와 곶간(쿠리코씨)의 겨울 코미케 신간으로</p><p>돈까스 동인지 (돈까스! Vol.5 전국편)이, 멜론북스에 입하되었다.</p><p><img src="7_a7df0dfb68906bf7d7e0b6cc4c984ce1.png" alt="image"></p><p>쿡팬 오아라이 출장소 (이바라키현)</p><p><img src="8_2e7ab68cab8e21d971b8ea94be82e87f.png" alt="image"></p><p>요시베 (효고현)</p><p><img src="9_a9f00522f4aba5130aaf02cfa4e16960.png" alt="image"></p><p>카츠세이 (미야기현)</p><p><img src="10_69721800b0ae5ab1c9af2e2062291629.png" alt="image"></p><p>돈팔 (아이치현)</p><p><img src="11_57b313b7f2daf085bbbb1e7def60b57a.png" alt="image"></p><p>카와히사 (카고시마현)</p><p><img src="12_3c4c6e5d395857e7093a702aed4284ec.png" alt="image"></p><p>쿠레토미 DIA PARK PREMIRE (인도)</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC/">아키하바라</category>
+      
+      <category domain="https://playneko.github.io/tags/akihabara/">akihabara</category>
+      
+      <category domain="https://playneko.github.io/tags/%E7%A7%8B%E8%91%89%E5%8E%9F/">秋葉原</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%82%A2%E3%82%AD%E3%83%90/">アキバ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%8C%ED%99%94/">만화</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%EB%B0%94/">아키바</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B3%B6%EA%B0%84/">곶간</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%8F%88%EA%B9%8C%EC%8A%A4/">돈까스</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%8F%99%EC%9D%B8%EC%9E%91%EA%B0%80/">동인작가</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%8F%99%EC%9D%B8%EC%A7%80/">동인지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A6%AC%EB%B8%8C%EC%8B%AC%EC%A7%80/">리브심지</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%B0%A4%EB%82%98%EB%AC%B4/">밤나무</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8B%A0%EA%B0%84/">신간</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8D%A8%ED%81%B4/">써클</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%A0%84%EA%B5%AD%ED%8E%B8/">전국편</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%BD%94%EB%AF%B8%EC%BC%80/">코미케</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/20/akihabara/akihabara-004/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>라즈베리파이로 레트로(ReTroPie) 게임기 만들기</title>
       <link>https://playneko.github.io/2020/06/20/rasberry-pi/rasberry-pi-026/</link>
       <guid>https://playneko.github.io/2020/06/20/rasberry-pi/rasberry-pi-026/</guid>
@@ -1941,6 +2313,50 @@
       
       
       <comments>https://playneko.github.io/2020/06/20/rasberry-pi/rasberry-pi-026/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>사신짱 스핀오프 고기 미노스 쇠고기 100% 1권 진보초에서 고기 먹는다!</title>
+      <link>https://playneko.github.io/2020/06/19/akihabara/akihabara-003/</link>
+      <guid>https://playneko.github.io/2020/06/19/akihabara/akihabara-003/</guid>
+      <pubDate>Thu, 18 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;사신짱 스핀오프 고기 미노스 쇠고기 100% 1권 진보초에서 고기 먹는다!&lt;br&gt;사신짱 드롭킥 스핀오프 만화 [미노스의 비프 100%] 1권 발매&lt;br&gt;악마가 진보쵸에서 고기를 먹는 포만 코미디! 만화&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="사신짱-스핀오프-고기-미노스-쇠고기-100-1권-진보초에서-고기-먹는다"><a href="#사신짱-스핀오프-고기-미노스-쇠고기-100-1권-진보초에서-고기-먹는다" class="headerlink" title="사신짱 스핀오프 고기 미노스 쇠고기 100% 1권 진보초에서 고기 먹는다!"></a>사신짱 스핀오프 고기 미노스 쇠고기 100% 1권 진보초에서 고기 먹는다!</h2><p><img src="2_4662ea456352915e8c51a8ba19119d82.png" alt="image"></p><p>사신짱 드롭킥 스핀오프 만화 [미노스의 비프 100%] 1권 발매</p><p>악마가 진보쵸에서 고기를 먹는 포만 코미디! 만화</p><p><img src="3_8b5b40fe7f1dcec506a2767e6574542b.png" alt="image"></p><p>작중에는 실제 점포가 등장.</p><p>진보쵸 식육 센터</p><p>“여기다” “에이, 내장 전문점이야?”</p><p><img src="4_0f147ba92a7aaa9f6ee690bf05b2e25c.png" alt="image"></p><p>첫 육회 (고기 두께에 식감도 있고… 육회밖에 맛볼수 없는 이 단맛)</p><p><img src="5_3d389476ae458660bbdeb1f7a717da97.png" alt="image"></p><p>기뻐해라 미노스야. 다음에 오는 고기는 네가 가장 좋아하는 갈매기 같은 고기인데,</p><p>그것과는 차원이 다른, 아직 보지 못한 넥스트 스테이지 고기다!</p><p><img src="6_097264aec684ce06997f61ed3175be49.png" alt="image"></p><p>안경 (하라미 같은 탄력과 붉은색 고기의 맛을 가진 희귀 부위)</p><p>(두툼한 고기인데 엄청 부드럽고 고기 자체의 질감을 충분히 맛볼수 있다)</p><p><img src="7_ef6b631647752aaf0bb78074dfd8f345.png" alt="image"></p><p>게이머즈 본점 (특전: 북커버)</p><p><img src="8_7ad13d3262e64a2931fa172f6924aff1.png" alt="image"></p><p>게이머즈 한정판 있음 토라노아나 아키하바라점A</p><p>(특전: 일러스트 카드)</p><p><img src="9_9853cd0fa52c1818d015c568f79b53f8.png" alt="image"></p><p>COMICZIN 아키하바라점 (특전: 일러스트 카드)</p><p><img src="11_43a8056e79558b434becd306ba6d7763.png" alt="image"></p><p>카미보우 (와~ 유리네가 추천하는 가게구나~)</p><p>‘여긴 뒷면 본디야’</p><p><img src="12_2545a35216339f415db8b42e2c0c958a.png" alt="image"></p><p>이건 방심하면… 볼이 떨어지는 맛이야~</p><p><img src="13_abe824cb90306fd3c3d83102ada88727.png" alt="image"></p><p>비프 스튜, 햄버거, 그리고 살로인 스테이크.</p><p>오늘의 나는 비프 300%다!</p><p><img src="14_91076c6e07fd443d31ea6da5454ea471.png" alt="image"></p><p>오! 여기야! 오늘 가게는 야키니쿠처 삼행원</p><p><img src="15_eb20850c64d3d6ca7ce260ff754a8f73.png" alt="image"></p><p>“우선은 소 혀! 잘 썰린 소 혀 입니다~!”</p><p><img src="16_bf2859fa3f09907433716164ce4fa24b.png" alt="image"></p><p>들어올린 이 갈매기를… 철판 위로… 고!</p><p><img src="17_0ad5b426716fda4717f9c55d474b1781.png" alt="image"></p><p>어린 양고기 주물럭 입니다</p><p><img src="18_06320ed63bf100264f0f749944317849.png" alt="image"></p><p>오! 불고기에 머스타드 소스는 낭만적이야!</p><p><img src="19_c54cf9099139c1148fabbf9f11ce8f1e.png" alt="image"></p><p>응축된 살코기의 느낌과 비계의 단맛의 밸런스</p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC/">아키하바라</category>
+      
+      <category domain="https://playneko.github.io/tags/akihabara/">akihabara</category>
+      
+      <category domain="https://playneko.github.io/tags/%E7%A7%8B%E8%91%89%E5%8E%9F/">秋葉原</category>
+      
+      <category domain="https://playneko.github.io/tags/%E3%82%A2%E3%82%AD%E3%83%90/">アキバ</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%A7%8C%ED%99%94/">만화</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%AF%B8%EB%85%B8%EC%8A%A4%EC%9D%98-%EB%B9%84%ED%94%84-100/">미노스의 비프 100%</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%82%AC%EC%8B%A0%EC%A7%B1/">사신짱</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8A%A4%ED%95%80%EC%98%A4%ED%94%84/">스핀오프</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%EB%B0%94/">아키바</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%85%EB%A7%88/">악마</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%A7%84%EB%B3%B4%EC%B5%B8/">진보쵸</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/19/akihabara/akihabara-003/#disqus_thread</comments>
       
     </item>
     
@@ -2333,6 +2749,56 @@
       
       
       <comments>https://playneko.github.io/2020/06/13/rasberry-pi/rasberry-pi-021/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Model SBS-206 열차와 SL의 교환음 키트 만들기</title>
+      <link>https://playneko.github.io/2020/06/12/akihabara/akihabara-002/</link>
+      <guid>https://playneko.github.io/2020/06/12/akihabara/akihabara-002/</guid>
+      <pubDate>Thu, 11 Jun 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;Model SBS-206 열차와 SL의 교환음 키트 만들기&lt;br&gt;이번에 소개할 내용은 Model SBS-206 열차와 SL의 교환음 키트 만들기 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="Model-SBS-206-열차와-SL의-교환음-키트-만들기"><a href="#Model-SBS-206-열차와-SL의-교환음-키트-만들기" class="headerlink" title="Model SBS-206 열차와 SL의 교환음 키트 만들기"></a>Model SBS-206 열차와 SL의 교환음 키트 만들기</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 Model SBS-206 열차와 SL의 교환음 키트 만들기 입니다.</p><p>아키하바라에서 세금포함 1749엔에 전자 공작 키트를 구매를 해보았습니다.</p><p>구성품은 아래와 같습니다.</p><p><img src="001-2.jpg" alt="image"></p><p>이런 비닐안에 필요한 부품이 모두 들어 있습니다.</p><p>조립만 하면 바로 쓸수있게 회로도 설계도 들어가 있기에 누구나 쉽고 빠르게</p><p>전자 공작을 하실수 있습니다.</p><p>좀 아쉬운것은 생각보다 비싸다는점이에요…</p><p><img src="002-1.jpg" alt="image"></p><p>뒷면에는 부품갯수와 간략한 회로도를 볼수 있습니다.</p><p><img src="003.jpg" alt="image"></p><p>전체적인 부품과 설계도는 위와 같습니다.</p><p>부품이 생각보다 많아보이지만 대부분이 점퍼케이블이기에</p><p>하나하나 연결을 하다보면 어느센가 끝나있습니다.</p><p>플레이트 보드에도 번호와 알파벳이 적혀져 있으므로 설계도와 맞춰서 연결을 할수가 있습니다.</p><p>라즈베리파이 처럼 코딩을 하실 필요없이 연결만 하면 끝납니다.</p><p><img src="004-1536x709.jpg" alt="image"></p><p>전체적으로 조립이 완료된 상태입니다.</p><p>버튼을 누르면 버튼에 따라서 스피커로 기차음을 들을수가 있습니다만</p><p>무슨문제인지 LED는 불이 잘 들어오지만 스피커에서 소리가 안나옵니다.</p><p>불량인것인지… ㅠㅠ</p><p>여러분도 이런 키트를 구매를 하실때는 교환등 따져보고 구매를 하세요.</p><p><a href="https://youtu.be/dtN_72W24mk"><img src="http://img.youtube.com/vi/dtN_72W24mk/0.jpg" alt="AkibaTV"></a></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC/">아키하바라</category>
+      
+      <category domain="https://playneko.github.io/tags/model/">model</category>
+      
+      <category domain="https://playneko.github.io/tags/sbs/">sbs</category>
+      
+      <category domain="https://playneko.github.io/tags/sbs-206/">sbs-206</category>
+      
+      <category domain="https://playneko.github.io/tags/SL/">SL</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B3%B5%EC%9E%91/">공작</category>
+      
+      <category domain="https://playneko.github.io/tags/%EA%B5%90%ED%99%98%EC%9D%8C/">교환음</category>
+      
+      <category domain="https://playneko.github.io/tags/%EB%AA%A8%EB%8D%B8/">모델</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%84%A0%ED%95%98%EC%95%BC%ED%86%A0/">선하야토</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%97%B4%EC%B0%A8/">열차</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%A0%84%EC%9E%90/">전자</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%82%A4%ED%8A%B8/">키트</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%A0%84%EC%9E%90-%EA%B3%B5%EC%9E%91-%ED%82%A4%ED%8A%B8/">전자 공작 키트</category>
+      
+      
+      <comments>https://playneko.github.io/2020/06/12/akihabara/akihabara-002/#disqus_thread</comments>
       
     </item>
     
@@ -3111,50 +3577,6 @@
     </item>
     
     <item>
-      <title>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</title>
-      <link>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/</link>
-      <guid>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/</guid>
-      <pubDate>Wed, 27 May 2020 17:00:01 GMT</pubDate>
-      
-      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO를 이용하여 코딩을 위해 파이썬 준비 입니다.&lt;/p&gt;</description>
-      
-      
-      
-      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비"><a href="#라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비" class="headerlink" title="라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비"></a>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</h2><p>일단 라즈베리파이에 VNC로 접속후 터미널을 실행 합니다.</p><p>터미널에서 아래의 명령어를 실행 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure><p><img src="001-8.png"></p><p>최신버전으로 업데이트를 하게 됩니다.</p><p><img src="002-8-e1590627633446.png"></p><p><img src="003-8-e1590627697120.png"></p><p>파이썬을 설치하기 위해 아래의 명령어를 입력합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y python-dev python-setuptools</span><br></pre></td></tr></table></figure><p><img src="004-5.png"></p><p><img src="005-6.png"></p><p>설치가 완료 되었습니다.</p><p>이렇게해서 라즈베리파이에서 파이썬을 사용할수 있는 준비가 되었습니다.</p><p>라즈베리파이 공식 사이트</p><p><a href="https://www.raspberrypi.org/">https://www.raspberrypi.org/</a></p>]]></content:encoded>
-      
-      
-      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
-      
-      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
-      
-      
-      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
-      
-      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
-      
-      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
-      
-      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
-      
-      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
-      
-      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/">파이썬 - apt</category>
-      
-      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
-      
-      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
-      
-      <category domain="https://playneko.github.io/tags/python/">python</category>
-      
-      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
-      
-      
-      <comments>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
       <title>.htaccess를 수정해서 URL 리다이렉트(Redirect) 처리하기</title>
       <link>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-012/</link>
       <guid>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-012/</guid>
@@ -3203,42 +3625,46 @@
     </item>
     
     <item>
-      <title>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function</title>
-      <link>https://playneko.github.io/2020/05/28/php/php-001/</link>
-      <guid>https://playneko.github.io/2020/05/28/php/php-001/</guid>
-      <pubDate>Wed, 27 May 2020 16:00:00 GMT</pubDate>
+      <title>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</title>
+      <link>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/</link>
+      <guid>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/</guid>
+      <pubDate>Wed, 27 May 2020 17:00:01 GMT</pubDate>
       
       <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function&lt;br&gt;이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.&lt;/p&gt;</description>
+&lt;p&gt;라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비&lt;br&gt;이번에 소개할 내용은 라즈베리파이에 GPIO를 이용하여 코딩을 위해 파이썬 준비 입니다.&lt;/p&gt;</description>
       
       
       
-      <content:encoded><![CDATA[<!-- excerpt --><h2 id="PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function"><a href="#PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function" class="headerlink" title="PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function"></a>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.</p><p>날짜시간 관련 함수는 주로 많이 사용되는 함수이므로 참고를 해두시면</p><p>앞으로 코딩을 하면서 날짜시간 관련 개발을 할때 유용한 정보가 될수가 있겠습니다.</p><p>대충 한번이라도 봐두시면 나중에 반듯이 생각이나는 경우가 있겠습니다.</p><blockquote><p>time : int time(void)<br>현재 시간을 timestamp로 반환</p><p>strtotime : int strtotime ( string $time [, int $now = time() ] )<br>string을 timestamp로 반환</p><p>date : string date ( string $format [, int $timestamp ] )<br>정수형으로 주어지는 timestamp나, timestamp가 주어지지 않았을 경우에는<br>현재 로컬시간을 사용하여, 주어진 포맷 문자열에 따라 형식화한 문자열을 반환합니다.<br>즉 timestamp는 선택적이고 기본값은 time()의 값입니다.</p></blockquote><h5 id="아래는-date-format-형식"><a href="#아래는-date-format-형식" class="headerlink" title="아래는 date format 형식"></a>아래는 date format 형식</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">d : 일, 앞에 0이 붙는 2 숫자(01에서 31)</span><br><span class="line">D : 요일 글자 표현, 3문자(Mon에서 Sun)</span><br><span class="line">j : 앞에 0이 붙지 않는 일(1에서 31)</span><br><span class="line">l : 요일의 완전한 글자 표현(Sunday에서 Saturday)</span><br><span class="line">N : 요일의 ISO-8601 숫자 표현(1(월요일)에서 7(일요일))</span><br><span class="line">w : 요일 숫자 표현(0(일요일)에서 6(토요일))</span><br><span class="line">W : ISO-8601 주차, 주는 월요이에 시작(42(그 해의 42번째 주))</span><br><span class="line">F : January나 March 같은 월의 완전한 글자 표현(Januray에서 December)</span><br><span class="line">m : 0이 붙는 월 숫자 표현(01에서 12)</span><br><span class="line">M : 월의 축약 글자 표현, 3문자(Jan에서 Dec)</span><br><span class="line">n : 0이 붙지 않는 월 숫자 표현(1에서 12)</span><br><span class="line">t : 주어진 월의 일 수(28에서 31)</span><br><span class="line">L : 윤년 여부(윤년엔 1, 그 외엔 0)</span><br><span class="line">Y : 연도의 완전한 숫자 표현, 4 숫자(1999나 2012)</span><br><span class="line">y : 연도의 두 숫자 표현(99나 12)</span><br><span class="line">a : 오전과 오후의 소문자(am 또는 pm)</span><br><span class="line">A : 오전과 오후의 대문자(AM 또는 PM)</span><br><span class="line">g : 0이 붙지 않는 12시간 형식 시(1에서 12)</span><br><span class="line">G : 0이 붙지 않는 24시간 형식 시(1에서 24)</span><br><span class="line">h : 0이 붙는 12시간 형식 시(01에서 12)</span><br><span class="line">H : 0이 붙는 24시간 형식 시(00에서 24)</span><br><span class="line">i : 0이 붙는 분(00에서 59)</span><br><span class="line">s : 초, 0이 붙음(00에서 59)</span><br></pre></td></tr></table></figure><blockquote><p>mktime : int mktime ([ int $hour = date(“H”) [, int $minute = date(“i”) [, int $second = date(“s”) [, int $month = date(“n”) [, int $day = date(“j”) [, int $year = date(“Y”) [, int $is_dst = -1 ]]]]]]] )</p></blockquote><h5 id="아래의-인자값을-대입하면-timestamp를-반환-합니다"><a href="#아래의-인자값을-대입하면-timestamp를-반환-합니다" class="headerlink" title="아래의 인자값을 대입하면 timestamp를 반환 합니다."></a>아래의 인자값을 대입하면 timestamp를 반환 합니다.</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hour : 시간</span><br><span class="line">minute : 분</span><br><span class="line">second : 초</span><br><span class="line">month : 월</span><br><span class="line">day : 일</span><br><span class="line">year : 년도</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$nextWeek</span> = time() + (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span>); <span class="comment">// 현재시간에 7일에 해당하는 시간을 더한다</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, <span class="variable">$nextWeek</span>) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&#x27;+1 week&#x27;</span>)) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 날짜 : 2020-05-28</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$recentdate</span> = mktime(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">28</span>, <span class="number">2020</span>);</span><br><span class="line"><span class="variable">$year</span>=date(<span class="string">&#x27;Y&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$month</span>=date(<span class="string">&#x27;m&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$day</span>=date(<span class="string">&#x27;d&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 : &quot;</span> . <span class="variable">$year</span> . <span class="string">&quot;년 &quot;</span> . <span class="variable">$month</span> . <span class="string">&quot;월 &quot;</span> . <span class="variable">$day</span> . <span class="string">&quot;일&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 : 2020년 05월 28일</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;now&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;10 September 2000&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 day&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week 2 days&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;next Thursday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;last Monday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재: 2020-05-28</span><br><span class="line">날짜: 2000-09-10</span><br><span class="line">날짜: 2020-05-29</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-06-06</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-05-25</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비"><a href="#라즈베리파이에서-파이썬을-이용한-GPIO-개발-준비" class="headerlink" title="라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비"></a>라즈베리파이에서 파이썬을 이용한 GPIO 개발 준비</h2><p>일단 라즈베리파이에 VNC로 접속후 터미널을 실행 합니다.</p><p>터미널에서 아래의 명령어를 실행 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure><p><img src="001-8.png"></p><p>최신버전으로 업데이트를 하게 됩니다.</p><p><img src="002-8-e1590627633446.png"></p><p><img src="003-8-e1590627697120.png"></p><p>파이썬을 설치하기 위해 아래의 명령어를 입력합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y python-dev python-setuptools</span><br></pre></td></tr></table></figure><p><img src="004-5.png"></p><p><img src="005-6.png"></p><p>설치가 완료 되었습니다.</p><p>이렇게해서 라즈베리파이에서 파이썬을 사용할수 있는 준비가 되었습니다.</p><p>라즈베리파이 공식 사이트</p><p><a href="https://www.raspberrypi.org/">https://www.raspberrypi.org/</a></p>]]></content:encoded>
       
       
-      <category domain="https://playneko.github.io/categories/PHP/">PHP</category>
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/">Rasberry Pi</category>
+      
+      <category domain="https://playneko.github.io/categories/Rasberry-Pi/Python/">Python</category>
       
       
-      <category domain="https://playneko.github.io/tags/PHP/">PHP</category>
+      <category domain="https://playneko.github.io/tags/Rasberry-Pi/">Rasberry Pi</category>
       
-      <category domain="https://playneko.github.io/tags/date/">date</category>
+      <category domain="https://playneko.github.io/tags/SSH/">SSH</category>
       
-      <category domain="https://playneko.github.io/tags/mktime/">mktime</category>
+      <category domain="https://playneko.github.io/tags/VNC/">VNC</category>
       
-      <category domain="https://playneko.github.io/tags/strtotime/">strtotime</category>
+      <category domain="https://playneko.github.io/tags/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%83%91%E3%82%A4/">ラズベリーパイ</category>
       
-      <category domain="https://playneko.github.io/tags/time/">time</category>
+      <category domain="https://playneko.github.io/tags/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4/">라즈베리파이</category>
       
-      <category domain="https://playneko.github.io/tags/timestamp/">timestamp</category>
+      <category domain="https://playneko.github.io/tags/%ED%8C%8C%EC%9D%B4%EC%8D%AC-apt/">파이썬 - apt</category>
       
-      <category domain="https://playneko.github.io/tags/%EC%8B%9C%EA%B0%84/">시간</category>
+      <category domain="https://playneko.github.io/tags/apt-get/">apt-get</category>
       
-      <category domain="https://playneko.github.io/tags/%EC%8B%9C%EA%B0%84%EA%B4%80%EB%A0%A8/">시간관련</category>
+      <category domain="https://playneko.github.io/tags/GPIO/">GPIO</category>
       
-      <category domain="https://playneko.github.io/tags/%ED%95%A8%EC%88%98/">함수</category>
+      <category domain="https://playneko.github.io/tags/python/">python</category>
+      
+      <category domain="https://playneko.github.io/tags/sudo/">sudo</category>
       
       
-      <comments>https://playneko.github.io/2020/05/28/php/php-001/#disqus_thread</comments>
+      <comments>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-011/#disqus_thread</comments>
       
     </item>
     
@@ -3363,6 +3789,46 @@
       
       
       <comments>https://playneko.github.io/2020/05/28/rasberry-pi/rasberry-pi-010/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function</title>
+      <link>https://playneko.github.io/2020/05/28/php/php-001/</link>
+      <guid>https://playneko.github.io/2020/05/28/php/php-001/</guid>
+      <pubDate>Wed, 27 May 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function&lt;br&gt;이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function"><a href="#PHP-날짜시간-함수-사용하기-date-strtotime-mktime-Function" class="headerlink" title="PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function"></a>PHP 날짜시간 함수 사용하기(date/strtotime/mktime) Function</h2><p>안녕하세요.</p><p>이번에 소개할 내용은 PHP 날짜시간 관련으로 사용하는 함수 입니다.</p><p>날짜시간 관련 함수는 주로 많이 사용되는 함수이므로 참고를 해두시면</p><p>앞으로 코딩을 하면서 날짜시간 관련 개발을 할때 유용한 정보가 될수가 있겠습니다.</p><p>대충 한번이라도 봐두시면 나중에 반듯이 생각이나는 경우가 있겠습니다.</p><blockquote><p>time : int time(void)<br>현재 시간을 timestamp로 반환</p><p>strtotime : int strtotime ( string $time [, int $now = time() ] )<br>string을 timestamp로 반환</p><p>date : string date ( string $format [, int $timestamp ] )<br>정수형으로 주어지는 timestamp나, timestamp가 주어지지 않았을 경우에는<br>현재 로컬시간을 사용하여, 주어진 포맷 문자열에 따라 형식화한 문자열을 반환합니다.<br>즉 timestamp는 선택적이고 기본값은 time()의 값입니다.</p></blockquote><h5 id="아래는-date-format-형식"><a href="#아래는-date-format-형식" class="headerlink" title="아래는 date format 형식"></a>아래는 date format 형식</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">d : 일, 앞에 0이 붙는 2 숫자(01에서 31)</span><br><span class="line">D : 요일 글자 표현, 3문자(Mon에서 Sun)</span><br><span class="line">j : 앞에 0이 붙지 않는 일(1에서 31)</span><br><span class="line">l : 요일의 완전한 글자 표현(Sunday에서 Saturday)</span><br><span class="line">N : 요일의 ISO-8601 숫자 표현(1(월요일)에서 7(일요일))</span><br><span class="line">w : 요일 숫자 표현(0(일요일)에서 6(토요일))</span><br><span class="line">W : ISO-8601 주차, 주는 월요이에 시작(42(그 해의 42번째 주))</span><br><span class="line">F : January나 March 같은 월의 완전한 글자 표현(Januray에서 December)</span><br><span class="line">m : 0이 붙는 월 숫자 표현(01에서 12)</span><br><span class="line">M : 월의 축약 글자 표현, 3문자(Jan에서 Dec)</span><br><span class="line">n : 0이 붙지 않는 월 숫자 표현(1에서 12)</span><br><span class="line">t : 주어진 월의 일 수(28에서 31)</span><br><span class="line">L : 윤년 여부(윤년엔 1, 그 외엔 0)</span><br><span class="line">Y : 연도의 완전한 숫자 표현, 4 숫자(1999나 2012)</span><br><span class="line">y : 연도의 두 숫자 표현(99나 12)</span><br><span class="line">a : 오전과 오후의 소문자(am 또는 pm)</span><br><span class="line">A : 오전과 오후의 대문자(AM 또는 PM)</span><br><span class="line">g : 0이 붙지 않는 12시간 형식 시(1에서 12)</span><br><span class="line">G : 0이 붙지 않는 24시간 형식 시(1에서 24)</span><br><span class="line">h : 0이 붙는 12시간 형식 시(01에서 12)</span><br><span class="line">H : 0이 붙는 24시간 형식 시(00에서 24)</span><br><span class="line">i : 0이 붙는 분(00에서 59)</span><br><span class="line">s : 초, 0이 붙음(00에서 59)</span><br></pre></td></tr></table></figure><blockquote><p>mktime : int mktime ([ int $hour = date(“H”) [, int $minute = date(“i”) [, int $second = date(“s”) [, int $month = date(“n”) [, int $day = date(“j”) [, int $year = date(“Y”) [, int $is_dst = -1 ]]]]]]] )</p></blockquote><h5 id="아래의-인자값을-대입하면-timestamp를-반환-합니다"><a href="#아래의-인자값을-대입하면-timestamp를-반환-합니다" class="headerlink" title="아래의 인자값을 대입하면 timestamp를 반환 합니다."></a>아래의 인자값을 대입하면 timestamp를 반환 합니다.</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hour : 시간</span><br><span class="line">minute : 분</span><br><span class="line">second : 초</span><br><span class="line">month : 월</span><br><span class="line">day : 일</span><br><span class="line">year : 년도</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$nextWeek</span> = time() + (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span>); <span class="comment">// 현재시간에 7일에 해당하는 시간을 더한다</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, <span class="variable">$nextWeek</span>) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;다음주 날짜 : &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&#x27;+1 week&#x27;</span>)) .<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 날짜 : 2020-05-28</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br><span class="line">다음주 날짜 : 2020-06-04</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$recentdate</span> = mktime(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">28</span>, <span class="number">2020</span>);</span><br><span class="line"><span class="variable">$year</span>=date(<span class="string">&#x27;Y&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$month</span>=date(<span class="string">&#x27;m&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="variable">$day</span>=date(<span class="string">&#x27;d&#x27;</span>, <span class="variable">$recentdate</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재 : &quot;</span> . <span class="variable">$year</span> . <span class="string">&quot;년 &quot;</span> . <span class="variable">$month</span> . <span class="string">&quot;월 &quot;</span> . <span class="variable">$day</span> . <span class="string">&quot;일&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재 : 2020년 05월 28일</span><br></pre></td></tr></table></figure><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;현재: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;now&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;10 September 2000&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 day&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;+1 week 2 days&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;next Thursday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;날짜: &quot;</span> . date(<span class="string">&#x27;Y-m-d&#x27;</span>, strtotime(<span class="string">&quot;last Monday&quot;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">결과값 :</span><br><span class="line">현재: 2020-05-28</span><br><span class="line">날짜: 2000-09-10</span><br><span class="line">날짜: 2020-05-29</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-06-06</span><br><span class="line">날짜: 2020-06-04</span><br><span class="line">날짜: 2020-05-25</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/PHP/">PHP</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/PHP/">PHP</category>
+      
+      <category domain="https://playneko.github.io/tags/date/">date</category>
+      
+      <category domain="https://playneko.github.io/tags/mktime/">mktime</category>
+      
+      <category domain="https://playneko.github.io/tags/strtotime/">strtotime</category>
+      
+      <category domain="https://playneko.github.io/tags/time/">time</category>
+      
+      <category domain="https://playneko.github.io/tags/timestamp/">timestamp</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8B%9C%EA%B0%84/">시간</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%8B%9C%EA%B0%84%EA%B4%80%EB%A0%A8/">시간관련</category>
+      
+      <category domain="https://playneko.github.io/tags/%ED%95%A8%EC%88%98/">함수</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/28/php/php-001/#disqus_thread</comments>
       
     </item>
     
@@ -3507,6 +3973,40 @@
       
       
       <comments>https://playneko.github.io/2020/05/26/rasberry-pi/rasberry-pi-007/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>소소한 자전거 여행 – 아키하바라 (Akihabara)</title>
+      <link>https://playneko.github.io/2020/05/26/akihabara/akihabara-001/</link>
+      <guid>https://playneko.github.io/2020/05/26/akihabara/akihabara-001/</guid>
+      <pubDate>Mon, 25 May 2020 16:00:00 GMT</pubDate>
+      
+      <description>&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;소소한 자전거 여행 – 아키하바라 (Akihabara)&lt;br&gt;소소하게 자전거로 여행을 해보았습니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<!-- excerpt --><h2 id="소소한-자전거-여행-–-아키하바라-Akihabara"><a href="#소소한-자전거-여행-–-아키하바라-Akihabara" class="headerlink" title="소소한 자전거 여행 – 아키하바라 (Akihabara)"></a>소소한 자전거 여행 – 아키하바라 (Akihabara)</h2><p><a href="https://youtu.be/vOorY_f13mw"><img src="http://img.youtube.com/vi/vOorY_f13mw/0.jpg" alt="AkibaTV"></a></p><p>소소하게 자전거로 여행을 해보았습니다.</p><p>카메라 흔들림이 조금 있습니다.</p><p>야간의 아키하바라 도로를 주행하는 영상 입니다.</p><p><a href="https://www.youtube.com/watch?v=vOorY_f13mw">아키바티비 채널</a></p>]]></content:encoded>
+      
+      
+      <category domain="https://playneko.github.io/categories/%EC%95%84%ED%82%A4%EB%B0%94-%EC%A0%95%EB%B3%B4/">아키바 정보</category>
+      
+      
+      <category domain="https://playneko.github.io/tags/%EC%95%84%ED%82%A4%ED%95%98%EB%B0%94%EB%9D%BC/">아키하바라</category>
+      
+      <category domain="https://playneko.github.io/tags/akihabara/">akihabara</category>
+      
+      <category domain="https://playneko.github.io/tags/%E7%A7%8B%E8%91%89%E5%8E%9F/">秋葉原</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%86%8C%EC%86%8C%ED%95%9C/">소소한</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%9E%90%EC%A0%84%EA%B1%B0/">자전거</category>
+      
+      <category domain="https://playneko.github.io/tags/%EC%97%AC%ED%96%89/">여행</category>
+      
+      
+      <comments>https://playneko.github.io/2020/05/26/akihabara/akihabara-001/#disqus_thread</comments>
       
     </item>
     
