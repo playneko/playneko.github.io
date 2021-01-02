@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>https://playneko.github.io/2020/06/28/akihabara/akihabara-012/</loc>
+        <lastmod>2021-01-02T23:49:34.684Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://playneko.github.io/2020/06/27/akihabara/akihabara-011/</loc>
         <lastmod>2021-01-02T01:17:46.830Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -59,14 +67,6 @@
     <url>
         <loc>https://playneko.github.io/2020/06/29/akihabara/akihabara-013/</loc>
         <lastmod>2020-12-28T00:31:53.282Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://playneko.github.io/2020/06/28/akihabara/akihabara-012/</loc>
-        <lastmod>2020-12-28T00:31:33.054Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
